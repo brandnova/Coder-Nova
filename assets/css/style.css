@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.hide-scrollbar {
+  @apply overflow-hidden;
+  /* Include custom scrollbar hiding styles here */
+}
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    scroll-behavior: smooth !important;
+}
+
+/* Hide scrollbar for Webkit browsers */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.hide-scrollbar {
+    scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar for Internet Explorer, Edge */
+.hide-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+
+:root {
+    font-family: 'Inter', sans-serif;
+    --bg-color: #ffffff;
+    --text-color: black;
+}
+
+[data-theme="dark"] {
+    --bg-color: #1e293b;
+    --text-color: white;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#main{
+    margin-top: 80px;
+}
+
+.bg-dots{
+    background-image: url(https://assets-global.website-files.com/5b5a66e9f3166b36708705fa/5dea7a12bb83ab1f13040de5_cx-dots.svg);
+    background-repeat: no-repeat
+}
+
+.scroll-btn {
+    cursor: pointer;
+}
+.sticky-nav {
+    position: sticky;
+    top: 1%;
+    z-index: 10;
+    background-color: white;
+}
+
+/* Ensures smooth transition */
+.transition-transform {
+    transition: transform 0.3s ease-in-out;
+}
+/* Hidden state */
+.-translate-y-full {
+    transform: translateY(-100%);
+}
+
+@media (min-width: 768px) {
+    .hidden-on-mobile {
+        display: block;
+    }
+}
+
+.component {
+background-color: var(--bg-color);
+color: var(--text-color);
+}
+
+.hidden {
+    display: none;
+}
+
+.toggle-btn {
+    cursor: pointer;
+}
+
+/* Preloader Styles */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Ensure it is on top of everything */
+}
+
+.loader {
+    border: 8px solid #f3f3f3; /* Light grey background */
+    border-top: 8px solid #3498db; /* Blue color */
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Comment form anonymous */
+.ano {
+    transition: opacity 0.5s ease-out, margin-bottom 0.5s ease-out;
+}
+
+.fade-out {
+    opacity: 0;
+    margin-bottom: 0;
+    height: 0;
+    overflow: hidden;
+}
