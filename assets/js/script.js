@@ -131,36 +131,3 @@ document.getElementById('scroll-right').addEventListener('click', function() {
         behavior: 'smooth'
     });
 });
-
-const alertTemplate = document?.getElementById("alertTemplate");
-
-    const appendAlert = (message, type, size) => {
-        const wrapper = document.createElement("div");
-        wrapper.classList.add("alert-root");
-        wrapper.innerHTML = [
-        `<div class="flex items-center justify-between p-3 rounded-md bg-green-100 gap-4" role="alert">`,
-        `  <div>${message}</div>`,
-        '  <button type="button" class="flex items-center justify-center rounded-full transition-all duration-300 p-1.5 hover:bg-black/10" data-dismiss="alert" aria-label="Close"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line> </svg></button>',
-        "</div>"
-    ].join("");
-
-    alertTemplate?.append(wrapper);
-
-    const dismissAlert = document?.querySelectorAll('[data-dismiss="alert"]');
-
-    dismissAlert.forEach((button) => {
-        button.addEventListener("click", () => {
-        wrapper.remove();
-        });
-    });
-    };
-
-    // Trigger alerts
-
-    const alertTrigger = document?.querySelector('[data-toggle="alert"]');
-
-    if (alertTrigger) {
-    alertTrigger.addEventListener("click", () => {
-        appendAlert("Nice, you triggered this alert message!", "success", "md");
-    });
-    }
