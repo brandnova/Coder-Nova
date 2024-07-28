@@ -1,0 +1,33 @@
+{% extends 'core/base.html' %}
+{% block title %}Uploads{% endblock  %}
+{% load static %}
+{% block content %}
+    <div class="container mx-auto my-10">
+        <h1 class="text-3xl font-bold">Uploads</h1>
+        <div class="filters my-4">
+            <form method="get" action="">
+                <select name="category">
+                    <option value="">All Categories</option>
+                    {% for category in categories %}
+                        <option value="{{ category.slug }}" {% if request.GET.category == category.slug %}selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+                <select name="framework">
+                    <option value="">All Frameworks</option>
+                    {% for framework in frameworks %}
+                        <option value="{{ framework.slug }}" {% if request.GET.framework == framework.slug %}selected{% endif %}>{{ framework.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Filter</button>
+            </form>
+        </div>
+        <div class="articles">
+            {% for article in articles %}
+                <div class="article">
+                    <h2><a href="{% url 'article_detail' article.slug %}">{{ article.title }}</a></h2>
+                    <p>{{ article.excerpt }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
