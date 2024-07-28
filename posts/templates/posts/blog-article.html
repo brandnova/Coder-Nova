@@ -1,0 +1,187 @@
+{% extends 'core/base.html' %}
+{% block title %}Article{% endblock  %}
+{% load static %}
+{% block content %}
+    <section class="mb-10 w-full max-w-[60rem] mx-auto px-4 sm:px-6 lg:px-8 my-20 font-serif">
+        <div class="container mx-auto my-10">
+            <div class="text-gray-600">
+                <p>{{ article.published_date|date:"d M Y" }} by {{ article.author.username }}</p>
+                <p>Categories: 
+                    {{ article.category.name }}
+                </p>
+                <p>Frameworks: 
+                    {% for framework in article.frameworks.all %}
+                        {{ framework.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+            </div>
+            <div class="content">
+                
+            </div>
+        </div>
+
+        <h1 class="mb-5 text-3xl font-bold">
+            {{ article.title }}
+        </h1>
+
+        <img src="{{ article.featured_image.url }}" class="object-cover h-32 w-full mb-5 rounded-lg" alt="{{ article.title }}">
+
+        <p class="mb-5">
+            {{ article.content|safe }}
+        </p>
+        
+
+        <p class="text-lg mb-5">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur ut id nobis facilis itaque? Quos fuga praesentium adipisci laudantium iure asperiores, ab sapiente omnis! Deserunt consequatur animi libero aperiam nemo!
+        </p>
+
+        <p class="mb-5">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur ut id nobis facilis itaque? Quos fuga praesentium adipisci laudantium iure asperiores, ab sapiente omnis! Deserunt consequatur animi libero aperiam nemo!
+        </p>
+
+        <p class="mb-5">
+            Lorem, <a href="#" class="text-blue-600 hover:underline">ipsum dolor sit amet consectetur</a> adipisicing elit. Tenetur ut id nobis facilis itaque? Quos fuga praesentium adipisci laudantium iure asperiores, ab sapiente omnis! Deserunt consequatur animi libero aperiam nemo!
+        </p>
+
+        <ul class="list-disc mb-5 list-inside p-4 bg-slate-800 rounded-lg">
+            <li>VSCode</li>
+            <li>Tailwind CSS</li>
+            <li>Laravel</li>
+        </ul>
+
+        <p class="mb-5">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur ut id nobis facilis itaque? Quos fuga praesentium adipisci laudantium iure asperiores, ab sapiente omnis! Deserunt consequatur animi libero aperiam nemo!
+
+        </p>
+
+        <p class="mb-5">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur ut id nobis facilis itaque? Quos fuga praesentium adipisci laudantium iure asperiores, ab sapiente omnis! Deserunt consequatur animi libero aperiam nemo!
+        </p>
+
+        <h2 class="mb-5 text-2xl font-bold">
+            Lorem, ipsum dolor sit
+        </h2>
+
+        <p class="mb-5">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur ut id nobis facilis itaque? Quos fuga praesentium adipisci laudantium iure asperiores, ab sapiente omnis! Deserunt consequatur animi libero aperiam nemo!
+
+        </p>
+
+        <img src="{% static 'assets/imgs/article1/tw1.png' %}" class="w-full mb-5 rounded-lg" alt="image article">
+
+        <h2 class="mb-5 text-2xl font-bold">
+            Conclusion
+        </h2>
+
+        <p class="mb-5">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur ut id nobis facilis itaque? Quos fuga praesentium adipisci laudantium iure asperiores, ab sapiente omnis! Deserunt consequatur animi libero aperiam nemo!
+        </p>
+
+        {% comment %} <iframe class="w-full h-64 my-10 rounded-lg md:h-80" src="https://www.youtube.com/embed/L6Jwa7al8os" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> {% endcomment %}
+
+        <div class="text-xs pt-5">
+            <span>Sources :</span>
+            <ul class="list-disc list-inside">
+                <li>
+                    <a href="https://10015.io/tools/tweet-to-image-converter" target="_blank" class="hover:underline">
+                        https://10015.io/tools/tweet-to-image-converter
+                    </a> 
+                </li>
+                <li>
+                    <a href="https://twitter.com/0gust1/status/1065685008650784773" target="_blank" class="hover:underline">
+                        https://twitter.com/0gust1/status/1065685008650784773                    
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.youtube.com/watch?v=jfKfPfyJRdk" target="_blank" class="hover:underline">
+                        https://www.youtube.com/watch?v=jfKfPfyJRdk
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="my-5">
+            <hr>
+            <div class="flex items-center space-x-4 py-4">
+                <!-- Like Button -->
+                <form id="like-form" action="{% url 'like_article' article.slug %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="flex items-center {% if user_liked %}text-blue-500{% else %}text-dark-800{% endif %} dark:text-gray-300 hover:text-blue-500 focus:outline-none">
+                        <i class="bi bi-hand-thumbs-up"></i>
+                        <span class="ml-2 text-sm">Like ({{ article.likes.count }})</span>
+                    </button>
+                </form>
+            
+                <!-- Dislike Button -->
+                <form id="dislike-form" action="{% url 'dislike_article' article.slug %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="flex items-center {% if user_disliked %}text-red-500{% else %}text-dark-800{% endif %} dark:text-gray-300 hover:text-red-500 focus:outline-none">
+                        <i class="bi bi-hand-thumbs-down"></i>
+                        <span class="ml-2 text-sm">Dislike ({{ article.dislikes.count }})</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Comments List -->
+        <div class="max-w-2xl dark:bg-gray-900 shadow-lg rounded-md p-6">
+            <h2 class="text-xl mb-4 tracking-wider font-lighter dark:text-gray-200">Comments</h2>
+            <div class="space-y-6 divide-y-2 divide-gray-400">
+                {% if comments %}
+                    {% for comment in comments %}
+                    <!-- Comment Item -->
+                    <div class="flex space-x-4">
+                        <div class="mt-3">
+                            <div class="text-base">
+                                <img src="{% if request.user.is_authenticated %} {{ user.profile.image.url }}{% else %} {% static 'assets/imgs/head-shot.jpg' %} {% endif %}" class="inline mx-3 h-8 w-8 rounded-full" alt="">
+                                <span class="font-medium text-slate-500">{% if comment.name %}{{ comment.name }}{% else %}Anonymous{% endif %} </span>
+                                <span class="text-sm text-gray-500">• {{ comment.created_at|timesince }} ago</span>
+                            </div>
+                            <div class="mt-1 ps-5">
+                                {{ comment.comment }}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Comment Item -->
+                    {% endfor %}
+                {% else %}
+                No comments...
+                {% endif %}
+            </div>
+        </div>
+        <!-- Comment Form -->
+        <div class="max-w-2xl my-5">
+            <div class="max-w-7xl dark:bg-gray-950 dark:text-white shadow shadow-2xl p-6 rounded-md">
+                <form class="w-full rounded" action="" method="post">
+                    {% csrf_token %}
+                    <h2 class="text-xl mb-4 tracking-wider font-lighter dark:text-gray-200">Leave a Comment</h2>
+
+                    <div class="grid grid-cols-1 gap-3">
+                        
+                        <div class="flex flex-row mb-2 ms-auto">
+                            <input type="checkbox" id="cb2" value="cb2" class="h-4 w-4 bg-gray-400 rounded-full transition-all duration-300 checked:scale-125"/>
+                            <label for='cb2' class='px-2 checked:text-slate-900 text-sm select-none'>Anonymous</label>
+                        </div>
+
+                        <div class="flex flex-col md:flex-row ano space-y-4 md:space-y-0 md:space-x-4 mb-4">
+                            <div class="flex-1">
+                                <input type="text" id="name" name="name" class="text-gray-900 w-full px-3 py-2 dark:bg-gray-900 rounded-sm border focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300" placeholder="Name"/>
+                            </div>
+                            <div class="flex-1">
+                                <input type="email" id="email" name="email" class="text-gray-900 w-full px-3 py-2 dark:bg-gray-900 rounded-sm border focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300" placeholder="Email"/>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 relative">
+                            <textarea id="comment" name="comment" class="text-gray-900 rounded-l w-full px-3 py-2 dark:bg-gray-900 rounded-sm border focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300" placeholder="Type Comment..." required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="submit" class="py-2 px-4 h-10 w-auto bg-slate-900 text-white rounded-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-800"> Post Comment → </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
