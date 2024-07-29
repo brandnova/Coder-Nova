@@ -2,23 +2,83 @@
 {% block title %}Uploads{% endblock  %}
 {% load static %}
 {% block content %}
-    <h2>Search Results for "{{ query }}"</h2>
-    <form method="get" action="{% url 'search_articles' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Search</button>
-    </form>
-    
-    {% if articles %}
-        <ul>
-            {% for article in articles %}
-                <li>
-                    <a href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
-                    <p>{{ article.excerpt }}</p>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No articles found.</p>
-    {% endif %}
+    <div class="my-20 px-4">
+        <h2 class="text-2xl font-semibold mb-4">Search Results for "{{ query }}"</h2>
+        <p class="my-5 text-gray-500">Total results: {{ articles.paginator.count }}</p>
+
+        <!-- Search Form -->
+        <form method="get" action="{% url 'search_articles' %}" class="mb-6">
+            {% csrf_token %}
+            <div class="flex items-center w-52 bg-white rounded-lg border border-gray-400 space-x-4">
+                {{ s_form.query }}
+                <button type="submit" class="py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    Search
+                </button>
+            </div>
+        </form>
+
+        <!-- Articles List -->
+        {% if articles %}
+            <ul class="space-y-4">
+                {% for article in articles %}
+                    <li class="border-b pb-4">
+                        <a href="{% url 'article_detail' article.slug %}" class="text-xl font-semibold text-blue-600 hover:underline">
+                            {{ article.title }}
+                        </a>
+                        <p class="mt-2 text-gray-600">{{ article.excerpt }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <!-- Pagination -->
+            <div class="flex items-center justify-center mt-8">
+                <div class="max-w-full md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl mx-auto bg-opacity-30 p-6 rounded-lg shadow-sm">
+                    <div class="flex justify-center">
+                        <nav class="flex space-x-2" aria-label="Pagination">
+                            <!-- Previous Page -->
+                            {% if articles.has_previous %}
+                                <a href="?page={{ articles.previous_page_number }}&query={{ query }}"
+                                class="relative inline-flex items-center px-4 py-2 text-sm bg-opacity-30 border border-gray-500 hover:border-violet-100 font-semibold cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
+                                    Previous
+                                </a>
+                            {% else %}
+                                <span class="relative inline-flex items-center px-4 py-2 text-sm bg-opacity-30 border border-gray-300 text-gray-400 cursor-not-allowed leading-5 rounded-md transition duration-150 ease-in-out">
+                                    Previous
+                                </span>
+                            {% endif %}
+
+                            <!-- Page Numbers -->
+                            {% for num in articles.paginator.page_range %}
+                                {% if articles.number == num %}
+                                    <span class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-fuchsia-200 border border-fuchsia-100 cursor-pointer leading-5 rounded-md">
+                                        {{ num }}
+                                    </span>
+                                {% elif num > articles.number|add:'-3' and num < articles.number|add:'3' %}
+                                    <a href="?page={{ num }}&query={{ query }}"
+                                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-fuchsia-100 hover:bg-fuchsia-200 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
+                                        {{ num }}
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+
+                            <!-- Next Page -->
+                            {% if articles.has_next %}
+                                <a href="?page={{ articles.next_page_number }}&query={{ query }}"
+                                class="relative inline-flex items-center px-4 py-2 text-sm bg-opacity-30 border border-gray-500 hover:border-violet-100 font-semibold cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
+                                    Next
+                                </a>
+                            {% else %}
+                                <span class="relative inline-flex items-center px-4 py-2 text-sm bg-opacity-30 border border-gray-300 text-gray-400 cursor-not-allowed leading-5 rounded-md transition duration-150 ease-in-out">
+                                    Next
+                                </span>
+                            {% endif %}
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p class="text-gray-500">No articles found.</p>
+        {% endif %}
+    </div>
+
 {% endblock %}

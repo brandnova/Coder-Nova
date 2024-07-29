@@ -3,8 +3,10 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
+from taggit.models import Tag # type: ignore
 from newsletter.forms import SubscriptionForm
 from .forms import SearchForm
+from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 from accounts.models import Profile
 from .models import Article, Category, Comment, Framework
@@ -73,31 +75,45 @@ def toggle_bookmark(request, slug):
         return redirect(referer)
     else:
         return redirect('index')
- 
+
 def uploads(request):
     articles = Article.objects.filter(status='published').order_by('-published_date')
     categories = Category.objects.all()
     frameworks = Framework.objects.all()
+    tags = Tag.objects.all()
     form = SearchForm()
     n_form = SubscriptionForm()
+    s_form = SearchForm()
 
     category_slug = request.GET.get('category')
     framework_slug = request.GET.get('framework')
+    tag_slug = request.GET.get('tag')
 
     if category_slug:
         articles = articles.filter(category__slug=category_slug)
     if framework_slug:
         articles = articles.filter(frameworks__slug=framework_slug)
+    if tag_slug:
+        articles = articles.filter(tags__slug=tag_slug)
+
+    # Paginate articles
+    paginator = Paginator(articles, 10)  # Show 10 articles per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    article_count = page_obj.paginator.count  # Count of all articles
 
     context = {
-        'articles': articles,
+        'articles': page_obj,  # Use the paginated page object
         'categories': categories,
         'frameworks': frameworks,
+        'tags': tags,
+        'article_count': article_count,
         'form': form,
         'n_form': n_form,
+        's_form': s_form,
     }
     return render(request, 'posts/uploads.html', context)
-
 
 def search_articles(request):
     s_form = SearchForm(request.GET or None)
@@ -109,11 +125,16 @@ def search_articles(request):
         articles = Article.objects.filter(
             Q(title__icontains=query) |
             Q(content__icontains=query) |
-            Q(frameworks__name__icontains=query) | 
+            Q(frameworks__name__icontains=query) |
             Q(type__icontains=query) |
             Q(slug__icontains=query) |
-            Q(category__name__icontains=query) 
+            Q(category__name__icontains=query)
         ).distinct()
+
+    # Pagination
+    paginator = Paginator(articles, 10)  # Show 10 articles per page
+    page_number = request.GET.get('page')
+    articles = paginator.get_page(page_number)
 
     context = {
         's_form': s_form,

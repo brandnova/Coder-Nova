@@ -2,32 +2,123 @@
 {% block title %}Uploads{% endblock  %}
 {% load static %}
 {% block content %}
-    <div class="container mx-auto my-10">
-        <h1 class="text-3xl font-bold">Uploads</h1>
-        <div class="filters my-4">
-            <form method="get" action="">
-                <select name="category">
-                    <option value="">All Categories</option>
-                    {% for category in categories %}
-                        <option value="{{ category.slug }}" {% if request.GET.category == category.slug %}selected{% endif %}>{{ category.name }}</option>
-                    {% endfor %}
-                </select>
-                <select name="framework">
-                    <option value="">All Frameworks</option>
-                    {% for framework in frameworks %}
-                        <option value="{{ framework.slug }}" {% if request.GET.framework == framework.slug %}selected{% endif %}>{{ framework.name }}</option>
-                    {% endfor %}
-                </select>
-                <button type="submit">Filter</button>
-            </form>
-        </div>
-        <div class="articles">
-            {% for article in articles %}
-                <div class="article">
-                    <h2><a href="{% url 'article_detail' article.slug %}">{{ article.title }}</a></h2>
-                    <p>{{ article.excerpt }}</p>
+    <div class="container mx-auto mt-20">
+        <!-- section hero -->
+        <div class="sm:grid grid-cols-5 grid-rows-2 px-4 py-6 min-h-full lg:min-h-screen space-y-6 sm:space-y-0 sm:gap-4">
+            <div class="">
+                <div class="h-96 col-span-1 ">
+                    <div class="flex items-center justify-center">
+                        <form method="get" action="{% url 'search_articles' %}" class="flex w-full rounded bg-white border border-gray-500">
+                            {% csrf_token %}
+                            {{ s_form.query }}
+                            <button type="submit" class="m-2 rounded bg-blue-600 px-4 py-2 text-white">
+                                <span>
+                                    <i class="bi bi-search h-10 w-10 font-semibold text-gray-600"></i>
+                                </span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="bg-white p-2 mt-2 rounded-md">
+                        <h1 class="text-center text-xl my-4  bg-white p-2 rounded-md border-b-2 cursor-pointer text-gray-600">Filters</h1>
+                        <div>
+                            <form method="get" action="{% url 'uploads' %}" class="bg-white rounded-md list-none">
+                                <li class="py-1 text-gray-600 list-none">
+                                    <select name="category" class="flex w-full my-2 items-center justify-between rounded bg-white text-gray-600 p-2 ring-1 ring-gray-300">
+                                        <option value="">All Categories</option>
+                                        {% for category in categories %}
+                                            <option value="{{ category.slug }}" {% if request.GET.category == category.slug %}selected{% endif %}>{{ category.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </li>
+                                <li class="py-1 text-gray-600 list-none">
+                                    <select name="framework" class="flex w-full my-2 items-center justify-between rounded bg-white text-gray-600 p-2 ring-1 ring-gray-300">
+                                        <option value="">All Frameworks</option>
+                                        {% for framework in frameworks %}
+                                            <option value="{{ framework.slug }}" {% if request.GET.framework == framework.slug %}selected{% endif %}>{{ framework.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </li>
+                                <li class="py-1 text-gray-600 list-none">
+                                    <select name="tag" class="flex w-full my-2 items-center justify-between rounded bg-white text-gray-600 p-2 ring-1 ring-gray-300">
+                                        <option value="">All Tags</option>
+                                        {% for tag in tags %}
+                                            <option value="{{ tag.slug }}" {% if request.GET.tag == tag.slug %}selected{% endif %}>{{ tag.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </li>
+                                <div class="flex-col">
+                                    <button type="submit" class="flex w-full justify-center mt-3 bg-yellow-600 hover:bg-yellow-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">Filter</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            {% endfor %}
+            </div>
+            <div class="h-auto col-span-4 shadow shadow-lg rounded-md flex py-5 px-3">
+                <div class="ml-20">
+                    <h1 class="text-3xl font-bold mb-6">({{ article_count }}) Result{% if article_count != 1 %}s{% endif %}</h1>
+                    <div class="articles space-y-6">
+                        {% for article in articles %}
+                            <div class="article py-3 border-b border-gray-300">
+                                <h2 class="text-xl font-semibold my-3">
+                                    <a href="{% url 'article_detail' article.slug %}" class="text-blue-600 hover:underline">
+                                        {{ article.title }}
+                                    </a>
+                                </h2>
+                                <p class="pl-10 text-gray-600">{{ article.excerpt }}</p>
+                            </div>
+                        {% empty %}
+                            <p>No articles found.</p>
+                        {% endfor %}
+                    </div>
+                    <!-- Pagination -->
+                    <div class="flex items-center justify-center mt-8">
+                        <div class="max-w-full md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl mx-auto bg-opacity-30 p-6 rounded-lg shadow-sm">
+                            <div class="flex justify-center">
+                                <nav class="flex space-x-2" aria-label="Pagination">
+                                    <!-- Previous Page -->
+                                    {% if articles.has_previous %}
+                                        <a href="?page={{ articles.previous_page_number }}&category={{ request.GET.category }}&framework={{ request.GET.framework }}&tag={{ request.GET.tag }}"
+                                           class="relative inline-flex items-center px-4 py-2 text-sm bg-opacity-30 border border-gray-500 hover:border-violet-100 font-semibold cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
+                                            Previous
+                                        </a>
+                                    {% else %}
+                                        <span class="relative inline-flex items-center px-4 py-2 text-sm bg-opacity-30 border border-gray-300 text-gray-400 cursor-not-allowed leading-5 rounded-md transition duration-150 ease-in-out">
+                                            Previous
+                                        </span>
+                                    {% endif %}
+                    
+                                    <!-- Page Numbers -->
+                                    {% for num in articles.paginator.page_range %}
+                                        {% if articles.number == num %}
+                                            <span class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-fuchsia-200 border border-fuchsia-100 cursor-pointer leading-5 rounded-md">
+                                                {{ num }}
+                                            </span>
+                                        {% elif num > articles.number|add:'-3' and num < articles.number|add:'3' %}
+                                            <a href="?page={{ num }}&category={{ request.GET.category }}&framework={{ request.GET.framework }}&tag={{ request.GET.tag }}"
+                                               class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-fuchsia-100 hover:bg-fuchsia-200 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
+                                                {{ num }}
+                                            </a>
+                                        {% endif %}
+                                    {% endfor %}
+                    
+                                    <!-- Next Page -->
+                                    {% if articles.has_next %}
+                                        <a href="?page={{ articles.next_page_number }}&category={{ request.GET.category }}&framework={{ request.GET.framework }}&tag={{ request.GET.tag }}"
+                                           class="relative inline-flex items-center px-4 py-2 text-sm bg-opacity-30 border border-gray-500 hover:border-violet-100 font-semibold cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
+                                            Next
+                                        </a>
+                                    {% else %}
+                                        <span class="relative inline-flex items-center px-4 py-2 text-sm bg-opacity-30 border border-gray-300 text-gray-400 cursor-not-allowed leading-5 rounded-md transition duration-150 ease-in-out">
+                                            Next
+                                        </span>
+                                    {% endif %}
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
