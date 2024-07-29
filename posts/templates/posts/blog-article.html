@@ -1,5 +1,5 @@
-{% extends 'core/base.html' %}
-{% block title %}Article{% endblock  %}
+{% extends 'posts/base.html' %}
+{% block title %}{% block title %}{{ article.title }}{% endblock %}{% endblock  %}
 {% load static %}
 {% block content %}
     <section class="mb-10 w-full max-w-[60rem] mx-auto px-4 sm:px-6 lg:px-8 my-20 font-serif">

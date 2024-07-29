@@ -1,3 +1,6 @@
 Styling all email templates and other pages... Profile, uploads,passwork reset, and others
 pagination
 List display for DIY content
+Creae a page for static page and reder the links to base (Context processor)
+Ads
+Upload online for testing
