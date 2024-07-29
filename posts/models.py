@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField # type: ignore
 from django.utils.text import slugify
 from django.contrib.auth.models import User
@@ -61,6 +62,9 @@ class Article(models.Model):
     allow_comments = models.BooleanField(default=True)
     featured = models.BooleanField(default=False)
     references = models.TextField(blank=True)
+
+    def get_absolute_url(self):
+        return reverse('article_detail', kwargs={'slug': self.slug})
     
     def save(self, *args, **kwargs):
         if not self.slug:
