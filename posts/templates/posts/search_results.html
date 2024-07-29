@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+{% block title %}Uploads{% endblock  %}
+{% load static %}
+{% block content %}
+    <h2>Search Results for "{{ query }}"</h2>
+    <form method="get" action="{% url 'search_articles' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Search</button>
+    </form>
+    
+    {% if articles %}
+        <ul>
+            {% for article in articles %}
+                <li>
+                    <a href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
+                    <p>{{ article.excerpt }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No articles found.</p>
+    {% endif %}
+{% endblock %}

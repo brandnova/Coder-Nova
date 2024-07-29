@@ -1,8 +1,8 @@
 from django.db import models
-from ckeditor_uploader.fields import RichTextUploadingField
+from ckeditor_uploader.fields import RichTextUploadingField # type: ignore
 from django.utils.text import slugify
 from django.contrib.auth.models import User
-from taggit.managers import TaggableManager
+from taggit.managers import TaggableManager # type: ignore
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -33,13 +33,18 @@ class Article(models.Model):
         ('draft', 'Draft'),
         ('published', 'Published'),
     )
+    CONTENT_TYPE = [
+    ('article', 'Article'),
+    ('diy', 'DIY Project'),
+]
     
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    type = models.CharField(max_length=20, choices=CONTENT_TYPE, default='article')
     content = RichTextUploadingField()
     excerpt = models.TextField(max_length=500, blank=True)
-    featured_image = models.ImageField(upload_to='articles/', blank=True, null=True)
+    image = models.ImageField(upload_to='articles/', blank=True, null=True)
     published_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
@@ -76,3 +81,10 @@ class Comment(models.Model):
     
     def __str__(self):
         return f'Comment by {self.name if self.name else "Anonymous"} on {self.article}'
+
+class Bookmark(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookmarks')
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='bookmarked_by')
+
+    def __str__(self):
+        return f'{self.user.username} bookmarked {self.article.title}'

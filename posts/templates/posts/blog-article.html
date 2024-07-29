@@ -3,6 +3,16 @@
 {% load static %}
 {% block content %}
     <section class="mb-10 w-full max-w-[60rem] mx-auto px-4 sm:px-6 lg:px-8 my-20 font-serif">
+        <!-- Search Bar -->
+        <div class="flex items-center justify-center">
+            <form method="get" action="{% url 'search_articles' %}" class="flex w-full mx-10 rounded bg-white">
+                {% csrf_token %}
+                {{ form.query }}
+                <button type="submit" class="m-2 rounded bg-blue-600 px-4 py-2 text-white">
+                    <i class="bi bi-search fill-current h-6 w-6"></i>
+                </button>
+            </form>
+        </div>
         <div class="container mx-auto my-10">
             <div class="text-gray-600">
                 <p>{{ article.published_date|date:"d M Y" }} by {{ article.author.username }}</p>
@@ -24,7 +34,7 @@
             {{ article.title }}
         </h1>
 
-        <img src="{{ article.featured_image.url }}" class="object-cover h-32 w-full mb-5 rounded-lg" alt="{{ article.title }}">
+        <img src="{{ article.image.url }}" class="object-cover h-32 w-full mb-5 rounded-lg" alt="{{ article.title }}">
 
         <p class="mb-5">
             {{ article.content|safe }}
@@ -106,7 +116,7 @@
                 <!-- Like Button -->
                 <form id="like-form" action="{% url 'like_article' article.slug %}" method="post">
                     {% csrf_token %}
-                    <button type="submit" class="flex items-center {% if user_liked %}text-blue-500{% else %}text-dark-800{% endif %} dark:text-gray-300 hover:text-blue-500 focus:outline-none">
+                    <button type="submit" class="flex items-center{% if request.user in article.likes.all %} text-blue-500{% else %}text-dark-800{% endif %} dark:text-gray-300 hover:text-blue-500 focus:outline-none">
                         <i class="bi bi-hand-thumbs-up"></i>
                         <span class="ml-2 text-sm">Like ({{ article.likes.count }})</span>
                     </button>
@@ -115,7 +125,7 @@
                 <!-- Dislike Button -->
                 <form id="dislike-form" action="{% url 'dislike_article' article.slug %}" method="post">
                     {% csrf_token %}
-                    <button type="submit" class="flex items-center {% if user_disliked %}text-red-500{% else %}text-dark-800{% endif %} dark:text-gray-300 hover:text-red-500 focus:outline-none">
+                    <button type="submit" class="flex items-center {% if request.user in article.dislikes.all %}text-red-500{% else %}text-dark-800{% endif %} dark:text-gray-300 hover:text-red-500 focus:outline-none">
                         <i class="bi bi-hand-thumbs-down"></i>
                         <span class="ml-2 text-sm">Dislike ({{ article.dislikes.count }})</span>
                     </button>
@@ -149,6 +159,7 @@
                 {% endif %}
             </div>
         </div>
+        {% if article.allow_comments == True %}
         <!-- Comment Form -->
         <div class="max-w-2xl my-5">
             <div class="max-w-7xl dark:bg-gray-950 dark:text-white shadow shadow-2xl p-6 rounded-md">
@@ -183,5 +194,10 @@
                 </form>
             </div>
         </div>
+        {% else %}
+        <div class="max-w-2xl my-5">
+            <h2 class="text-xl mb-4 tracking-wider font-lighter dark:text-gray-200">Commenting is disabled for this Post</h2>
+        </div>
+        {% endif %}
     </section>
 {% endblock %}

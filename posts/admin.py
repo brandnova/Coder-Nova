@@ -12,6 +12,18 @@ class ArticleAdmin(admin.ModelAdmin):
     ordering = ('status', 'published_date')
     filter_horizontal = ('frameworks',)
 
-admin.site.register(Category)
-admin.site.register(Framework)
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+    prepopulated_fields = {'slug': ('name',)}
+    search_fields = ('name',)
+
+@admin.register(Framework)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+    prepopulated_fields = {'slug': ('name',)}
+    search_fields = ('name',)
+
+
 admin.site.register(Comment)
+

@@ -1,1 +1,3 @@
-Allow comments
+Styling all email templates and other pages... Profile, uploads,passwork reset, and others
+pagination
+List display for DIY content
