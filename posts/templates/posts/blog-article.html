@@ -1,5 +1,5 @@
 {% extends 'posts/base.html' %}
-{% block title %}{% block title %}{{ article.title }}{% endblock %}{% endblock  %}
+{% block title %}{{ article.title }}{% endblock  %}
 {% load static %}
 {% block content %}
     <section class="mb-10 w-full max-w-[60rem] mx-auto px-4 sm:px-6 lg:px-8 my-20 font-serif">
@@ -39,57 +39,10 @@
         <p class="mb-5">
             {{ article.content|safe }}
         </p>
-        
-
-        <p class="text-lg mb-5">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur ut id nobis facilis itaque? Quos fuga praesentium adipisci laudantium iure asperiores, ab sapiente omnis! Deserunt consequatur animi libero aperiam nemo!
-        </p>
-
-        <p class="mb-5">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur ut id nobis facilis itaque? Quos fuga praesentium adipisci laudantium iure asperiores, ab sapiente omnis! Deserunt consequatur animi libero aperiam nemo!
-        </p>
-
-        <p class="mb-5">
-            Lorem, <a href="#" class="text-blue-600 hover:underline">ipsum dolor sit amet consectetur</a> adipisicing elit. Tenetur ut id nobis facilis itaque? Quos fuga praesentium adipisci laudantium iure asperiores, ab sapiente omnis! Deserunt consequatur animi libero aperiam nemo!
-        </p>
-
-        <ul class="list-disc mb-5 list-inside p-4 bg-slate-800 rounded-lg">
-            <li>VSCode</li>
-            <li>Tailwind CSS</li>
-            <li>Laravel</li>
-        </ul>
-
-        <p class="mb-5">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur ut id nobis facilis itaque? Quos fuga praesentium adipisci laudantium iure asperiores, ab sapiente omnis! Deserunt consequatur animi libero aperiam nemo!
-
-        </p>
-
-        <p class="mb-5">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur ut id nobis facilis itaque? Quos fuga praesentium adipisci laudantium iure asperiores, ab sapiente omnis! Deserunt consequatur animi libero aperiam nemo!
-        </p>
-
-        <h2 class="mb-5 text-2xl font-bold">
-            Lorem, ipsum dolor sit
-        </h2>
-
-        <p class="mb-5">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur ut id nobis facilis itaque? Quos fuga praesentium adipisci laudantium iure asperiores, ab sapiente omnis! Deserunt consequatur animi libero aperiam nemo!
-
-        </p>
-
-        <img src="{% static 'assets/imgs/article1/tw1.png' %}" class="w-full mb-5 rounded-lg" alt="image article">
-
-        <h2 class="mb-5 text-2xl font-bold">
-            Conclusion
-        </h2>
-
-        <p class="mb-5">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur ut id nobis facilis itaque? Quos fuga praesentium adipisci laudantium iure asperiores, ab sapiente omnis! Deserunt consequatur animi libero aperiam nemo!
-        </p>
 
         {% comment %} <iframe class="w-full h-64 my-10 rounded-lg md:h-80" src="https://www.youtube.com/embed/L6Jwa7al8os" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> {% endcomment %}
 
-        <div class="text-xs pt-5">
+        {% comment %} <div class="text-xs pt-5">
             <span>Sources :</span>
             <ul class="list-disc list-inside">
                 <li>
@@ -108,7 +61,7 @@
                     </a>
                 </li>
             </ul>
-        </div>
+        </div> {% endcomment %}
 
         <div class="my-5">
             <hr>

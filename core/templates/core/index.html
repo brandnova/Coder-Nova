@@ -99,29 +99,52 @@
                         {% endfor %}
                     </div>
                     <!-- Pagination -->
-                    <div class="flex items-center justify-center">
+                    <div class="flex items-center justify-center mt-8">
                         <div class="max-w-full md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl mx-auto bg-opacity-30 p-6 rounded-lg shadow-sm">
                             <div class="flex justify-center">
                                 <nav class="flex space-x-2" aria-label="Pagination">
-                                    <a href="#" class="relative inline-flex items-center px-4 py-2 text-sm bg-opacity-30 border border-gray-500 hover:border-violet-100 font-semibold cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
-                                        Previous
-                                    </a>
-                                    <a href="#" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-fuchsia-100 hover:bg-fuchsia-200 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
-                                        1
-                                    </a>
-                                    <a href="#" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-fuchsia-100 hover:bg-fuchsia-200 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
-                                        2
-                                    </a>
-                                    <a href="#" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-fuchsia-100 hover:bg-fuchsia-200 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
-                                        3
-                                    </a>
-                                    <a href="#" class="relative inline-flex items-center px-4 py-2 text-sm bg-opacity-30 border border-gray-500 hover:border-violet-100 font-semibold cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
-                                        Next
-                                    </a>
+                                    <!-- Previous Page -->
+                                    {% if articles.has_previous %}
+                                        <a href="?page={{ articles.previous_page_number }}&category={{ request.GET.category }}&framework={{ request.GET.framework }}&tag={{ request.GET.tag }}"
+                                           class="relative inline-flex items-center px-4 py-2 text-sm bg-opacity-30 border border-gray-500 hover:border-violet-100 font-semibold cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
+                                            Previous
+                                        </a>
+                                    {% else %}
+                                        <span class="relative inline-flex items-center px-4 py-2 text-sm bg-opacity-30 border border-gray-300 text-gray-400 cursor-not-allowed leading-5 rounded-md transition duration-150 ease-in-out">
+                                            Previous
+                                        </span>
+                                    {% endif %}
+                    
+                                    <!-- Page Numbers -->
+                                    {% for num in articles.paginator.page_range %}
+                                        {% if articles.number == num %}
+                                            <span class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-fuchsia-200 border border-fuchsia-100 cursor-pointer leading-5 rounded-md">
+                                                {{ num }}
+                                            </span>
+                                        {% elif num > articles.number|add:'-3' and num < articles.number|add:'3' %}
+                                            <a href="?page={{ num }}&category={{ request.GET.category }}&framework={{ request.GET.framework }}&tag={{ request.GET.tag }}"
+                                               class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-fuchsia-100 hover:bg-fuchsia-200 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
+                                                {{ num }}
+                                            </a>
+                                        {% endif %}
+                                    {% endfor %}
+                    
+                                    <!-- Next Page -->
+                                    {% if articles.has_next %}
+                                        <a href="?page={{ articles.next_page_number }}&category={{ request.GET.category }}&framework={{ request.GET.framework }}&tag={{ request.GET.tag }}"
+                                           class="relative inline-flex items-center px-4 py-2 text-sm bg-opacity-30 border border-gray-500 hover:border-violet-100 font-semibold cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
+                                            Next
+                                        </a>
+                                    {% else %}
+                                        <span class="relative inline-flex items-center px-4 py-2 text-sm bg-opacity-30 border border-gray-300 text-gray-400 cursor-not-allowed leading-5 rounded-md transition duration-150 ease-in-out">
+                                            Next
+                                        </span>
+                                    {% endif %}
                                 </nav>
                             </div>
                         </div>
                     </div>
+                    
                 </div>    
             </div>
             <!-- Right-side List Section -->
@@ -133,30 +156,27 @@
                             {% csrf_token %}
                             {{ s_form.query }}
                             <button type="submit" class="m-2 rounded bg-blue-600 px-4 py-2 text-white">
-                                <i class="bi bi-search fill-current h-6 w-6"></i>
+                                <span>
+                                    <i class="bi bi-search h-10 w-10 font-semibold text-gray-600"></i>
+                                </span>
                             </button>
                         </form>
                     </div>
-                    <!-- Diy Projects --> 
+                    <!-- Featured Contents --> 
                     <div class="mb-20 w-full max-w-[60rem] mx-auto my-5 px-4">
-                        <h2 class="mb-5 text-lg font-bold">DIY's Projects</h2>
+                        <h2 class="mb-5 text-lg font-bold">Featured</h2>
                         <div class="mb-3 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-5">
-                            <a href="blog-article.html" class="p-2 rounded-lg bg-gray-100 bg-opacity-30 hover:underline hover:shadow-2xl" title="10 Essential Tools for Every DIY Enthusiast">
-                                <img src="{% static 'assets/imgs/article1.jpg' %}" class="mb-3 rounded-lg" alt="image article">
-                                <h3>10 Essential Tools for Every DIY Enthusiast</h3>
-                            </a>
-                            <a href="blog-article.html" class="p-2 rounded-lg bg-gray-100 bg-opacity-30 hover:underline" title="What Are the Benefits of Regular Exercise?">
-                                <img src="{% static 'assets/imgs/article2.jpg' %}" class="mb-3 rounded-lg" alt="image article">
-                                <h3>What Are the Benefits of Regular Exercise?</h3>
-                            </a>
-                            <a href="blog-article.html" class="p-2 rounded-lg bg-gray-100 bg-opacity-30 hover:underline" title="Discover the Hidden Gems of Europe">
-                                <img src="{% static 'assets/imgs/article3.jpg' %}" class="mb-3 rounded-lg" alt="image article">
-                                <h3>Discover the Hidden Gems of Europe</h3>
-                            </a>
-                            <a href="blog-article.html" class="p-2 rounded-lg bg-gray-100 bg-opacity-30 hover:underline" title="How to Bake a Delicious Chocolate Cake">
-                                <img src="{% static 'assets/imgs/article4.jpg' %}" class="mb-3 rounded-lg" alt="image article">
-                                <h3>How to Bake a Delicious Chocolate Cake</h3>
-                            </a>
+                            {% if featured %}
+                                {% for feat in featured %}
+                                    <a href="{% url 'article_detail' feat.slug %}" class="p-2 rounded-lg bg-gray-100 bg-opacity-30 hover:underline hover:shadow-2xl" title="{{ feat.title }}">
+                                        <img src="{{ feat.image.url }}" class="mb-3 rounded-lg" alt="image article">
+                                        <h3>{{ feat.title }}</h3>
+                                    </a>
+                                {% endfor %}
+                            {% else %}
+                                <p>No Featured Contents available.</p>
+                            {% endif %}
+
                         </div>
                         <a href="{% url 'uploads' %}" class="decoration-none hover:underline">See More <i class="bi bi-arrow-right"></i></a>
                     </div>
