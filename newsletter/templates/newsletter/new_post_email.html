@@ -1,0 +1,14 @@
+{% extends 'newsletter/email_base.html' %}
+{% load static %}
+{% block content %}
+    <p>Hello,</p>
+    <p>We are excited to announce a new post on {{ site_name }}!</p>
+    <p>Title: {{ article.title }}</p>
+    <p>Summary: {{ article.excerpt }}</p>
+    <p>Read the full post here: <a href="{{ post_url }}">{{ post_url }}</a></p>
+    <p>Thank you for being a part of our community!</p>
+    <p>Best regards,</p>
+    <p>The {{ site_name }} Team</p>
+    <p>Visit the site: <a href="{{ site_settings.og_url }}">{{ site_name }}</a></p>
+
+{% endblock %}

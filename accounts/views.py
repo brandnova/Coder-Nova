@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, update_session_auth_hash, logout
 from django.contrib.auth.decorators import login_required
+
+from newsletter.forms import SubscriptionForm
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, CustomAuthenticationForm, CustomPasswordChangeForm
 from django.contrib import messages
-
+from posts.models import Article
+from .models import Profile
+from newsletter.utils import send_registration_email
 
 def register(request):
     # Redirect authenticated users to the profile page
@@ -15,7 +19,7 @@ def register(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # send_registration_email(user)
+            send_registration_email(user)
             login(request, user)  # Log the user in after registration
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}!')
@@ -52,6 +56,8 @@ def logout_view(request):
 def profile(request):
     u_form = UserUpdateForm(request.POST or None, instance=request.user)
     p_form = ProfileUpdateForm(request.POST or None, request.FILES or None, instance=request.user.profile)
+    n_form = SubscriptionForm()
+    bookmarks = request.user.profile.bookmarks.all()
     
     if request.method == 'POST':
         if u_form.is_valid() and p_form.is_valid():
@@ -63,6 +69,8 @@ def profile(request):
     context = {
         'u_form': u_form,
         'p_form': p_form,
+        'n_form': n_form,
+        'bookmarks': bookmarks,
     }
 
     return render(request, 'accounts/profile.html', context)

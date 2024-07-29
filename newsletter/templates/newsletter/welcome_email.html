@@ -1,0 +1,9 @@
+{% extends 'newsletter/email_base.html' %}
+
+{% block content %}
+<p>Dear {{ user.username }},</p>
+<p>Welcome to {{ site_name }}! Thank you for registering with us.</p>
+<p>If you have any questions or need assistance, feel free to reach out to us at {{ contact_email }}.</p>
+<p>Best regards,</p>
+<p>The {{ site_name }} Team</p>
+{% endblock %}
