@@ -1,9 +1,6 @@
-Styling all email templates and other pages... Profile, uploads,passwork reset, and others
 Use tailwind online CDN for email base and contents
-Creae a page for static page and reder the links to base (Context processor)
 upload images at specific dimentions
 Auto share contents to other social platforms upon upload.
 Profile view for others
 Ads
-Auth page hide and show password
 Unsubscribe from newsletter (Done)... Make the message an alert...

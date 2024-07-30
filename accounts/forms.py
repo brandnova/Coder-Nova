@@ -5,9 +5,36 @@ from django.contrib.auth import get_user_model
 from .models import Profile
 
 class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900', 'placeholder' : 'Enter Email',}))
-    first_name = forms.CharField(max_length=30, required=True, widget=forms.TextInput(attrs={'class': 'mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900', 'placeholder' : 'First Name',}))
-    last_name = forms.CharField(max_length=30, required=True, widget=forms.TextInput(attrs={'class': 'mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900', 'placeholder' : 'Last Name',}))
+    email = forms.EmailField(
+        required=True,
+        widget=forms.EmailInput(attrs={
+            'class': 'mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900',
+            'placeholder': 'Enter Email',
+        })
+    )
+    first_name = forms.CharField(
+        max_length=30,
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900',
+            'placeholder': 'First Name',
+        })
+    )
+    last_name = forms.CharField(
+        max_length=30,
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900',
+            'placeholder': 'Last Name',
+        })
+    )
+    terms_and_privacy = forms.BooleanField(
+        required=True,
+        widget=forms.CheckboxInput(attrs={
+            'class': 'mr-2 focus:ring-0 rounded',
+        }),
+        error_messages={'required': 'You must agree to the terms and privacy policy.'}
+    )
 
     class Meta:
         model = User
@@ -15,9 +42,20 @@ class UserRegisterForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update({'class': 'mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900', 'placeholder' : 'Username',})
-        self.fields['password1'].widget.attrs.update({'class': 'flex-1 p-2 border pr-10 border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900', 'placeholder' : 'Enter Password', ':type' : 'show ? \'text\': \'password\''})
-        self.fields['password2'].widget.attrs.update({'class': 'flex-1 p-2 pr-10 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900', 'placeholder' : 'Repeat Password', ':type' : 'show ? \'text\': \'password\''})
+        self.fields['username'].widget.attrs.update({
+            'class': 'mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900',
+            'placeholder': 'Username',
+        })
+        self.fields['password1'].widget.attrs.update({
+            'class': 'flex-1 p-2 border pr-10 border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900',
+            'placeholder': 'Enter Password',
+            ':type': 'show ? \'text\': \'password\'',
+        })
+        self.fields['password2'].widget.attrs.update({
+            'class': 'flex-1 p-2 pr-10 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900',
+            'placeholder': 'Repeat Password',
+            ':type': 'show ? \'text\': \'password\'',
+        })
     
 class CustomAuthenticationForm(AuthenticationForm):
     class Meta:

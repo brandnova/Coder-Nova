@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.http import JsonResponse
 from .forms import SubscriptionForm
 from .models import Subscriber
 from django.core.mail import send_mail
@@ -16,18 +17,18 @@ def subscribe(request):
             email = form.cleaned_data['email']
             if not Subscriber.objects.filter(email=email).exists():
                 Subscriber.objects.create(email=email)
-                messages.success(request, 'You have successfully subscribed to our newsletter!')
+                return JsonResponse({'status': 'success', 'message': 'You have successfully subscribed to our newsletter!'})
             else:
-                messages.info(request, 'You are already subscribed.')
-            return redirect(request.META.get('HTTP_REFERER', 'index'))  # Redirect to the referring page
-    return redirect('index')  # Fallback redirection
+                return JsonResponse({'status': 'info', 'message': 'You are already subscribed.'})
+        return JsonResponse({'status': 'error', 'message': 'You are already subscribed to our newsletter.'}, status=400)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
 
 def unsubscribe(request, email):
     if request.method == 'POST':
         subscriber = get_object_or_404(Subscriber, email=email)
         subscriber.delete()
-        messages.success(request, 'You have been successfully unsubscribed.')
-    return redirect('profile')
+        return JsonResponse({'status': 'success', 'message': 'You have successfully unsubscribed from our newsletter.'})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
 
 def send_bulk_email(request):
     site_settings = SiteSettings.objects.first()

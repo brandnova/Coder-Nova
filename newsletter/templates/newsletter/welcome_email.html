@@ -1,9 +1,14 @@
 {% extends 'newsletter/email_base.html' %}
-
 {% block content %}
-<p>Dear {{ user.username }},</p>
-<p>Welcome to {{ site_name }}! Thank you for registering with us.</p>
-<p>If you have any questions or need assistance, feel free to reach out to us at {{ contact_email }}.</p>
-<p>Best regards,</p>
-<p>The {{ site_name }} Team</p>
+    <h2 class="mt-6 text-gray-700 dark:text-gray-200">Hi {{ user.first_name }},</h2>
+    <p class="mt-2 leading-loose text-gray-600 dark:text-gray-300">
+        Welcome to {{ site_name }}! It's great to have you with us.<br> 
+        We post tons of coding content, DIY projects and informative articles. Visit our website and get yourself started as soon as possible.<br> 
+        If you have any questions, <a href="mailto:{{ contact_email }}" class="underline transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400">please get in touch</a>.
+    </p>
+    <p class="mt-2 text-gray-600 dark:text-gray-300">
+        Thanks, <br>
+        {{ site_name }} team.
+    </p>
 {% endblock %}
+
