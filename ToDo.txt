@@ -4,3 +4,5 @@ Auto share contents to other social platforms upon upload.
 Profile view for others
 Ads
 Unsubscribe from newsletter (Done)... Make the message an alert...
+
+Blog-article base logout button
