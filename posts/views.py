@@ -13,6 +13,8 @@ from .models import Article, Category, Comment, Framework
 
 def article_detail(request, slug):
     article = get_object_or_404(Article, slug=slug, status='published')
+    if article.youtube_url:
+        article.youtube_url = article.youtube_url.replace("watch?v=", "embed/")
     comments = article.comments.filter(approved=True)
     form = SearchForm()
     n_form = SubscriptionForm()
@@ -97,14 +99,14 @@ def uploads(request):
         articles = articles.filter(tags__slug=tag_slug)
 
     # Paginate articles
-    paginator = Paginator(articles, 10)  # Show 10 articles per page
+    paginator = Paginator(articles, 10)  
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    article_count = page_obj.paginator.count  # Count of all articles
+    article_count = page_obj.paginator.count  
 
     context = {
-        'articles': page_obj,  # Use the paginated page object
+        'articles': page_obj,  
         'categories': categories,
         'frameworks': frameworks,
         'tags': tags,
@@ -132,7 +134,7 @@ def search_articles(request):
         ).distinct()
 
     # Pagination
-    paginator = Paginator(articles, 10)  # Show 10 articles per page
+    paginator = Paginator(articles, 10)  
     page_number = request.GET.get('page')
     articles = paginator.get_page(page_number)
 

@@ -1,6 +1,8 @@
 Styling all email templates and other pages... Profile, uploads,passwork reset, and others
+Use tailwind online CDN for email base and contents
 Creae a page for static page and reder the links to base (Context processor)
-Ads
-Post sharing and url copying
+upload images at specific dimentions
 Auto share contents to other social platforms upon upload.
-Search resuly page styling
+Profile view for others
+Ads
+Auth page hide and show password

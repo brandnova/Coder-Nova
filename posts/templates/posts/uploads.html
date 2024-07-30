@@ -3,59 +3,57 @@
 {% load static %}
 {% block content %}
     <div class="container mx-auto mt-20">
-        <!-- section hero -->
-        <div class="sm:grid grid-cols-5 grid-rows-2 px-4 py-6 min-h-full lg:min-h-screen space-y-6 sm:space-y-0 sm:gap-4">
-            <div class="">
-                <div class="h-96 col-span-1 ">
-                    <div class="flex items-center justify-center">
-                        <form method="get" action="{% url 'search_articles' %}" class="flex w-full rounded bg-white border border-gray-500">
-                            {% csrf_token %}
-                            {{ s_form.query }}
-                            <button type="submit" class="m-2 rounded bg-blue-600 px-4 py-2 text-white">
-                                <span>
-                                    <i class="bi bi-search h-10 w-10 font-semibold text-gray-600"></i>
-                                </span>
-                            </button>
+        <!-- Article list -->
+        <div class="sm:grid grid-cols-5 grid-rows-2 px-4 py-6 min-h-auto lg:min-h-auto space-y-6 sm:space-y-0 sm:gap-4">
+            <div class="h-auto col-span-1 ">
+                <div class="flex items-center justify-center">
+                    <form method="get" action="{% url 'search_articles' %}" class="flex w-full rounded bg-white border border-gray-500">
+                        {% csrf_token %}
+                        {{ s_form.query }}
+                        <button type="submit" class="m-2 rounded bg-blue-600 px-4 py-2 text-white">
+                            <span>
+                                <i class="bi bi-search h-10 w-10 font-semibold text-gray-600"></i>
+                            </span>
+                        </button>
+                    </form>
+                </div>
+                <div class="bg-white p-2 mt-2 rounded-md">
+                    <h1 class="text-center text-xl my-4  bg-white p-2 rounded-md border-b-2 cursor-pointer text-gray-600">Filters</h1>
+                    <div>
+                        <form method="get" action="{% url 'uploads' %}" class="bg-white rounded-md list-none">
+                            <li class="py-1 text-gray-600 list-none">
+                                <select name="category" class="flex w-full my-2 items-center justify-between rounded bg-white text-gray-600 p-2 ring-1 ring-gray-300">
+                                    <option value="">All Categories</option>
+                                    {% for category in categories %}
+                                        <option value="{{ category.slug }}" {% if request.GET.category == category.slug %}selected{% endif %}>{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </li>
+                            <li class="py-1 text-gray-600 list-none">
+                                <select name="framework" class="flex w-full my-2 items-center justify-between rounded bg-white text-gray-600 p-2 ring-1 ring-gray-300">
+                                    <option value="">All Frameworks</option>
+                                    {% for framework in frameworks %}
+                                        <option value="{{ framework.slug }}" {% if request.GET.framework == framework.slug %}selected{% endif %}>{{ framework.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </li>
+                            <li class="py-1 text-gray-600 list-none">
+                                <select name="tag" class="flex w-full my-2 items-center justify-between rounded bg-white text-gray-600 p-2 ring-1 ring-gray-300">
+                                    <option value="">All Tags</option>
+                                    {% for tag in tags %}
+                                        <option value="{{ tag.slug }}" {% if request.GET.tag == tag.slug %}selected{% endif %}>{{ tag.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </li>
+                            <div class="flex-col">
+                                <button type="submit" class="flex w-full justify-center mt-3 bg-yellow-600 hover:bg-yellow-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">Filter</button>
+                            </div>
                         </form>
-                    </div>
-                    <div class="bg-white p-2 mt-2 rounded-md">
-                        <h1 class="text-center text-xl my-4  bg-white p-2 rounded-md border-b-2 cursor-pointer text-gray-600">Filters</h1>
-                        <div>
-                            <form method="get" action="{% url 'uploads' %}" class="bg-white rounded-md list-none">
-                                <li class="py-1 text-gray-600 list-none">
-                                    <select name="category" class="flex w-full my-2 items-center justify-between rounded bg-white text-gray-600 p-2 ring-1 ring-gray-300">
-                                        <option value="">All Categories</option>
-                                        {% for category in categories %}
-                                            <option value="{{ category.slug }}" {% if request.GET.category == category.slug %}selected{% endif %}>{{ category.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </li>
-                                <li class="py-1 text-gray-600 list-none">
-                                    <select name="framework" class="flex w-full my-2 items-center justify-between rounded bg-white text-gray-600 p-2 ring-1 ring-gray-300">
-                                        <option value="">All Frameworks</option>
-                                        {% for framework in frameworks %}
-                                            <option value="{{ framework.slug }}" {% if request.GET.framework == framework.slug %}selected{% endif %}>{{ framework.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </li>
-                                <li class="py-1 text-gray-600 list-none">
-                                    <select name="tag" class="flex w-full my-2 items-center justify-between rounded bg-white text-gray-600 p-2 ring-1 ring-gray-300">
-                                        <option value="">All Tags</option>
-                                        {% for tag in tags %}
-                                            <option value="{{ tag.slug }}" {% if request.GET.tag == tag.slug %}selected{% endif %}>{{ tag.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </li>
-                                <div class="flex-col">
-                                    <button type="submit" class="flex w-full justify-center mt-3 bg-yellow-600 hover:bg-yellow-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">Filter</button>
-                                </div>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>
-            <div class="h-auto col-span-4 shadow shadow-lg rounded-md flex py-5 px-3">
-                <div class="ml-20">
+            <div class="h-auto col-span-4 shadow shadow-lg rounded-md flex py-5 px-5">
+                <div class="px-4">
                     <h1 class="text-3xl font-bold mb-6">({{ article_count }}) Result{% if article_count != 1 %}s{% endif %}</h1>
                     <div class="articles space-y-6">
                         {% for article in articles %}

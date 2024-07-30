@@ -1,7 +1,32 @@
 {% extends 'posts/base.html' %}
 {% block title %}{{ article.title }}{% endblock  %}
 {% load static %}
+{% load social_share %}
 {% block content %}
+<style>
+    /* Include the CSS here */
+    pre, code {
+        font-family: 'Courier New', Courier, monospace;
+        background-color: #0D0D0D;
+        color: #f8f8f2;
+        padding: 1em;
+        border-radius: 10px;
+        overflow: auto;
+        margin: 1em 0;
+    }
+    pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        border: 1px solid #444;
+        cursor: pointer;
+    }
+    code {
+        background-color: #444;
+        padding: 0.2em 0.4em;
+        border-radius: 3px;
+        border: 1px solid #555;
+    }
+</style>
     <section class="mb-10 w-full max-w-[60rem] mx-auto px-4 sm:px-6 lg:px-8 my-20 font-serif">
         <!-- Search Bar -->
         <div class="flex items-center justify-center">
@@ -13,9 +38,22 @@
                 </button>
             </form>
         </div>
-        <div class="container mx-auto my-10">
-            <div class="text-gray-600">
-                <p>{{ article.published_date|date:"d M Y" }} by {{ article.author.username }}</p>
+        <div class="w-full mx-auto flex-row my-10">
+            <div class="w-full ms-auto">
+                <p class="text-xs">Bookmark Article</p>
+                <form action="{% url 'toggle_bookmark' article.slug %}" method="post" class="inline w-full float-right">
+                    {% csrf_token %}
+                    <button type="submit" class="bookmark-btn inline-flex items-center text-lg cursor-pointer">
+                        {% if article in request.user.profile.bookmarks.all %}
+                            <i class="bi bi-bookmark-fill mx-2" title="Remove Bookmark"></i>
+                        {% else %}
+                            <i class="bi bi-bookmark-plus mx-2" title="Add Bookmark"></i>
+                        {% endif %}
+                    </button>
+                </form>
+            </div>
+            <div class="text-gray-500 space-y-3">
+                <p>{{ article.published_date|date:"d M Y" }} by {{ article.author.first_name }} {{ article.author.last_name }}</p>
                 <p>Categories: 
                     {{ article.category.name }}
                 </p>
@@ -24,65 +62,111 @@
                         {{ framework.name }}{% if not forloop.last %}, {% endif %}
                     {% endfor %}
                 </p>
-            </div>
-            <div class="content">
-                
+                <p>
+                    Read Time:
+                    {{ article.reading_time }} Minute{% if article.reading_time > 1 %}s{% endif %}
+                </p>
             </div>
         </div>
+        <div class="flex w-full">
+            <!-- Share Buttons -->
+            <div class="my-4 ms-auto">
+                <p class="text-sm my-2 font-semibold text-gray-500">Share this article</p>
+                <div class="flex-row">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}&quote=Check%20out%20this%20awesome%20article%20from%20{{ site_settings.site_name }}%3A%20{{ article.title }}" class="mx-2 text-blue-600 hover:text-blue-800" target="_blank" rel="noopener noreferrer" title="Share Post To Facebook">
+                        <i class="bi bi-facebook text-2xl"></i>
+                    </a>
+                    
+                    <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text=Read%20this%20incredible%20article%20titled%3A%20{{ article.title }}%20from%20{{ site_settings.site_name }}%20%23ArticleShare" class="mx-2 hover:text-gray-600" target="_blank" rel="noopener noreferrer" title="Share Post To Twitter">
+                        <i class="bi bi-twitter-x text-2xl"></i>
+                    </a>
+                    
+                    <a href="https://www.linkedin.com/shareArticle?url={{ request.build_absolute_uri }}&title={{ article.title }}&summary=I%20just%20read%20this%20fantastic%20article%20from%20{{ site_settings.site_name }}%20and%20thought%20you%20might%20find%20it%20interesting%21" class="mx-2 text-blue-700 hover:text-blue-900" target="_blank" rel="noopener noreferrer" title="Share Post To LinkedIn">
+                        <i class="bi bi-linkedin text-2xl"></i>
+                    </a>
+                    
+                    <a href="mailto:?subject=Check%20out%20this%20article%20from%20{{ site_settings.site_name }}%3A%20{{ article.title }}&body=Hi%2C%0A%0ACheck%20out%20this%20article%20from%20{{ site_settings.site_name }}%20that%20I%20found%20interesting%3A%20{{ request.build_absolute_uri }}%0A%0ABest%2C%0A[Your%20Name]" class="mx-2 text-red-500 hover:text-red-700" target="_blank" rel="noopener noreferrer" title="Share Post To Mail">
+                        <i class="bi bi-envelope text-2xl"></i>
+                    </a>
+                    
+                    <a href="https://api.whatsapp.com/send?text=Hey%21%20I%20found%20this%20great%20article%20from%20{{ site_settings.site_name }}%20and%20thought%20you%20might%20like%20it%3A%20{{ article.title }}%20{{ request.build_absolute_uri }}" class="mx-2 text-green-600 hover:text-green-800" target="_blank" rel="noopener noreferrer" title="Share Post To Whatsapp">
+                        <i class="bi bi-whatsapp text-2xl"></i>
+                    </a>
+                    <a id="copy-url-button" class="mx-2 text-gray-400 hover:text-gray-600" title="Copy Post Link">
+                        <i class="bi bi-bi bi-copy text-2xl"></i>
+                    </a>
+                </div>
+    
+                
+                <div id="copy-alert" class="hidden fixed top-4 right-4 w-full max-w-xs md:max-w-sm lg:max-w-md bg-green-100 border border-green-400 text-green-700 rounded-lg shadow-lg p-4 z-50" role="alert">
+                    <strong><i class="bi bi-clipboard-check"></i></strong>Post Link Copied to clipboard!
+                    <button id="close-alert-button" type="button" class="absolute top-2 right-2 text-green-700 hover:text-green-900 focus:outline-none" aria-label="Close">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M6.293 6.293a1 1 0 011.414 0L10 7.586l2.293-1.293a1 1 0 111.414 1.414L11.414 9l2.293 2.293a1 1 0 01-1.414 1.414L10 10.414l-2.293 2.293a1 1 0 01-1.414-1.414L8.586 9 6.293 6.707a1 1 0 010-1.414z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <hr>
 
-        <h1 class="mb-5 text-3xl font-bold">
+        <h1 class="my-5 text-xl">
             {{ article.title }}
         </h1>
 
-        <img src="{{ article.image.url }}" class="object-cover h-32 w-full mb-5 rounded-lg" alt="{{ article.title }}">
+        <img src="{{ article.image.url }}" class="object-cover h-52 w-full mb-5 rounded-lg" alt="{{ article.title }}">
 
-        <p class="mb-5">
+        <p class="mb-10">
             {{ article.content|safe }}
         </p>
 
-        {% comment %} <iframe class="w-full h-64 my-10 rounded-lg md:h-80" src="https://www.youtube.com/embed/L6Jwa7al8os" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> {% endcomment %}
-
-        {% comment %} <div class="text-xs pt-5">
-            <span>Sources :</span>
-            <ul class="list-disc list-inside">
-                <li>
-                    <a href="https://10015.io/tools/tweet-to-image-converter" target="_blank" class="hover:underline">
-                        https://10015.io/tools/tweet-to-image-converter
-                    </a> 
-                </li>
-                <li>
-                    <a href="https://twitter.com/0gust1/status/1065685008650784773" target="_blank" class="hover:underline">
-                        https://twitter.com/0gust1/status/1065685008650784773                    
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.youtube.com/watch?v=jfKfPfyJRdk" target="_blank" class="hover:underline">
-                        https://www.youtube.com/watch?v=jfKfPfyJRdk
-                    </a>
-                </li>
-            </ul>
-        </div> {% endcomment %}
-
+        {% if article.youtube_url %}
+            <span class="my-10">Related Video :</span>
+            <iframe class="w-full h-64 my-10 rounded-lg md:h-80" 
+                    src="{{ article.youtube_url }}" 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+            </iframe>
+        {% endif %}
+        
+        {% if article.references %}
+            <div class="text-xs pt-5">
+                <span>Sources :</span>
+                <ul class="list-disc list-inside">
+                    <li class="list-none">
+                        <p class="">
+                            -- {{ article.references }} --
+                        </p> 
+                    </li>
+                </ul>
+            </div>
+        {% endif %}
         <div class="my-5">
             <hr>
-            <div class="flex items-center space-x-4 py-4">
-                <!-- Like Button -->
-                <form id="like-form" action="{% url 'like_article' article.slug %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="flex items-center{% if request.user in article.likes.all %} text-blue-500{% else %}text-dark-800{% endif %} dark:text-gray-300 hover:text-blue-500 focus:outline-none">
-                        <i class="bi bi-hand-thumbs-up"></i>
-                        <span class="ml-2 text-sm">Like ({{ article.likes.count }})</span>
-                    </button>
-                </form>
-            
-                <!-- Dislike Button -->
-                <form id="dislike-form" action="{% url 'dislike_article' article.slug %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="flex items-center {% if request.user in article.dislikes.all %}text-red-500{% else %}text-dark-800{% endif %} dark:text-gray-300 hover:text-red-500 focus:outline-none">
-                        <i class="bi bi-hand-thumbs-down"></i>
-                        <span class="ml-2 text-sm">Dislike ({{ article.dislikes.count }})</span>
-                    </button>
-                </form>
+            <div class="flex justify-between my-5">
+                <div class="flex items-center space-x-4 py-4">
+                    <!-- Like Button -->
+                    <form id="like-form" action="{% url 'like_article' article.slug %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="flex items-center{% if request.user in article.likes.all %} text-blue-500{% else %}text-dark-800{% endif %} dark:text-gray-300 hover:text-blue-500 focus:outline-none">
+                            <i class="bi bi-hand-thumbs-up"></i>
+                            <span class="ml-2 text-sm">Like ({{ article.likes.count }})</span>
+                        </button>
+                    </form>
+                
+                    <!-- Dislike Button -->
+                    <form id="dislike-form" action="{% url 'dislike_article' article.slug %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="flex items-center {% if request.user in article.dislikes.all %}text-red-500{% else %}text-dark-800{% endif %} dark:text-gray-300 hover:text-red-500 focus:outline-none">
+                            <i class="bi bi-hand-thumbs-down"></i>
+                            <span class="ml-2 text-sm">Dislike ({{ article.dislikes.count }})</span>
+                        </button>
+                    </form>
+                </div>
+    
+                
             </div>
         </div>
 
@@ -96,7 +180,6 @@
                     <div class="flex space-x-4">
                         <div class="mt-3">
                             <div class="text-base">
-                                <img src="{% if request.user.is_authenticated %} {{ user.profile.image.url }}{% else %} {% static 'assets/imgs/head-shot.jpg' %} {% endif %}" class="inline mx-3 h-8 w-8 rounded-full" alt="">
                                 <span class="font-medium text-slate-500">{% if comment.name %}{{ comment.name }}{% else %}Anonymous{% endif %} </span>
                                 <span class="text-sm text-gray-500">• {{ comment.created_at|timesince }} ago</span>
                             </div>
@@ -153,4 +236,86 @@
         </div>
         {% endif %}
     </section>
+
+    <section>
+        <div class="mb-20 w-full max-w-[60rem] mx-auto my-5 px-4">
+            <h2 class="mb-5 text-lg font-bold">Related Articles</h2>
+            <div class="mb-3 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <a href="./blog-article.html" class="p-2 rounded-lg bg-gray-100 bg-opacity-30 hover:underline hover:shadow-2xl" title="10 Essential Tools for Every DIY Enthusiast">
+                    <img src="{% static 'assets/imgs/article1.jpg' %}" class="mb-3 rounded-lg" alt="image article">
+                    <h3>10 Essential Tools for Every DIY Enthusiast</h3>
+                </a>
+                <a href="./blog-article.html" class="p-2 rounded-lg bg-gray-100 bg-opacity-30 hover:underline" title="What Are the Benefits of Regular Exercise?">
+                    <img src="{% static 'assets/imgs/article2.jpg' %}" class="mb-3 rounded-lg" alt="image article">
+                    <h3>What Are the Benefits of Regular Exercise?</h3>
+                </a>
+                <a href="./blog-article.html" class="p-2 rounded-lg bg-gray-100 bg-opacity-30 hover:underline" title="Discover the Hidden Gems of Europe">
+                    <img src="{% static 'assets/imgs/article3.jpg' %}" class="mb-3 rounded-lg" alt="image article">
+                    <h3>Discover the Hidden Gems of Europe</h3>
+                </a>
+                <a href="./blog-article.html" class="p-2 rounded-lg bg-gray-100 bg-opacity-30 hover:underline" title="How to Bake a Delicious Chocolate Cake">
+                    <img src="{% static 'assets/imgs/article4.jpg' %}" class="mb-3 rounded-lg" alt="image article">
+                    <h3>How to Bake a Delicious Chocolate Cake</h3>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Copy code snippet to clipboard
+        document.addEventListener('DOMContentLoaded', function() {
+            const preElements = document.querySelectorAll('pre');
+    
+            preElements.forEach(pre => {
+                pre.addEventListener('click', function() {
+                    const code = pre.querySelector('code').innerText;
+    
+                    // Create a temporary textarea element to copy the text
+                    const textarea = document.createElement('textarea');
+                    textarea.value = code;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+    
+                    // Show the alert message
+                    alert('Code copied to clipboard!');
+                });
+            });
+        });
+    </script>
+
+    <script>
+        // Copy page URL to clipboard
+        document.addEventListener('DOMContentLoaded', function() {
+            var copyButton = document.getElementById('copy-url-button');
+            var copyAlert = document.getElementById('copy-alert');
+            var closeButton = document.getElementById('close-alert-button');
+            var pageUrl = window.location.href;
+        
+            copyButton.addEventListener('click', function() {
+                var tempInput = document.createElement('input');
+                document.body.appendChild(tempInput);
+                tempInput.value = pageUrl;
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+        
+                // Show the alert
+                copyAlert.style.display = 'block';
+        
+                // Hide the alert after 5 seconds
+                setTimeout(function() {
+                    copyAlert.style.display = 'none';
+                }, 5000);
+            });
+    
+            // Add event listener to the close button
+            if (closeButton) {
+                closeButton.addEventListener('click', function() {
+                    copyAlert.style.display = 'none';
+                });
+            }
+        });
+    </script>
 {% endblock %}
