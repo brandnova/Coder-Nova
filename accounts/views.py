@@ -57,6 +57,10 @@ def profile(request):
     p_form = ProfileUpdateForm(request.POST or None, request.FILES or None, instance=request.user.profile)
     n_form = SubscriptionForm()
     bookmarks = request.user.profile.bookmarks.all()
+
+    # Count the likes and dislikes the user has given
+    total_likes = Article.objects.filter(likes=request.user).count()
+    total_dislikes = Article.objects.filter(dislikes=request.user).count()
     
     if request.method == 'POST':
         if u_form.is_valid() and p_form.is_valid():
@@ -70,6 +74,8 @@ def profile(request):
         'p_form': p_form,
         'n_form': n_form,
         'bookmarks': bookmarks,
+        'total_likes': total_likes,
+        'total_dislikes': total_dislikes,
     }
 
     return render(request, 'accounts/profile.html', context)

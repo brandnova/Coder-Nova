@@ -4,7 +4,7 @@ from .models import Article, Category, Framework, Comment
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'status', 'published_date', 'updated_date')
-    list_filter = ('status', 'published_date', 'author', 'category', 'tags')
+    list_filter = ('status', 'published_date', 'author', 'category')
     search_fields = ('title', 'content')
     prepopulated_fields = {'slug': ('title',)}
     # raw_id_fields = ('author',)

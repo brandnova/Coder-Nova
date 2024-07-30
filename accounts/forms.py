@@ -48,20 +48,21 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['phone', 'avatar', 'bio']
+        fields = ['phone', 'avatar', 'cover_image', 'bio']
         widgets = {
             'phone': forms.TextInput(attrs={'class': 'mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}),
-            'avatar': forms.FileInput(attrs={'class': 'mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}),
-            'bio': forms.Textarea(attrs={'class': 'mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}),
+            'avatar': forms.FileInput(attrs={'class': 'bg-white mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}),
+            'cover_image': forms.FileInput(attrs={'class': 'bg-white mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}),
+            'bio': forms.Textarea(attrs={'class': 'w-full mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}),
         }
 
 class CustomPasswordChangeForm(PasswordChangeForm):
     old_password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'flex-1 p-2 border pr-10 border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900', 'placeholder': 'Old Password'})
+        widget=forms.PasswordInput(attrs={'class': 'flex-1 my-3 p-2 border pr-10 border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900', 'placeholder': 'Old Password'})
     )
     new_password1 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'flex-1 p-2 border pr-10 border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900', 'placeholder': 'New Password'})
+        widget=forms.PasswordInput(attrs={'class': 'flex-1 my-3 p-2 border pr-10 border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900', 'placeholder': 'New Password'})
     )
     new_password2 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'flex-1 p-2 border pr-10 border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900', 'placeholder': 'Confirm New Password'})
+        widget=forms.PasswordInput(attrs={'class': 'flex-1 my-3 p-2 border pr-10 border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900', 'placeholder': 'Confirm New Password'})
     )

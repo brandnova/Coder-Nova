@@ -62,6 +62,7 @@ class Article(models.Model):
     allow_comments = models.BooleanField(default=True)
     featured = models.BooleanField(default=False)
     references = models.TextField(blank=True)
+    youtube_url = models.URLField(blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse('article_detail', kwargs={'slug': self.slug})

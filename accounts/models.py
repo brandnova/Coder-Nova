@@ -8,6 +8,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(blank=True, null=True)
     avatar = models.ImageField(default='default.jpg', upload_to='profile_images', null=True, blank=True)
+    cover_image = models.ImageField(default='default.jpg', upload_to='cover_images',null=True, blank=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
     bookmarks = models.ManyToManyField(Article, related_name='article_bookmark', blank=True)
 
