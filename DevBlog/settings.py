@@ -38,6 +38,18 @@ INSTALLED_APPS = [
     
 ]
 
+# Session settings
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Use database-backed sessions
+SESSION_COOKIE_NAME = 'sessionid'  # Cookie name
+SESSION_COOKIE_AGE = 1209600  # 2 weeks in seconds (default)
+SESSION_SAVE_EVERY_REQUEST = False  # Don't save session data on every request
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Session will not expire when the browser is closed
+
+# Authentication settings
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # Default authentication backend
+)
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -153,12 +165,3 @@ EMAIL_USE_SSL = True  # Set to True if using SSL
 EMAIL_HOST_USER = 'info@blog.coursearena.com.ng'
 EMAIL_HOST_PASSWORD = '0Wu$w[+FwDsz'
 DEFAULT_FROM_EMAIL = 'info@blog.coursearena.com.ng'
-
-
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'blog.coursearena.com.ng'
-# EMAIL_PORT = 465
-# EMAIL_USE_SSL = True
-# EMAIL_HOST_USER = 'info@blog.coursearena.com.ng'
-# EMAIL_HOST_PASSWORD = '0Wu$w[+FwDsz'
-# DEFAULT_FROM_EMAIL = 'info@blog.coursearena.com.ng'

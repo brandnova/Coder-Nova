@@ -40,6 +40,12 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+
+            if not request.POST.get('remember_me'):
+                request.session.set_expiry(0)  # Expire the session when the browser is closed
+            else:
+                request.session.set_expiry(1209600)  # 2 weeks in seconds
+            
             return redirect('profile')
     else:
         form = CustomAuthenticationForm()
