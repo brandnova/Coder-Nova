@@ -2,7 +2,7 @@ from django.contrib import messages
 from .forms import SubscriptionForm
 from .models import Subscriber
 from django.core.mail import send_mail
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from .forms import BulkEmailForm
@@ -19,8 +19,15 @@ def subscribe(request):
                 messages.success(request, 'You have successfully subscribed to our newsletter!')
             else:
                 messages.info(request, 'You are already subscribed.')
-            return redirect(request.META.get('HTTP_REFERER', 'home'))  # Redirect to the referring page
-    return redirect('home')  # Fallback redirection
+            return redirect(request.META.get('HTTP_REFERER', 'index'))  # Redirect to the referring page
+    return redirect('index')  # Fallback redirection
+
+def unsubscribe(request, email):
+    if request.method == 'POST':
+        subscriber = get_object_or_404(Subscriber, email=email)
+        subscriber.delete()
+        messages.success(request, 'You have been successfully unsubscribed.')
+    return redirect('profile')
 
 def send_bulk_email(request):
     site_settings = SiteSettings.objects.first()
