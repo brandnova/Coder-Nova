@@ -22,12 +22,13 @@ def article_detail(request, slug):
     n_form = SubscriptionForm()
     
     if request.method == 'POST':
-        # if request.user.is_authenticated():
-        #     name = request.user.first_name + ' ' + request.user.last_name
-        #     email = request.user.email
-            
-        name = request.POST.get('name')
-        email = request.POST.get('email')
+        if request.user.is_authenticated:
+            name = request.user.first_name + ' ' + request.user.last_name
+            email = request.user.email
+        else:
+            name = request.POST.get('name')
+            email = request.POST.get('email')
+        
         comment_text = request.POST.get('comment')
         comment = Comment(article=article, name=name, email=email, comment=comment_text, approved=True)
         comment.save()

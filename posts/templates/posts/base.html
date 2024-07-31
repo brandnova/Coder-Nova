@@ -132,6 +132,54 @@
                             Subscribe
                         </button>
                     </form>
+                    <!-- Custom Alert Modal -->
+                    <div id="custom-alert" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+                        <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+                            <p id="custom-alert-message" class="mb-4 text-gray-800"></p>
+                            <button id="custom-alert-close" class="px-4 py-2 bg-blue-500 text-white rounded-lg w-full">OK</button>
+                        </div>
+                    </div>
+                    <script>
+                        document.getElementById('subscribe-form').addEventListener('submit', function(event) {
+                            event.preventDefault();
+                            const form = event.target;
+                            const formData = new FormData(form);
+                            
+                            fetch(form.action, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+                                },
+                                body: formData
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                showModal(data.message);
+                                if (data.status === 'success' || data.status === 'info') {
+                                    document.getElementById('custom-alert-close').addEventListener('click', function() {
+                                        window.location.href = document.referrer; // Redirect to the referring page after showing the alert
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                showModal('An error occurred while processing your request.');
+                            });
+                        });
+                    
+                        function showModal(message) {
+                            const modal = document.getElementById('custom-alert');
+                            const modalMessage = document.getElementById('custom-alert-message');
+                            const modalClose = document.getElementById('custom-alert-close');
+                    
+                            modalMessage.textContent = message;
+                            modal.classList.remove('hidden');
+                    
+                            modalClose.addEventListener('click', function() {
+                                modal.classList.add('hidden');
+                            });
+                        }
+                    </script>
                 </div>
                 <div class="ml-5">
                     <p class="font-semibold text-gray700">Documentation</p>

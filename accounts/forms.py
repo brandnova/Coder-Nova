@@ -73,7 +73,6 @@ class CustomAuthenticationForm(AuthenticationForm):
 class UserUpdateForm(forms.ModelForm):
     first_name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': 'w-full mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}))
     last_name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': 'w-full mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}))
-    username = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': 'w-full mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'w-full mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}))
 
     class Meta:
@@ -82,7 +81,7 @@ class UserUpdateForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update({'class': 'mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'})
+        self.fields['username'].widget.attrs.update({'class': 'w-full mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'})
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:

@@ -41,6 +41,15 @@
                         </button>
                     </form>
                 {% endif %}
+
+                <!-- Custom Alert Modal -->
+                <div id="custom-alert" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+                    <div class="bg-white p-4 rounded-lg shadow-lg">
+                        <p id="custom-alert-message" class="mb-4 text-gray-800"></p>
+                        <button id="custom-alert-close" class="px-4 py-2 bg-blue-500 text-white rounded-lg">OK</button>
+                    </div>
+                </div>
+
                 <script>
                     document.getElementById('unsubscribe-form').addEventListener('submit', function(event) {
                         event.preventDefault();
@@ -56,18 +65,32 @@
                         })
                         .then(response => response.json())
                         .then(data => {
+                            showCustomAlert(data.message, data.status === 'success');
                             if (data.status === 'success') {
-                                alert(data.message);
-                                window.location.href = "{% url 'profile' %}";
-                            } else {
-                                alert(data.message);
+                                setTimeout(() => {
+                                    window.location.href = "{% url 'profile' %}";
+                                }, 2000); // Redirect after 2 seconds
                             }
                         })
                         .catch(error => {
                             console.error('Error:', error);
-                            alert('An error occurred while processing your request.');
+                            showCustomAlert('An error occurred while processing your request.');
                         });
                     });
+
+                    function showCustomAlert(message, isSuccess) {
+                        const alertBox = document.getElementById('custom-alert');
+                        const alertMessage = document.getElementById('custom-alert-message');
+                        const alertClose = document.getElementById('custom-alert-close');
+
+                        alertMessage.textContent = message;
+                        alertMessage.style.color = isSuccess ? 'green' : 'red';
+                        alertBox.classList.remove('hidden');
+
+                        alertClose.addEventListener('click', () => {
+                            alertBox.classList.add('hidden');
+                        });
+                    }
                 </script>
             </div>
         </div>
