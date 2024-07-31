@@ -71,9 +71,10 @@ class CustomAuthenticationForm(AuthenticationForm):
 
 
 class UserUpdateForm(forms.ModelForm):
-    first_name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': 'mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}))
-    last_name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': 'mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}))
+    first_name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': 'w-full mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}))
+    last_name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': 'w-full mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}))
+    username = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': 'w-full mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'w-full mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}))
 
     class Meta:
         model = User
@@ -88,9 +89,9 @@ class ProfileUpdateForm(forms.ModelForm):
         model = Profile
         fields = ['phone', 'avatar', 'cover_image', 'bio']
         widgets = {
-            'phone': forms.TextInput(attrs={'class': 'mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}),
-            'avatar': forms.FileInput(attrs={'class': 'bg-white mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}),
-            'cover_image': forms.FileInput(attrs={'class': 'bg-white mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}),
+            'phone': forms.TextInput(attrs={'class': 'w-full mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}),
+            'avatar': forms.FileInput(attrs={'class': 'w-full bg-white mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}),
+            'cover_image': forms.FileInput(attrs={'class': 'w-full bg-white mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}),
             'bio': forms.Textarea(attrs={'class': 'w-full mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}),
         }
 

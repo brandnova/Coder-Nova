@@ -1,6 +1,6 @@
-Use tailwind online CDN for email base and contents
 upload images at specific dimentions
 Auto share contents to other social platforms upon upload.
-Profile view for others
 Ads
-Unsubscribe from newsletter (Done)... Make the message an alert...
+Posts/views.py and template... make the form save name and email of user if they are authenticated.
+Style username form field in user profile
+Make button styles uniform

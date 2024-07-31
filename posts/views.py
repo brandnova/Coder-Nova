@@ -11,8 +11,10 @@ from django.views.decorators.http import require_POST
 from accounts.models import Profile
 from .models import Article, Category, Comment, Framework
 
+
 def article_detail(request, slug):
     article = get_object_or_404(Article, slug=slug, status='published')
+    similar_article = Article.objects.filter(category=article.category)[:8]
     if article.youtube_url:
         article.youtube_url = article.youtube_url.replace("watch?v=", "embed/")
     comments = article.comments.filter(approved=True)
@@ -20,6 +22,10 @@ def article_detail(request, slug):
     n_form = SubscriptionForm()
     
     if request.method == 'POST':
+        # if request.user.is_authenticated():
+        #     name = request.user.first_name + ' ' + request.user.last_name
+        #     email = request.user.email
+            
         name = request.POST.get('name')
         email = request.POST.get('email')
         comment_text = request.POST.get('comment')
@@ -32,6 +38,7 @@ def article_detail(request, slug):
         'comments': comments,
         'form': form,
         'n_form': n_form,
+        'similar_article': similar_article,
         
     }
 
