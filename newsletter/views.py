@@ -19,8 +19,8 @@ def subscribe(request):
                 Subscriber.objects.create(email=email)
                 return JsonResponse({'status': 'success', 'message': 'You have successfully subscribed to our newsletter!'})
             else:
-                return JsonResponse({'status': 'info', 'message': 'You are already subscribed.'})
-        return JsonResponse({'status': 'error', 'message': 'You are already subscribed to our newsletter.'}, status=400)
+                return JsonResponse({'status': 'info', 'message': 'This email is already subscribed.'})
+        return JsonResponse({'status': 'error', 'message': 'Error! Invalid form input.'}, status=400)
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
 
 def unsubscribe(request, email):

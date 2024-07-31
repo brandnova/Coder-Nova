@@ -37,7 +37,9 @@ def index(request):
 
 def static_page(request, slug):
     page = get_object_or_404(StaticPage, slug=slug)
+    n_form = SubscriptionForm()
     context = {
         'page': page,
+        'n_form': n_form,
     }
     return render(request, 'core/static-page.html', context)
