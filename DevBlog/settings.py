@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'taggit',
     'accounts.apps.AccountsConfig',
     'newsletter',
+    'ads',
     
 ]
 
@@ -76,6 +77,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'core.context_processors.site_settings_processor',
                 'core.context_processors.static_pages_processor',
+                'core.context_processors.ad_context_processor',
             ],
         },
     },
