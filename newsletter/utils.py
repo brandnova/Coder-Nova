@@ -52,6 +52,7 @@ def send_bulk_email(bulk_email):
             'site_logo_url': site_settings.logo.url if site_settings.logo else '',
             'site_url': site_settings.og_url,
             'current_year': datetime.now().year,
+            'user': subscriber,  # Pass the subscriber object to the template
         })
         plain_message = strip_tags(html_message)
         from_email = site_settings.contact_email

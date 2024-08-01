@@ -1,12 +1,10 @@
 {% extends 'newsletter/email_base.html' %}
 {% block content %}
-    <p class="mt-6 text-gray-500 dark:text-gray-400">
-        <p>{{ message }}</p>
-    </p>
-    <p class="mt-6 text-gray-500 dark:text-gray-400">
-        {% comment %} This email was sent to <span class="text-blue-600 hover:underline dark:text-blue-400" target="_blank">{{ user.email }}</span>.  {% endcomment %}
+    <p>{{ message }}</p>
+    <p>
+        This email was sent to <a href="mailto:{{ user.email }}">{{ user.email }}</a>. 
         You've received this email because you are subscribed to our newsletter.<br>
-        If you'd rather not receive this kind of email, you can <a href="{{ site_url }}/accounts/profile" class="text-blue-600 hover:underline dark:text-blue-400">login to your profile</a> and find the button to unsubscribe from our newsletter.<br>
+        If you'd rather not receive this kind of email, you can <a href="{{ site_url }}/accounts/profile">login to your profile</a> and find the button to unsubscribe from our newsletter.<br>
         Visit site: <a href="{{ site_url }}">{{ site_name }}</a>
     </p>
 {% endblock %}

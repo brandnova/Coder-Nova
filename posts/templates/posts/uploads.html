@@ -51,10 +51,9 @@
                         </form>
                     </div>
                 </div>
-                <div class="max-w-[60rem] mx-auto border-l-4 border-blue-500 bg-blue-100 text-blue-800 p-4 my-5">
-                    <p class="font-semibold">Ads</p>
-                    <p>This is an ad location</p>
-                </div>
+                {% if ads.uploadspage_sidebar %}
+                    {{ ads.uploadspage_sidebar.code|safe }}
+                {% endif %}
             </div>
             <div class="h-auto col-span-4 shadow shadow-lg rounded-md flex py-5 px-5">
                 <div class="px-4">
