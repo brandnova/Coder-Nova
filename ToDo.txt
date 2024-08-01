@@ -1,6 +1,4 @@
 upload images at specific dimentions
 Auto share contents to other social platforms upon upload.
-Ads
 
 email_base logo link
-

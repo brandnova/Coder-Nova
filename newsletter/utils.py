@@ -24,6 +24,7 @@ def send_registration_email(user):
         'user': user,
         'site_name': site_settings.site_name,
         'contact_email': site_settings.contact_email,
+        'site_url': site_settings.og_url,
         'site_logo_url': site_settings.logo.url if site_settings.logo else '',
         'current_year': datetime.now().year,
     })
