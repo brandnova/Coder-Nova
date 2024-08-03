@@ -1,0 +1,8 @@
+{% extends 'posts/base.html' %}
+{% block content %}
+    <div class="mt-20 px-auto">
+        <h1>Permission Denied</h1>
+        <p>{{ message }}</p>
+        <a href="{% url 'index' %}">Go back to Home</a>
+    </div>
+{% endblock %}

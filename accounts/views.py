@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import login, update_session_auth_hash, logout
 from django.contrib.auth.decorators import login_required
 from newsletter.forms import SubscriptionForm
@@ -71,6 +71,9 @@ def profile(request):
     p_form = ProfileUpdateForm(request.POST or None, request.FILES or None, instance=request.user.profile)
     n_form = SubscriptionForm()
     bookmarks = request.user.profile.bookmarks.all()
+    drafts = Article.objects.filter(status='draft').order_by('-published_date')
+    posts = Article.objects.filter(status='published').order_by('-published_date')
+
     is_subscribed = Subscriber.objects.filter(email=request.user.email).exists()
 
     # Count the likes and dislikes the user has given
@@ -89,6 +92,8 @@ def profile(request):
         'p_form': p_form,
         'n_form': n_form,
         'bookmarks': bookmarks,
+        'drafts': drafts,
+        'posts': posts,
         'is_subscribed': is_subscribed,
         'total_likes': total_likes,
         'total_dislikes': total_dislikes,
