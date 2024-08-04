@@ -10,7 +10,16 @@ from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 from accounts.models import Profile
 from .models import Article, Category, Comment, Framework
+from django.contrib.auth.decorators import user_passes_test
+from django.urls import reverse_lazy
 
+def permission_denied_view(request):
+    return render(request, 'posts/permission_denied.html', {
+        'message': "You do not have permission to access this page."
+    })
+
+def staff_or_superuser_required(user):
+    return user.is_active and (user.is_staff or user.is_superuser)
 
 def article_detail(request, slug):
     article = get_object_or_404(Article, slug=slug, status='published')
@@ -44,6 +53,29 @@ def article_detail(request, slug):
     }
 
     return render(request, 'posts/blog-article.html', context)
+
+@user_passes_test(staff_or_superuser_required, login_url=reverse_lazy('permission_denied'))
+def draft_detail(request, slug):
+    draft = get_object_or_404(Article, slug=slug, status='draft')
+    similar_article = Article.objects.filter(category=draft.category, status='published')[:8]
+
+    if draft.youtube_url:
+        draft.youtube_url = draft.youtube_url.replace("watch?v=", "embed/")
+
+    # Initialize the forms
+    form = SearchForm()
+    n_form = SubscriptionForm()
+
+    # Define the context
+    context = {
+        'article': draft, 
+        'form': form,
+        'n_form': n_form,
+        'similar_article': similar_article,
+    }
+
+    return render(request, 'posts/draft-detail.html', context)
+
 
 @require_POST
 @login_required
