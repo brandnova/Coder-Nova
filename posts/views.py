@@ -23,7 +23,8 @@ def staff_or_superuser_required(user):
 
 def article_detail(request, slug):
     article = get_object_or_404(Article, slug=slug, status='published')
-    similar_article = Article.objects.filter(category=article.category)[:8]
+    similar_article = Article.objects.filter(category=article.category, status='published').order_by('?')[:4]
+    for_u = Article.objects.filter(featured=True, status='published').order_by('?')[:8]
     if article.youtube_url:
         article.youtube_url = article.youtube_url.replace("watch?v=", "embed/")
     comments = article.comments.filter(approved=True)
@@ -49,6 +50,7 @@ def article_detail(request, slug):
         'form': form,
         'n_form': n_form,
         'similar_article': similar_article,
+        'for_u': for_u,
         
     }
 
