@@ -2,6 +2,8 @@ email_base logo link
 
 Design permission denied page
 
+Add boxshadow to images
+
 
 
 Please write an excerp for the blog post, a list of tags separated by commas, an SEO title, a short meta description and some meta keywords for the post separated by commas.
