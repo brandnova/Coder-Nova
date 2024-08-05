@@ -35,4 +35,8 @@ class CommentAdmin(admin.ModelAdmin):
     
     comment_display.short_description = 'Comment'
 
-admin.site.register(ArticleView)
+class ArticleViewAdmin(admin.ModelAdmin):
+    list_display = ('article', 'ip_address', 'viewed_on')
+    list_filter = ('article', 'user_agent')
+
+admin.site.register(ArticleView, ArticleViewAdmin)
