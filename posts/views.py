@@ -42,10 +42,13 @@ def article_detail(request, slug):
 
     # Increment view count if the IP address hasn't viewed this article before
     ip_address = get_client_ip(request)
+    user_agent = request.META.get('HTTP_USER_AGENT', '')
+    referrer = request.META.get('HTTP_REFERER', '')
+
     if not ArticleView.objects.filter(article=article, ip_address=ip_address).exists():
         article.views += 1
         article.save(update_fields=['views'])
-        ArticleView.objects.create(article=article, ip_address=ip_address)
+        ArticleView.objects.create(article=article, ip_address=ip_address, user_agent=user_agent, referrer=referrer)
 
     if request.method == 'POST':
         if request.user.is_authenticated:
