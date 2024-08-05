@@ -201,10 +201,12 @@
                     {{ article.reading_time }} Minute{% if article.reading_time > 1 %}s{% endif %}
                 </p>
                 {% if request.user.is_staff %}
-                    <p>
-                        Status:
-                        {{ article.status }} <span class="text-yellow-500">(Only Staffs Can See This)</span>
-                    </p>
+                    {% if article.author.username == request.user.username %}
+                        <p>
+                            Status:
+                            {{ article.status }} <span class="text-yellow-700">(Only You  Can See This)</span>
+                        </p>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
