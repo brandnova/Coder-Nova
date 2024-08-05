@@ -161,9 +161,10 @@ CKEDITOR_CONFIGS = {
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'blog.coursearena.com.ng'  # E.g., 'smtp.gmail.com'
-EMAIL_PORT = 465  # Common ports: 587 for TLS, 465 for SSL
-EMAIL_USE_SSL = True  # Set to True if using SSL
-EMAIL_HOST_USER = 'info@blog.coursearena.com.ng'
-EMAIL_HOST_PASSWORD = '0Wu$w[+FwDsz'
-DEFAULT_FROM_EMAIL = 'info@blog.coursearena.com.ng'
+EMAIL_HOST = 'cn.coursearena.com.ng'
+EMAIL_PORT = 587  # TLS port
+EMAIL_USE_TLS = True  # Use TLS instead of SSL
+EMAIL_USE_SSL = False  # Make sure SSL is disabled
+EMAIL_HOST_USER = 'support@cn.coursearena.com.ng'
+EMAIL_HOST_PASSWORD = 'eI7uG{WW{Yl_'
+DEFAULT_FROM_EMAIL = 'support@cn.coursearena.com.ng'
