@@ -9,9 +9,10 @@ from .forms import SearchForm
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 from accounts.models import Profile
-from .models import Article, Category, Comment, Framework
+from .models import Article, ArticleView, Category, Comment, Framework
 from django.contrib.auth.decorators import user_passes_test
 from django.urls import reverse_lazy
+from django.utils.timezone import now
 
 def permission_denied_view(request):
     return render(request, 'posts/permission_denied.html', {
@@ -20,6 +21,14 @@ def permission_denied_view(request):
 
 def staff_or_superuser_required(user):
     return user.is_active and (user.is_staff or user.is_superuser)
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
 
 def article_detail(request, slug):
     article = get_object_or_404(Article, slug=slug, status='published')
@@ -30,7 +39,14 @@ def article_detail(request, slug):
     comments = article.comments.filter(approved=True)
     form = SearchForm()
     n_form = SubscriptionForm()
-    
+
+    # Increment view count if the IP address hasn't viewed this article before
+    ip_address = get_client_ip(request)
+    if not ArticleView.objects.filter(article=article, ip_address=ip_address).exists():
+        article.views += 1
+        article.save(update_fields=['views'])
+        ArticleView.objects.create(article=article, ip_address=ip_address)
+
     if request.method == 'POST':
         if request.user.is_authenticated:
             name = request.user.first_name + ' ' + request.user.last_name
@@ -51,7 +67,6 @@ def article_detail(request, slug):
         'n_form': n_form,
         'similar_article': similar_article,
         'for_u': for_u,
-        
     }
 
     return render(request, 'posts/blog-article.html', context)
