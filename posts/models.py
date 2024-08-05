@@ -74,6 +74,14 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+    
+class ArticleView(models.Model):
+    article = models.ForeignKey(Article, related_name='article_views', on_delete=models.CASCADE)
+    ip_address = models.GenericIPAddressField()
+    viewed_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.ip_address} viewed {self.article.title}"
 
 class Comment(models.Model):
     article = models.ForeignKey(Article, related_name='comments', on_delete=models.CASCADE)

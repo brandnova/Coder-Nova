@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Article, Category, Framework, Comment
+from .models import Article, ArticleView, Category, Framework, Comment
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
@@ -34,3 +34,5 @@ class CommentAdmin(admin.ModelAdmin):
         return str(obj)
     
     comment_display.short_description = 'Comment'
+
+admin.site.register(ArticleView)
