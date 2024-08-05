@@ -2,6 +2,50 @@
 {% block title %}Profile{% endblock %}
 {% load static %}
 {% block content %}
+    <!-- Modal -->
+    <div id="modal" class="hidden fixed inset-0 z-20 bg-gray-400/50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded shadow-lg w-11/12 md:w-1/2 h-3/4 relative">
+            <!-- Horizontal Scroll Navigation -->
+            <div class="flex overflow-x-auto space-x-4 hide-scrollbar p-2 bg-gray-200 rounded h-auto justify-center">
+                {% if sections %}
+                    {% for section in sections %}
+                        <a href="#{{ section.section_id }}" class="nav-link hover:text-gray-900 transition duration-300">{{ section.title }}</a>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            
+            <!-- Vertical Scroll Content -->
+            <div class="flex-1 hide-scrollbar overflow-y-auto scroll-container mt-5" id="scroll-container" style="height: 90%; scroll-behavior: smooth;">
+                {% if sections %}
+                    {% for section in sections %}
+                        <div id="{{ section.section_id }}" class="content-section my-4">
+                            <h2 class="text-xl font-bold mb-2">{{ section.title }}</h2>
+                            <div class="prose">
+                                {{ section.content|safe }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <script>
+        // JavaScript to handle the modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('modal');
+            const openModalBtn = document.getElementById('openModalBtn');
+
+            openModalBtn.addEventListener('click', function() {
+                modal.classList.remove('hidden');
+            });
+
+            modal.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+        });
+    </script>
     <div class="h-full p-8 pt-20">
         <div class=" border border-gray-500 rounded-lg shadow-xl pb-8">
             <div class="w-full h-[250px]">
@@ -16,6 +60,20 @@
                             <i class="bi bi-patch-check-fill"></i>
                         </span> 
                     {% endif %}
+                </div>
+            </div>
+            <div class="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
+                <div class="flex items-center space-x-4 mt-2">
+                    <button id="openModalBtn" class="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100" title="Inquiry">
+                        <i class="bi bi-question-circle"></i>
+                    </button>
+                    
+                    {% comment %} <button class="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Message</span>
+                    </button> {% endcomment %}
                 </div>
             </div>
             <div class="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
@@ -269,6 +327,7 @@
                                                         <p class="text-center font-bold text-xs">{{ post.title|truncatewords:4 }}</p>
                                                     </div>
                                                 </a>
+                                                <span class="text-xs">({{ post.views }} views)</span>
                                             </div>
                                         {% endif %}
                                     {% endfor %}

@@ -6,7 +6,7 @@ from newsletter.models import Subscriber
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, CustomAuthenticationForm, CustomPasswordChangeForm
 from django.contrib import messages
 from posts.models import Article
-from .models import Profile
+from .models import InfoContent, Profile
 from newsletter.utils import send_registration_email
 
 def register(request):
@@ -72,6 +72,7 @@ def profile(request):
     bookmarks = request.user.profile.bookmarks.all()
     drafts = Article.objects.filter(status='draft').order_by('-published_date')
     posts = Article.objects.filter(status='published').order_by('-published_date')
+    sections = InfoContent.objects.all()
 
     is_subscribed = Subscriber.objects.filter(email=request.user.email).exists()
 
@@ -93,6 +94,7 @@ def profile(request):
         'bookmarks': bookmarks,
         'drafts': drafts,
         'posts': posts,
+        'sections': sections,
         'is_subscribed': is_subscribed,
         'total_likes': total_likes,
         'total_dislikes': total_dislikes,
