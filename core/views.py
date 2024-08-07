@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from newsletter.forms import SubscriptionForm
+from newsletter.models import Subscriber
 from posts.models import Article, Category, Framework
 from posts.forms import SearchForm
 from django.core.paginator import Paginator
@@ -10,6 +11,16 @@ def index(request):
     page_number = request.GET.get('page')  # Get the current page number from the query parameters
     s_form = SearchForm()
     n_form = SubscriptionForm()
+
+    show_popup = True
+
+    if request.user.is_authenticated:
+        # Check if the authenticated user's email is subscribed
+        if Subscriber.objects.filter(email=request.user.email).exists():
+            show_popup = False
+    else:
+        # For unauthenticated users, just show the popup
+        show_popup = True
 
     if category_slug:
         articles_list = Article.objects.filter(category__slug=category_slug, status='published').order_by('-published_date')
@@ -31,6 +42,7 @@ def index(request):
         's_form': s_form,
         'n_form': n_form,
         'featured': featured,
+        'show_popup': show_popup,
     }
     return render(request, 'core/index.html', context)
 

@@ -51,7 +51,7 @@ class Article(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     tags = TaggableManager()
     category = models.ForeignKey(Category, related_name='articles', on_delete=models.CASCADE)
-    frameworks = models.ManyToManyField(Framework, related_name='articles')
+    frameworks = models.ManyToManyField(Framework, related_name='articles', blank=True)
     reading_time = models.PositiveIntegerField(blank=True, null=True)
     views = models.PositiveIntegerField(default=0)
     likes = models.ManyToManyField(User, related_name='article_likes', blank=True)

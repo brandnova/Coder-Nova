@@ -5,6 +5,58 @@
     {% if ads.homepage_top %}
         {{ ads.homepage_top.code|safe }}
     {% endif %}
+    <!-- Popup -->
+    {% if show_popup %}
+        <div id="popup" class="fixed bottom-4 left-4 flex items-center justify-center bg-gray-900 bg-opacity-75 text-white p-4 rounded-lg shadow-lg hidden" style="z-index: 7777;">
+            <div class="flex flex-col space-y-4 w-80">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-lg font-semibold">Subscribe to Our Newsletter</h2>
+                    <button id="dismiss-btn" class="text-gray-300 hover:text-gray-100 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <p class="text-gray-200">Subscribe to our newsletter to get notified on new posts!</p>
+                <form action="{% url 'subscribe' %}" method="post" id="subscribe-form" class="flex flex-col space-y-4 items-center">
+                    {% csrf_token %}
+                    {{ n_form.as_p }}
+                    <button type="submit" class=" w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const popup = document.getElementById('popup');
+            const dismissBtn = document.getElementById('dismiss-btn');
+            const subscribeForm = document.getElementById('subscribe-form');
+        
+            // Function to show the popup
+            function showPopup() {
+                popup.classList.remove('hidden');
+            }
+        
+            // Show the popup after 10 seconds
+            setTimeout(showPopup, 5000);
+        
+            // Dismiss button click event
+            dismissBtn.addEventListener('click', () => {
+                popup.classList.add('hidden');
+            });
+        
+            // Handle form submission
+            subscribeForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const email = document.getElementById('email').value;
+        
+                // Handle form submission logic here, e.g., sending email to server
+        
+                // For demonstration, just hide the popup
+                popup.classList.add('hidden');
+            });
+        });
+    </script>
     <section class="mt-28 px-52">
         <!-- Landing -->
         <section class="pb-12 bg-gradient-to-b from-[#E8E3F5] via-[#EDEAFB] to-[#F7FAFC] lg:block md:hidden hidden">
