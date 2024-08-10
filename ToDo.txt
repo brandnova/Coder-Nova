@@ -7,3 +7,4 @@ PYTTSX3 Python Text to Speech
 Please write an excerp for the blog post, a list of tags separated by commas, an SEO title, a short meta description and some meta keywords for the post separated by commas.
 
 And whats the estimated read time for the post, what framework/frameworks would you say the post is based on, and what general category would you place 
+

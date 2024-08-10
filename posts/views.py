@@ -181,17 +181,19 @@ def search_articles(request):
     s_form = SearchForm(request.GET or None)
     n_form = SubscriptionForm()
     query = request.GET.get('query', '')
-    articles = Article.objects.none()
 
+    articles = Article.objects.none()
     if query:
         articles = Article.objects.filter(
-            Q(title__icontains=query) |
-            Q(content__icontains=query) |
-            Q(frameworks__name__icontains=query) |
-            Q(type__icontains=query) |
-            Q(slug__icontains=query) |
-            Q(category__name__icontains=query)
-        ).distinct()
+        Q(title__icontains=query) | 
+        Q(content__icontains=query) | 
+        Q(frameworks__name__icontains=query) | 
+        Q(type__icontains=query) | 
+        Q(slug__icontains=query) | 
+        Q(category__name__icontains=query),
+        status='published'
+    ).distinct()
+
 
     # Pagination
     paginator = Paginator(articles, 10)  

@@ -4,7 +4,7 @@ from newsletter.models import Subscriber
 from posts.models import Article, Category, Framework
 from posts.forms import SearchForm
 from django.core.paginator import Paginator
-from .models import StaticPage
+from .models import SiteSettings, StaticPage
 
 def index(request):
     category_slug = request.GET.get('category')
@@ -48,10 +48,12 @@ def index(request):
 
 
 def static_page(request, slug):
+    site_settings = SiteSettings.objects.first()
     page = get_object_or_404(StaticPage, slug=slug)
     n_form = SubscriptionForm()
     context = {
         'page': page,
         'n_form': n_form,
+        'site_settings': site_settings,
     }
     return render(request, 'core/static-page.html', context)

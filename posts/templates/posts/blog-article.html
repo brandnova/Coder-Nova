@@ -126,11 +126,17 @@
             margin-bottom: 0.5rem; 
         }
         
-        /* Blockquotes */
         blockquote {
-            padding-left: 1rem; 
-            margin-bottom: 1rem; 
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+            border-left: 5px solid #ccc;
+            background-color: #f9f9f9;
+            font-style: italic;
+            font-family: Georgia, serif; 
+            font-size: 0.5rem; 
+            line-height: 1.5; 
         }
+          
         
         /* Tables */
         table {
@@ -225,6 +231,10 @@
                     
                     <a href="https://www.linkedin.com/shareArticle?url={{ request.build_absolute_uri }}&title={{ article.title }}&summary=I%20just%20read%20this%20fantastic%20article%20from%20{{ site_settings.site_name }}%20and%20thought%20you%20might%20find%20it%20interesting%21" class="mx-2 no-underline hover:no-underline text-blue-700 hover:text-blue-900" target="_blank" rel="noopener noreferrer" title="Share Post To LinkedIn">
                         <i class="bi bi-linkedin text-2xl"></i>
+                    </a>
+
+                    <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}&text=I%20just%20read%20this%20fantastic%20article%20from%20{{ site_settings.site_name }}%20and%20thought%20you%20might%20find%20it%20interesting%21" class="mx-2 no-underline hover:no-underline text-blue-700 hover:text-blue-900" target="_blank" rel="noopener noreferrer" title="Share Post To Telegram">
+                        <i class="bi bi-telegram text-2xl"></i>
                     </a>
                     
                     <a href="mailto:?subject=Check%20out%20this%20article%20from%20{{ site_settings.site_name }}%3A%20{{ article.title }}&body=Hi%2C%0A%0ACheck%20out%20this%20article%20from%20{{ site_settings.site_name }}%20that%20I%20found%20interesting%3A%20{{ request.build_absolute_uri }}%0A%0ABest%2C%0A[Your%20Name]" class="mx-2 no-underline hover:no-underline text-red-500 hover:text-red-700" target="_blank" rel="noopener noreferrer" title="Share Post To Mail">

@@ -17,7 +17,7 @@
                         </svg>
                     </button>
                 </div>
-                <p class="text-gray-200">Subscribe to our newsletter to get notified on new posts!</p>
+                <p class="text-gray-200">Subscribe to our newsletter to get notified on new posts!<br> <span class="text-white"> Check your inbox or spam folder for new notifications.</span></p>
                 <form action="{% url 'subscribe' %}" method="post" id="subscribe-form" class="flex flex-col space-y-4 items-center">
                     {% csrf_token %}
                     {{ n_form.as_p }}
@@ -97,15 +97,34 @@
                         </button>
                     </form>
                 </div>
+                <style>
+                    :root {
+                        --inline-background-color: #EEE;
+                    }
+                    
+                    [data-theme='dark'] {
+                        --inline-background-color: #6B7280;
+                    }
+
+                    [data-theme='dark'] #scroll-container, #scroll-nav {
+                        background-color: var(--inline-background-color);
+                    }
+
+                    #scroll-container, #scroll-nav {
+                        background-color: var(--inline-background-color);
+                    }
+                      
+                      
+                </style>
                 <nav class="py-4 sticky-nav rounded-xl bg-transparent">
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center scroll-btn" id="scroll-left">
                                 <a class="font-bold text-xl hover:text-gray-700 transition duration-300 mx-3">
-                                    <i class="bi bi-chevron-left"></i>
+                                    <i class="bi bi-chevron-left p-3 rounded-lg hover:p-4 duration-75" id="scroll-nav"></i>
                                 </a>
                             </div>
-                            <div class="flex-1 hide-scrollbar overflow-x-auto" id="scroll-container">
+                            <div class="p-2 hover:p-3 duration-75 rounded-lg flex-1 hide-scrollbar overflow-x-auto" id="scroll-container">
                                 <div class="flex space-x-8 whitespace-nowrap my-2 text-sm md:text-sm">
                                     <a href="{% url 'index' %}" class="hover:text-gray-900 transition duration-300">All</a>
                                     {% for category in categories %}
@@ -115,7 +134,7 @@
                             </div>
                             <div class="flex items-center scroll-btn" id="scroll-right">
                                 <a class="font-bold text-xl hover:text-gray-700 transition duration-300 mx-3">
-                                    <i class="bi bi-chevron-right"></i>
+                                    <i class="bi bi-chevron-right p-3 rounded-lg hover:p-4 duration-75" id="scroll-nav"></i>
                                 </a>
                             </div>
                         </div>
