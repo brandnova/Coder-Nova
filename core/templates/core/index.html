@@ -2,7 +2,7 @@
 {% block title %}Home{% endblock  %}
 {% load static %}
 {% block content %}
-    <section class="ad mt-20 w-full mx-10">
+    <section class="ad mt-20">
         {% if ads.homepage_top %}
             {{ ads.homepage_top.code|safe }}
         {% endif %}
