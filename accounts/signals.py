@@ -1,11 +1,7 @@
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.dispatch import receiver
-from django.core.mail import send_mail
-from django.conf import settings
-from django.template.loader import render_to_string
 from newsletter.utils import send_registration_email
-
 from .models import Profile
 
 @receiver(post_save, sender=User)
@@ -21,4 +17,3 @@ def save_profile(sender, instance, **kwargs):
 def notify_new_user(sender, instance, created, **kwargs):
     if created:
         send_registration_email(instance)
-
