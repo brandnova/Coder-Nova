@@ -159,8 +159,8 @@ CKEDITOR_CONFIGS = {
         'height': 300,
         'width': '100%',
         'extraPlugins': ','.join([
-            'uploadimage',  # the upload image feature
-            'codesnippet',  # code snippet feature
+            'uploadimage',
+            'codesnippet',
             # additional plugins
         ]),
     },
@@ -168,10 +168,63 @@ CKEDITOR_CONFIGS = {
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'cn.coursearena.com.ng'
-EMAIL_PORT = 587  # TLS port
-EMAIL_USE_TLS = True  # Use TLS instead of SSL
-EMAIL_USE_SSL = False  # Make sure SSL is disabled
-EMAIL_HOST_USER = 'support@cn.coursearena.com.ng'
-EMAIL_HOST_PASSWORD = 'eI7uG{WW{Yl_'
-DEFAULT_FROM_EMAIL = 'support@cn.coursearena.com.ng'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'brandnova89@gmail.com'
+EMAIL_HOST_PASSWORD = 'zxgc intt dvax quzy'
+DEFAULT_FROM_EMAIL = 'brandnova89@gmail.com'
+
+
+# Zazzmin settings
+
+
+JAZZMIN_SETTINGS = {
+    # Title of the window (Will default to current_admin_site.site_title if absent or None)
+    'site_title': 'Coder Nova',
+
+    # Title on the brand, and the login screen (19 chars max)
+    'site_header': 'Coder Nova',
+
+    # Logo to use for your site, must be present in static files, used for login, brand and top menu
+    'site_logo': 'assets/imgs/Coder_Nova - Copy.jpeg',
+
+    # CSS classes that are applied to the logo above
+    'site_logo_classes': 'rounded-full',
+
+    # Welcome text on the login screen
+    'welcome_sign': 'Welcome to Coder Nova',
+
+    # Copyright on the footer
+    'copyright': 'Coder Nova',
+
+    # The model admin to search from the search bar, search bar omitted if excluded
+    'search_model': 'auth.User',
+
+    # Field name on user model that contains avatar image, used for the avatar beside the log out
+    'user_avatar': lambda user: user.profile.avatar.url if user.profile.avatar else None,
+
+    # Custom icons for side menu apps/models
+    'icons': {
+        'auth': 'fas fa-users-cog',
+        'auth.user': 'fas fa-user',
+        'auth.Group': 'fas fa-users',
+    },
+
+    # Default expanded menu
+    'default_expanded': True,
+
+    # Custom links to be included in the top menu
+    'topmenu_links': [
+        {'name': 'Home', 'url': 'admin:index', 'permissions': ['auth.view_user']},
+    ],
+
+    # Link to put at the bottom of the sidebar
+    'show_ui_builder': False,
+
+    # Hide these apps
+    'hide_apps': ['auth', 'contenttypes'],
+
+    # Hide these models
+    'hide_models': ['auth.user'],
+}
