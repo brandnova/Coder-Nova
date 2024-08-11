@@ -178,7 +178,6 @@ DEFAULT_FROM_EMAIL = 'brandnova89@gmail.com'
 
 # Zazzmin settings
 
-
 JAZZMIN_SETTINGS = {
     # Title of the window (Will default to current_admin_site.site_title if absent or None)
     'site_title': 'Coder Nova',
@@ -190,7 +189,7 @@ JAZZMIN_SETTINGS = {
     'site_logo': 'assets/imgs/Coder_Nova - Copy.jpeg',
 
     # CSS classes that are applied to the logo above
-    'site_logo_classes': 'rounded-full',
+    'site_logo_classes': 'img-circle',
 
     # Welcome text on the login screen
     'welcome_sign': 'Welcome to Coder Nova',
@@ -222,9 +221,4 @@ JAZZMIN_SETTINGS = {
     # Link to put at the bottom of the sidebar
     'show_ui_builder': False,
 
-    # Hide these apps
-    'hide_apps': ['auth', 'contenttypes'],
-
-    # Hide these models
-    'hide_models': ['auth.user'],
 }

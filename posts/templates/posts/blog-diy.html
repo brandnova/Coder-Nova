@@ -164,13 +164,15 @@
             font-size: 0.875rem; 
         }
     </style>
-    {% if ads.articlepage_top %}
-        {{ ads.articlepage_bottom.code|safe }}
-    {% endif %}
+    <section class="ad mt-20 w-full mx-10">
+        {% if ads.articlepage_top %}
+            {{ ads.articlepage_bottom.code|safe }}
+        {% endif %}
+    </section>
     <section class="mb-10 w-full max-w-[60rem] mx-auto px-4 sm:px-6 lg:px-8 my-20">
         <!-- Search Bar -->
         <div class="flex items-center justify-center">
-            <form method="get" action="{% url 'uploads' %}" class="flex w-full mx-10 rounded">
+            <form method="get" action="{% url 'projects' %}" class="flex w-full mx-10 rounded">
                 {% csrf_token %}
                 {{ form.query }}
                 <button type="submit" class="m-2 rounded bg-blue-600 px-4 py-2 text-white">
@@ -180,7 +182,7 @@
         </div>
         <div class="w-full mx-auto flex-row my-10">
             <div class="w-full ms-auto">
-                <p class="text-xs">Bookmark Article</p>
+                <p class="text-xs">Bookmark Project</p>
                 <form action="{% url 'toggle_bookmark' article.slug %}" method="post" class="inline w-full float-right">
                     {% csrf_token %}
                     <button type="submit" class="bookmark-btn inline-flex items-center text-lg cursor-pointer">
@@ -219,29 +221,29 @@
         <div class="flex w-full">
             <!-- Share Buttons -->
             <div class="my-4 ms-auto">
-                <p class="text-sm my-2 font-semibold text-gray-500">Share this article</p>
+                <p class="text-sm my-2 font-semibold text-gray-500">Share this Project</p>
                 <div class="flex-row">
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}&quote=Check%20out%20this%20awesome%20article%20from%20{{ site_settings.site_name }}%3A%20{{ article.title }}" class="mx-2 no-underline hover:no-underline text-blue-600 hover:text-blue-800" target="_blank" rel="noopener noreferrer" title="Share Post To Facebook">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}&quote=Check%20out%20this%20awesome%20post%20from%20{{ site_settings.site_name }}%3A%20{{ article.title }}" class="mx-2 no-underline hover:no-underline text-blue-600 hover:text-blue-800" target="_blank" rel="noopener noreferrer" title="Share Post To Facebook">
                         <i class="bi bi-facebook text-2xl"></i>
                     </a>
                     
-                    <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text=Read%20this%20incredible%20article%20titled%3A%20{{ article.title }}%20from%20{{ site_settings.site_name }}%20%23ArticleShare" class="mx-2 no-underline hover:no-underline no-underline text-inherit hover:text-gray-600" target="_blank" rel="noopener noreferrer" title="Share Post To Twitter">
+                    <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text=Read%20this%20incredible%20post%20titled%3A%20{{ article.title }}%20from%20{{ site_settings.site_name }}%20%23ArticleShare" class="mx-2 no-underline hover:no-underline no-underline text-inherit hover:text-gray-600" target="_blank" rel="noopener noreferrer" title="Share Post To Twitter">
                         <i class="bi bi-twitter-x text-2xl"></i>
                     </a>
                     
-                    <a href="https://www.linkedin.com/shareArticle?url={{ request.build_absolute_uri }}&title={{ article.title }}&summary=I%20just%20read%20this%20fantastic%20article%20from%20{{ site_settings.site_name }}%20and%20thought%20you%20might%20find%20it%20interesting%21" class="mx-2 no-underline hover:no-underline text-blue-700 hover:text-blue-900" target="_blank" rel="noopener noreferrer" title="Share Post To LinkedIn">
+                    <a href="https://www.linkedin.com/shareArticle?url={{ request.build_absolute_uri }}&title={{ article.title }}&summary=I%20just%20read%20this%20post%20from%20{{ site_settings.site_name }}%20and%20thought%20you%20might%20find%20it%20interesting%21" class="mx-2 no-underline hover:no-underline text-blue-700 hover:text-blue-900" target="_blank" rel="noopener noreferrer" title="Share Post To LinkedIn">
                         <i class="bi bi-linkedin text-2xl"></i>
                     </a>
 
-                    <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}&text=I%20just%20read%20this%20fantastic%20article%20from%20{{ site_settings.site_name }}%20and%20thought%20you%20might%20find%20it%20interesting%21" class="mx-2 no-underline hover:no-underline text-blue-700 hover:text-blue-900" target="_blank" rel="noopener noreferrer" title="Share Post To Telegram">
+                    <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}&text=I%20just%20read%20this%20post%20from%20{{ site_settings.site_name }}%20and%20thought%20you%20might%20find%20it%20interesting%21" class="mx-2 no-underline hover:no-underline text-blue-700 hover:text-blue-900" target="_blank" rel="noopener noreferrer" title="Share Post To Telegram">
                         <i class="bi bi-telegram text-2xl"></i>
                     </a>
                     
-                    <a href="mailto:?subject=Check%20out%20this%20article%20from%20{{ site_settings.site_name }}%3A%20{{ article.title }}&body=Hi%2C%0A%0ACheck%20out%20this%20article%20from%20{{ site_settings.site_name }}%20that%20I%20found%20interesting%3A%20{{ request.build_absolute_uri }}%0A%0ABest%2C%0A[Your%20Name]" class="mx-2 no-underline hover:no-underline text-red-500 hover:text-red-700" target="_blank" rel="noopener noreferrer" title="Share Post To Mail">
+                    <a href="mailto:?subject=Check%20out%20this%20article%20from%20{{ site_settings.site_name }}%3A%20{{ article.title }}&body=Hi%2C%0A%0ACheck%20out%20this%20post%20from%20{{ site_settings.site_name }}%20that%20I%20found%20interesting%3A%20{{ request.build_absolute_uri }}%0A%0ABest%2C%0A[Your%20Name]" class="mx-2 no-underline hover:no-underline text-red-500 hover:text-red-700" target="_blank" rel="noopener noreferrer" title="Share Post To Mail">
                         <i class="bi bi-envelope text-2xl"></i>
                     </a>
                     
-                    <a href="https://api.whatsapp.com/send?text=Hey%21%20I%20found%20this%20great%20article%20from%20{{ site_settings.site_name }}%20and%20thought%20you%20might%20like%20it%3A%20{{ article.title }}%20{{ request.build_absolute_uri }}" class="mx-2 no-underline hover:no-underline text-green-600 hover:text-green-800" target="_blank" rel="noopener noreferrer" title="Share Post To Whatsapp">
+                    <a href="https://api.whatsapp.com/send?text=Hey%21%20I%20found%20this%20great%20post%20from%20{{ site_settings.site_name }}%20and%20thought%20you%20might%20like%20it%3A%20{{ article.title }}%20{{ request.build_absolute_uri }}" class="mx-2 no-underline hover:no-underline text-green-600 hover:text-green-800" target="_blank" rel="noopener noreferrer" title="Share Post To Whatsapp">
                         <i class="bi bi-whatsapp text-2xl"></i>
                     </a>
                     <a id="copy-url-button" class="mx-2 no-underline text-gray-400 hover:text-gray-600" title="Copy Post Link">

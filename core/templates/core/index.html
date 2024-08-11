@@ -2,9 +2,11 @@
 {% block title %}Home{% endblock  %}
 {% load static %}
 {% block content %}
-    {% if ads.homepage_top %}
-        {{ ads.homepage_top.code|safe }}
-    {% endif %}
+    <section class="ad mt-20 w-full mx-10">
+        {% if ads.homepage_top %}
+            {{ ads.homepage_top.code|safe }}
+        {% endif %}
+    </section>
     <!-- Popup -->
     {% if show_popup %}
         <div id="popup" class="fixed bottom-4 left-4 flex items-center justify-center bg-gray-900 bg-opacity-75 text-white p-4 rounded-lg shadow-lg hidden" style="z-index: 7777;">
@@ -57,7 +59,7 @@
             });
         });
     </script>
-    <section class="mt-28 px-52">
+    <section class="mt-10 px-52">
         <!-- Landing -->
         <section class="pb-12 bg-gradient-to-b from-[#E8E3F5] via-[#EDEAFB] to-[#F7FAFC] lg:block md:hidden hidden">
             <div class="items-center pt-5 px-4 sm:px-8 mx-auto max-w-7xl lg:px-16 md:px-12">
@@ -87,7 +89,7 @@
             <div class="md:w-2/3 md:pr-10">
                 <!-- Search Bar -->
                 <div class="flex items-center justify-center lg:hidden md:hidden">
-                    <form method="get" action="{% url 'search_articles' %}" class="flex w-full mx-10 rounded bg-white">
+                    <form method="get" action="{% url 'uploads' %}" class="flex w-full mx-10 rounded">
                         {% csrf_token %}
                         {{ s_form.query }}
                         <button type="submit" class="m-2 rounded bg-blue-600 px-4 py-2 text-white">
@@ -238,7 +240,7 @@
                 <div class=" sticky-nav bg-transparent p-5 rounded-lg">
                     <!-- Search Bar -->
                     <div class="flex items-center justify-center hidden lg:block md:block">
-                        <form method="get" action="{% url 'search_articles' %}" class="flex w-full mx-10 rounded bg-white">
+                        <form method="get" action="{% url 'uploads' %}" class="flex w-full mx-10 rounded">
                             {% csrf_token %}
                             {{ s_form.query }}
                             <button type="submit" class="m-2 rounded bg-blue-600 px-4 py-2 text-white">
@@ -249,18 +251,38 @@
                         </form>
                     </div>
                     <!-- Featured Contents --> 
-                    <div class="mb-20 w-full max-w-[60rem] mx-auto my-5 px-4">
-                        <h2 class="mb-5 text-lg font-bold">Featured</h2>
+                    <div class="mb-20 w-full max-w-[60rem] mx-auto px-4">
+                        <h2 class="my-5 text-lg font-bold">Featured Projects</h2>
+                        <div class=" space-y-6">
+                            {% if featured_d %}
+                                {% for feat_d in featured_d %}
+                                    <li class="article py-3 border-b border-gray-300">
+                                        <h2 class="text-sm font-semibold my-3">
+                                            <a href="{% url 'diy_detail' feat_d.slug %}" class="hover:underline">
+                                                {{ feat_d.title|truncatewords:5 }}
+                                            </a>
+                                        </h2>
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                                <p>No Featured Projects available.</p>
+                            {% endif %}
+                        </div>
+                        <a href="{% url 'projects' %}" class="decoration-none hover:underline">See More <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                    
+                    <div class="mb-5 w-full max-w-[60rem] mx-auto my-5 px-4">
+                        <h2 class="mb-5 text-lg font-bold">Featured Articles</h2>
                         <div class="mb-3 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-5">
-                            {% if featured %}
-                                {% for feat in featured %}
-                                    <a href="{% url 'article_detail' feat.slug %}" class="p-2 rounded-lg bg-gray-100 bg-opacity-30 hover:underline hover:shadow-2xl" title="{{ feat.title }}">
-                                        <img src="{{ feat.image.url }}" class="mb-3 rounded-lg " alt="image article">
-                                        <h3 class="w-full text-xs md:text-xs">{{ feat.title }}</h3>
+                            {% if featured_a %}
+                                {% for feat_a in featured_a %}
+                                    <a href="{% url 'article_detail' feat_a.slug %}" class="p-2 rounded-lg bg-gray-100 bg-opacity-30 hover:underline hover:shadow-2xl" title="{{ feat_a.title }}">
+                                        <img src="{% if feat_a.image %}{{ feat_a.image.url }}{% endif %}" class="mb-3 rounded-lg " alt="image article">
+                                        <h3 class="w-full text-xs md:text-xs">{{ feat_a.title }}</h3>
                                     </a>
                                 {% endfor %}
                             {% else %}
-                                <p>No Featured Contents available.</p>
+                                <p>No Featured Articles available.</p>
                             {% endif %}
                         </div>
                         <a href="{% url 'uploads' %}" class="decoration-none hover:underline">See More <i class="bi bi-arrow-right"></i></a>

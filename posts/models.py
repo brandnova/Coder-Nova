@@ -48,6 +48,7 @@ class Article(models.Model):
     image = models.ImageField(upload_to='articles/', blank=True, null=True)
     published_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
+    file_url = models.URLField(blank=True, null=True, help_text="Paste the direct download link for the project file.")
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     tags = TaggableManager()
     category = models.ForeignKey(Category, related_name='articles', on_delete=models.CASCADE)
@@ -62,7 +63,7 @@ class Article(models.Model):
     allow_comments = models.BooleanField(default=True)
     featured = models.BooleanField(default=False)
     references = models.TextField(blank=True)
-    youtube_url = models.URLField(blank=True, null=True)
+    youtube_url = models.URLField(blank=True, null=True, help_text="Paste the link to the YouTube video.")
 
     def get_absolute_url(self):
         return reverse('article_detail', kwargs={'slug': self.slug})

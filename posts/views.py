@@ -31,9 +31,9 @@ def get_client_ip(request):
     return ip
 
 def article_detail(request, slug):
-    article = get_object_or_404(Article, slug=slug, status='published')
-    similar_article = Article.objects.filter(category=article.category, status='published').order_by('?')[:4]
-    for_u = Article.objects.filter(featured=True, status='published').order_by('?')[:8]
+    article = get_object_or_404(Article, slug=slug, status='published', type='article')
+    similar_article = Article.objects.filter(category=article.category, status='published', type='article').order_by('?')[:4]
+    for_u = Article.objects.filter(featured=True, status='published', type='article').order_by('?')[:8]
     if article.youtube_url:
         article.youtube_url = article.youtube_url.replace("watch?v=", "embed/")
     comments = article.comments.filter(approved=True)
@@ -77,7 +77,7 @@ def article_detail(request, slug):
 @user_passes_test(staff_or_superuser_required, login_url=reverse_lazy('permission_denied'))
 def draft_detail(request, slug):
     draft = get_object_or_404(Article, slug=slug, status='draft')
-    similar_article = Article.objects.filter(category=draft.category, status='published')[:8]
+    similar_article = Article.objects.filter(category=draft.category, status='published', type='article')[:8]
 
     if draft.youtube_url:
         draft.youtube_url = draft.youtube_url.replace("watch?v=", "embed/")
@@ -106,7 +106,13 @@ def like_article(request, slug):
     else:
         article.likes.add(request.user)
         article.dislikes.remove(request.user)
-    return redirect('article_detail', slug=slug)
+    
+    # Get the referring page
+    referer = request.META.get('HTTP_REFERER')
+    if referer:
+        return redirect(referer)
+    else:
+        return redirect('index')
 
 @require_POST
 @login_required
@@ -117,7 +123,13 @@ def dislike_article(request, slug):
     else:
         article.dislikes.add(request.user)
         article.likes.remove(request.user)
-    return redirect('article_detail', slug=slug)
+    
+    # Get the referring page
+    referer = request.META.get('HTTP_REFERER')
+    if referer:
+        return redirect(referer)
+    else:
+        return redirect('index')
 
 @login_required
 def toggle_bookmark(request, slug):
@@ -139,13 +151,25 @@ def toggle_bookmark(request, slug):
         return redirect('index')
 
 def uploads(request):
-    articles = Article.objects.filter(status='published').order_by('-published_date')
+    articles = Article.objects.filter(status='published', type='article').order_by('-published_date')
     categories = Category.objects.all()
     frameworks = Framework.objects.all()
     tags = Tag.objects.all()
     form = SearchForm()
     n_form = SubscriptionForm()
-    s_form = SearchForm()
+    s_form = SearchForm(request.GET or None)
+    query = request.GET.get('query', '')
+
+    if query:
+        articles = Article.objects.filter(
+        Q(title__icontains=query) | 
+        Q(content__icontains=query) | 
+        Q(frameworks__name__icontains=query) | 
+        Q(type__icontains=query) | 
+        Q(slug__icontains=query) | 
+        Q(category__name__icontains=query),
+        status='published',
+    ).distinct()
 
     category_slug = request.GET.get('category')
     framework_slug = request.GET.get('framework')
@@ -177,33 +201,85 @@ def uploads(request):
     }
     return render(request, 'posts/uploads.html', context)
 
-def search_articles(request):
-    s_form = SearchForm(request.GET or None)
+def projects(request):
+    diys = Article.objects.filter(status='published', type='diy').order_by('-published_date')
+    categories = Category.objects.all()
+    frameworks = Framework.objects.all()
+    tags = Tag.objects.all()
+    form = SearchForm()
     n_form = SubscriptionForm()
-    query = request.GET.get('query', '')
+    s_form = SearchForm()
 
-    articles = Article.objects.none()
-    if query:
-        articles = Article.objects.filter(
-        Q(title__icontains=query) | 
-        Q(content__icontains=query) | 
-        Q(frameworks__name__icontains=query) | 
-        Q(type__icontains=query) | 
-        Q(slug__icontains=query) | 
-        Q(category__name__icontains=query),
-        status='published'
-    ).distinct()
+    category_slug = request.GET.get('category')
+    framework_slug = request.GET.get('framework')
+    tag_slug = request.GET.get('tag')
 
+    if category_slug:
+        diys = diys.filter(category__slug=category_slug)
+    if framework_slug:
+        diys = diys.filter(frameworks__slug=framework_slug)
+    if tag_slug:
+        diys = diys.filter(tags__slug=tag_slug)
 
-    # Pagination
-    paginator = Paginator(articles, 10)  
+    # Paginate diys
+    paginator = Paginator(diys, 20)  
     page_number = request.GET.get('page')
-    articles = paginator.get_page(page_number)
+    page_obj = paginator.get_page(page_number)
+
+    diy_count = page_obj.paginator.count  
 
     context = {
-        's_form': s_form,
-        'articles': articles,
-        'query': query,
+        'diys': page_obj,  
+        'categories': categories,
+        'frameworks': frameworks,
+        'tags': tags,
+        'diy_count': diy_count,
+        'form': form,
         'n_form': n_form,
+        's_form': s_form,
     }
-    return render(request, 'posts/search_results.html', context)
+    return render(request, 'posts/projects.html', context)
+
+def diy_detail(request, slug):
+    article = get_object_or_404(Article, slug=slug, status='published', type='diy')
+    similar_article = Article.objects.filter(category=article.category, status='published', type='diy').order_by('?')[:4]
+    for_u = Article.objects.filter(featured=True, status='published', type='diy').order_by('?')[:8]
+    if article.youtube_url:
+        article.youtube_url = article.youtube_url.replace("watch?v=", "embed/")
+    comments = article.comments.filter(approved=True)
+    form = SearchForm()
+    n_form = SubscriptionForm()
+
+    # Increment view count if the IP address hasn't viewed this article before
+    ip_address = get_client_ip(request)
+    user_agent = request.META.get('HTTP_USER_AGENT', '')
+    referrer = request.META.get('HTTP_REFERER', '')
+
+    if not ArticleView.objects.filter(article=article, ip_address=ip_address).exists():
+        article.views += 1
+        article.save(update_fields=['views'])
+        ArticleView.objects.create(article=article, ip_address=ip_address, user_agent=user_agent, referrer=referrer)
+
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            name = request.user.first_name + ' ' + request.user.last_name
+            email = request.user.email
+        else:
+            name = request.POST.get('name')
+            email = request.POST.get('email')
+        
+        comment_text = request.POST.get('comment')
+        comment = Comment(article=article, name=name, email=email, comment=comment_text, approved=True)
+        comment.save()
+        return redirect('diy_detail', slug=article.slug)
+
+    context = {
+        'n_form': n_form,
+        'article': article, 
+        'comments': comments,
+        'form': form,
+        'n_form': n_form,
+        'similar_article': similar_article,
+        'for_u': for_u,
+    }
+    return render(request, 'posts/blog-diy.html', context)

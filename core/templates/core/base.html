@@ -184,13 +184,19 @@
                     </script>
                 </div>
                 <div class="ml-5">
-                    <p class="font-semibold text-gray700">Documentation</p>
+                    <p class="font-semibold text-gray700">Quick Links</p>
                     <div class=" flex flex-col item-start mt-5 space-y-2">
                         {% if static_pages %}
                             {% for page in static_pages %}
                                 <a href="{% url 'static_page' page.slug %}" class="text-gray-600 hover:text-gray-90 hover:text-blue-700">{{ page.title }}</a>
                             {% endfor %}
                         {% endif %}
+                    </div>
+                </div>
+                <div class="ml-5">
+                    <p class="font-semibold text-gray700"> Documentation </p>
+                    <div class=" flex flex-col item-start mt-5 space-y-2">
+                        <a href="{% url 'projects' %}" class="text-gray-600 hover:text-gray-90 hover:text-blue-700">Projects</a>
                     </div>
                 </div>
             </div>
