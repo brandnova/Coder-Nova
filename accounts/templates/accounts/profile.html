@@ -271,7 +271,7 @@
                                             </button>
                                         </form>
                                         <a href="{% url 'article_detail' article.slug %}" class="hover:text-blue-600" title="View Article">
-                                            <img src="{{ article.image.url }}" class="w-12 h-12 object-cover mx-auto rounded">
+                                            <img src="{% if article.image %}{{ article.image.url }}{% endif %}" class="w-12 h-12 object-cover mx-auto rounded">
                                             <div class="flex items-center justify-between w-full mt-1">
                                                 <p class="text-center font-bold text-xs">{{ article.title|truncatewords:4 }}</p>
                                             </div>

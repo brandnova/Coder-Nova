@@ -7,7 +7,6 @@ class ArticleAdmin(admin.ModelAdmin):
     list_filter = ('status', 'published_date', 'author', 'category')
     search_fields = ('title', 'content')
     prepopulated_fields = {'slug': ('title',)}
-    # raw_id_fields = ('author',)
     date_hierarchy = 'published_date'
     ordering = ('status', 'published_date')
     filter_horizontal = ('frameworks',)
@@ -38,5 +37,6 @@ class CommentAdmin(admin.ModelAdmin):
 class ArticleViewAdmin(admin.ModelAdmin):
     list_display = ('article', 'ip_address', 'viewed_on')
     list_filter = ('article', 'user_agent')
+    date_hierarchy = 'viewed_on'
 
 admin.site.register(ArticleView, ArticleViewAdmin)
