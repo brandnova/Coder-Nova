@@ -23,9 +23,9 @@ def index(request):
         show_popup = True
 
     if category_slug:
-        articles_list = Article.objects.filter(category__slug=category_slug, status='published').order_by('-published_date')
+        articles_list = Article.objects.filter(category__slug=category_slug, status='published', type='article').order_by('-published_date')
     else:
-        articles_list = Article.objects.filter(status='published').order_by('-id')
+        articles_list = Article.objects.filter(status='published', type='article').order_by('-id')
 
     # Paginate the articles list
     paginator = Paginator(articles_list, 10)  # Show 10 articles per page
@@ -33,7 +33,8 @@ def index(request):
 
     categories = Category.objects.all()
     frameworks = Framework.objects.all()
-    featured = Article.objects.filter(status='published', featured=True).order_by('?')[:4]
+    featured_a = Article.objects.filter(status='published', type='article', featured=True).order_by('?')[:4]
+    featured_d = Article.objects.filter(status='published', type='diy', featured=True).order_by('?')[:4]
 
     context = {
         'articles': articles,
@@ -41,7 +42,8 @@ def index(request):
         'frameworks': frameworks,
         's_form': s_form,
         'n_form': n_form,
-        'featured': featured,
+        'featured_a': featured_a,
+        'featured_d': featured_d,
         'show_popup': show_popup,
     }
     return render(request, 'core/index.html', context)

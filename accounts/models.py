@@ -5,12 +5,15 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from posts.models import Article
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(blank=True, null=True)
+    title = models.CharField(max_length=255, blank=True, null=True, help_text="What do you do... ?")
     avatar = models.ImageField(default='default.jpg', upload_to='profile_images', null=True, blank=True)
     cover_image = models.ImageField(default='default.jpg', upload_to='cover_images',null=True, blank=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
+    location = models.CharField(max_length=200, null=True, blank=True)
     bookmarks = models.ManyToManyField(Article, related_name='article_bookmark', blank=True)
 
     def __str__(self):

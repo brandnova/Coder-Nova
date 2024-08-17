@@ -222,7 +222,7 @@
                               </div>
                             </div>
                         </div>
-                        <div class="px-6 py-6 border border-gray-300 rounded-lg shadow-xl">
+                        {% comment %} <div class="px-6 py-6 border border-gray-300 rounded-lg shadow-xl">
                           <div class="flex items-center justify-between">
                             <span class="font-bold text-sm text-green-600">Likes</span>
                           </div>
@@ -232,7 +232,7 @@
                             </div>
                             <div class="flex flex-col">
                               <div class="flex items-end">
-                                <span class="text-2xl 2xl:text-3xl font-bold">{{ total_likes }}</span>
+                                <span class="text-2xl 2xl:text-3xl font-bold">5</span>
                               </div>
                             </div>
                           </div>
@@ -247,14 +247,14 @@
                             </div>
                             <div class="flex flex-col">
                               <div class="flex items-end">
-                                <span class="text-2xl 2xl:text-3xl font-bold">{{ total_dislikes }}</span>
+                                <span class="text-2xl 2xl:text-3xl font-bold">3</span>
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> {% endcomment %}
                     </div>
 
-                    <div class="mt-14">
+                    <div class="mt-14 overflow-hidden max-h-80 border-t border-b rounded-sm py-5 overflow-y-scroll hide-scrollbar">
                         <div class="flex items-center justify-between">
                             <h4 class="text-xl font-bold">Bookmarks</h4>
                         </div>
@@ -287,7 +287,7 @@
                     </div>
 
                     {% if request.user.is_staff %} 
-                        <div class="mt-14">
+                        <div class="mt-14 overflow-hidden max-h-80 border-t border-b rounded-sm py-5 overflow-y-scroll hide-scrollbar">
                             <div class="flex items-center justify-between">
                                 <h4 class="text-xl font-bold">Drafted Articles</h4>
                             </div>
@@ -311,30 +311,53 @@
 
                             </div>
                         </div>
-                    {% endif %}
-
-                    {% if request.user.is_staff %} 
-                        <div class="mt-14">
+                     
+                        <div class="mt-14 overflow-hidden max-h-80 border-t border-b rounded-sm py-5 overflow-y-scroll hide-scrollbar">
                             <div class="flex items-center justify-between">
                                 <h4 class="text-xl font-bold">Published Articles</h4>
                             </div>
                             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-8 mt-8">
-                                {% if posts %}
-                                    {% for post in posts %}
-                                        {% if post.author.username == request.user.username %}
+                                {% if posts_a %}
+                                    {% for post_a in posts_a %}
+                                        {% if post_a.author.username == request.user.username %}
                                             <div class="flex flex-col items-center justify-center rounded-md p-2 transition duration-200">
-                                                <a href="{% url 'article_detail' post.slug %}" class="hover:text-blue-600" title="View Article">
-                                                    <img src="{% if post.image %}{{ post.image.url }}{% endif %}" class="w-12 h-12 object-cover mx-auto rounded">
+                                                <a href="{% url 'article_detail' post_a.slug %}" class="hover:text-blue-600" title="View Article">
+                                                    <img src="{% if post_a.image %}{{ post_a.image.url }}{% endif %}" class="w-12 h-12 object-cover mx-auto rounded">
                                                     <div class="flex items-center justify-between w-full mt-1">
-                                                        <p class="text-center font-bold text-xs">{{ post.title|truncatewords:4 }}</p>
+                                                        <p class="text-center font-bold text-xs">{{ post_a.title|truncatewords:4 }}</p>
                                                     </div>
                                                 </a>
-                                                <span class="text-xs">({{ post.views }} views)</span>
+                                                <span class="text-xs">({{ post_a.views }} views)</span>
                                             </div>
                                         {% endif %}
                                     {% endfor %}
                                 {% else %}
-                                    <p class="text-center text-gray-500 col-span-full">You Have No Published  Articles.</p>
+                                    <p class="text-center text-gray-500 col-span-full">You Have No Published Articles.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="mt-14 overflow-hidden max-h-80 border-t border-b rounded-sm py-5 overflow-y-scroll hide-scrollbar">
+                            <div class="flex items-center justify-between">
+                                <h4 class="text-xl font-bold">Published Projects</h4>
+                            </div>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-8 mt-8">
+                                {% if posts_p %}
+                                    {% for post_p in posts_p %}
+                                        {% if post_p.author.username == request.user.username %}
+                                            <div class="flex flex-col items-center justify-center rounded-md p-2 transition duration-200">
+                                                <a href="{% url 'article_detail' post_p.slug %}" class="hover:text-blue-600" title="View Article">
+                                                    <img src="{% if post_p.image %}{{ post_p.image.url }}{% endif %}" class="w-12 h-12 object-cover mx-auto rounded">
+                                                    <div class="flex items-center justify-between w-full mt-1">
+                                                        <p class="text-center font-bold text-xs">{{ post_p.title|truncatewords:4 }}</p>
+                                                    </div>
+                                                </a>
+                                                <span class="text-xs">({{ post_p.views }} views)</span>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <p class="text-center text-gray-500 col-span-full">You Have No Published Projects.</p>
                                 {% endif %}
                             </div>
                         </div>
@@ -342,8 +365,6 @@
                 </div>
             </div>
         </div>
-        
-        
-    </div>
 
+    </div>
 {% endblock %}

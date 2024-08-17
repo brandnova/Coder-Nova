@@ -10,6 +10,25 @@ class ArticleAdmin(admin.ModelAdmin):
     date_hierarchy = 'published_date'
     ordering = ('status', 'published_date')
     filter_horizontal = ('frameworks',)
+    fieldsets = (
+        ('General Information', {
+            'fields': ('title', 'slug', 'author', 'type', 'category', 'tags', 'frameworks')
+        }),
+        ('Content', {
+            'fields': ('content', 'excerpt', 'image'),
+        }),
+        ('Publication Details', {
+            'fields': ('status', 'reading_time', 'views', 'allow_comments'),
+            'classes': ('collapse',),
+        }),
+        ('SEO Settings', {
+            'fields': ('seo_title', 'meta_description', 'meta_keywords'),
+            'classes': ('collapse',),
+        }),
+        ('Additional Options', {
+            'fields': ('featured', 'file_url', 'youtube_url', 'references'),
+        }),
+    )
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):

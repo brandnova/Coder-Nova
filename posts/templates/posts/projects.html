@@ -1,0 +1,162 @@
+{% extends 'core/base.html' %}
+{% block title %}Projects{% endblock  %}
+{% load static %}
+{% block content %}
+    <section class="ad mt-20">
+        {% if ads.projectpage_top %}
+            {{ ads.projectpage_top.code|safe }}
+        {% endif %}
+    </section>
+    <section class="font-serif mx-auto body-font mt-10">
+        <div class="container max-w-full mx-auto px-5 flex flex-col md:flex-row">
+            <!-- Left-side List Section -->
+            <div class="md:w-1/5 mt-10 md:mt-0 border-e border-gray-900">
+                <div class="h-auto col-span-1 mx-3">
+                    <div class="bg-white p-2 mt-2 rounded-md">
+                        <h1 class="text-center text-xl my-4  bg-white p-2 rounded-md border-b-2 cursor-pointer text-gray-600">Filters</h1>
+                        <div>
+                            <form method="get" action="{% url 'projects' %}" class="bg-white rounded-md list-none">
+                                {% csrf_token %}
+                                {{ s_form.query }}
+                                
+                                <li class="py-1 text-gray-600 list-none">
+                                    <select name="category" class="flex w-full my-2 items-center justify-between rounded bg-white text-gray-600 p-2 ring-1 ring-gray-300">
+                                        <option value="">All Categories</option>
+                                        {% for category in categories %}
+                                            <option value="{{ category.slug }}" {% if request.GET.category == category.slug %}selected{% endif %}>{{ category.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </li>
+                                <li class="py-1 text-gray-600 list-none">
+                                    <select name="framework" class="flex w-full my-2 items-center justify-between rounded bg-white text-gray-600 p-2 ring-1 ring-gray-300">
+                                        <option value="">All Frameworks</option>
+                                        {% for framework in frameworks %}
+                                            <option value="{{ framework.slug }}" {% if request.GET.framework == framework.slug %}selected{% endif %}>{{ framework.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </li>
+                                <li class="py-1 text-gray-600 list-none">
+                                    <select name="tag" class="flex w-full my-2 items-center justify-between rounded bg-white text-gray-600 p-2 ring-1 ring-gray-300">
+                                        <option value="">All Tags</option>
+                                        {% for tag in tags %}
+                                            <option value="{{ tag.slug }}" {% if request.GET.tag == tag.slug %}selected{% endif %}>{{ tag.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </li>
+                                <div class="flex-col">
+                                    <button type="submit" class="flex w-full justify-center mt-3 bg-yellow-600 hover:bg-yellow-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    {% if ads.projectpage_left %}
+                        {{ ads.projectpage_left.code|safe }}
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Article Section -->
+            <div class="md:w-3/5 md:pr-10">
+                <section>
+                    <div class="mb-20 w-full max-w-[60rem] mx-auto my-5 px-4">
+                        <h2 class="mb-5 text-3xl font-bold">DIY's Projects</h2>
+                        <h1 class="text-lg font-bold my-6">({{ diy_count }}) Result{% if diy_count != 1 %}s{% endif %}</h1>
+                        <div class="mb-3 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5 py-3 border-b border-gray-300">
+                            {% for diy in diys %}
+                                <a href="{% url 'diy_detail' diy.slug %}" class="p-2 rounded-lg bg-gray-100 bg-opacity-30 hover:underline overflow-hidden" title="{{ diy.title }}">
+                                    <img src="{% if diy.image %}{{ diy.image.url }}{% endif %}" class="mb-3 rounded-lg" alt="{{ diy.title }}">
+                                    <h3>{{ diy.title|truncatewords:5 }}</h3>
+                                    {% comment %} <p class="text-xs">{{ diy.excerpt|truncatewords:10 }}</p> {% endcomment %}
+                                </a>
+                            {% empty %}
+                                <p>No Projects found.</p>
+                            {% endfor %}
+                            
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <div class="flex items-center justify-center mt-8">
+                            <div class="max-w-full md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl mx-auto bg-opacity-30 p-6 rounded-lg shadow-sm">
+                                <div class="flex justify-center">
+                                    <nav class="flex space-x-2" aria-label="Pagination">
+                                        <!-- Previous Page -->
+                                        {% if diys.has_previous %}
+                                            <a href="?page={{ diys.previous_page_number }}&category={{ request.GET.category }}&framework={{ request.GET.framework }}&tag={{ request.GET.tag }}"
+                                            class="relative inline-flex items-center px-4 py-2 text-sm bg-opacity-30 border border-gray-500 hover:border-violet-100 font-semibold cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
+                                                Previous
+                                            </a>
+                                        {% else %}
+                                            <span class="relative inline-flex items-center px-4 py-2 text-sm bg-opacity-30 border border-gray-300 text-gray-400 cursor-not-allowed leading-5 rounded-md transition duration-150 ease-in-out">
+                                                Previous
+                                            </span>
+                                        {% endif %}
+                        
+                                        <!-- Page Numbers -->
+                                        {% for num in diys.paginator.page_range %}
+                                            {% if diys.number == num %}
+                                                <span class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-fuchsia-200 border border-fuchsia-100 cursor-pointer leading-5 rounded-md">
+                                                    {{ num }}
+                                                </span>
+                                            {% elif num > diys.number|add:'-3' and num < diys.number|add:'3' %}
+                                                <a href="?page={{ num }}&category={{ request.GET.category }}&framework={{ request.GET.framework }}&tag={{ request.GET.tag }}"
+                                                class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-fuchsia-100 hover:bg-fuchsia-200 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
+                                                    {{ num }}
+                                                </a>
+                                            {% endif %}
+                                        {% endfor %}
+                        
+                                        <!-- Next Page -->
+                                        {% if diys.has_next %}
+                                            <a href="?page={{ diys.next_page_number }}&category={{ request.GET.category }}&framework={{ request.GET.framework }}&tag={{ request.GET.tag }}"
+                                            class="relative inline-flex items-center px-4 py-2 text-sm bg-opacity-30 border border-gray-500 hover:border-violet-100 font-semibold cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
+                                                Next
+                                            </a>
+                                        {% else %}
+                                            <span class="relative inline-flex items-center px-4 py-2 text-sm bg-opacity-30 border border-gray-300 text-gray-400 cursor-not-allowed leading-5 rounded-md transition duration-150 ease-in-out">
+                                                Next
+                                            </span>
+                                        {% endif %}
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right-side List Section -->
+            <div class="md:w-1/5 mt-10 md:mt-0 border-s border-gray-900">
+                <div class=" sticky-nav bg-transparent p-5 rounded-lg">
+                    {% if ads.projectpage_right %}
+                        {{ ads.projectpage_right.code|safe }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% comment %} <section>
+        <div class="mb-20 w-full max-w-[60rem] mx-auto my-5 px-4">
+            <h2 class="mb-5 text-lg font-bold">DIY's Projects</h2>
+            <div class="mb-3 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <a href="#" class="p-2 rounded-lg bg-gray-100 bg-opacity-30 hover:underline hover:shadow-2xl" title="10 Essential Tools for Every DIY Enthusiast">
+                    <img src="{% static 'assets\imgs\Coder_Nova.jpeg' %}" class="mb-3 rounded-lg" alt="image article">
+                    <h3>10 Essential Tools for Every DIY Enthusiast</h3>
+                </a>
+                <a href="#" class="p-2 rounded-lg bg-gray-100 bg-opacity-30 hover:underline" title="What Are the Benefits of Regular Exercise?">
+                    <img src="{% static 'assets\imgs\Coder_Nova.jpeg' %}" class="mb-3 rounded-lg" alt="image article">
+                    <h3>What Are the Benefits of Regular Exercise?</h3>
+                </a>
+                <a href="#" class="p-2 rounded-lg bg-gray-100 bg-opacity-30 hover:underline" title="Discover the Hidden Gems of Europe">
+                    <img src="{% static 'assets\imgs\Coder_Nova.jpeg' %}" class="mb-3 rounded-lg" alt="image article">
+                    <h3>Discover the Hidden Gems of Europe</h3>
+                </a>
+                <a href="#" class="p-2 rounded-lg bg-gray-100 bg-opacity-30 hover:underline" title="How to Bake a Delicious Chocolate Cake">
+                    <img src="{% static 'assets\imgs\Coder_Nova.jpeg' %}" class="mb-3 rounded-lg" alt="image article">
+                    <h3>How to Bake a Delicious Chocolate Cake</h3>
+                </a>
+                
+            </div>
+        </div>
+    </section> {% endcomment %}
+{% endblock %}
