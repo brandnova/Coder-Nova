@@ -9,7 +9,7 @@ from .forms import SearchForm
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 from accounts.models import Profile
-from .models import Article, ArticleView, Category, Comment, Framework
+from .models import Article, ArticleView, Category, Comment, Framework, Reaction
 from django.contrib.auth.decorators import user_passes_test
 from django.urls import reverse_lazy
 from django.utils.timezone import now
@@ -34,8 +34,10 @@ def article_detail(request, slug):
     article = get_object_or_404(Article, slug=slug, status='published', type='article')
     similar_article = Article.objects.filter(category=article.category, status='published', type='article').order_by('?')[:4]
     for_u = Article.objects.filter(featured=True, status='published', type='article').order_by('?')[:8]
+
     if article.youtube_url:
         article.youtube_url = article.youtube_url.replace("watch?v=", "embed/")
+    
     comments = article.comments.filter(approved=True)
     form = SearchForm()
     n_form = SubscriptionForm()
@@ -63,13 +65,29 @@ def article_detail(request, slug):
         comment.save()
         return redirect('article_detail', slug=article.slug)
     
+    # Fetch the user's reactions to this article, if any
+    user_reactions = []
+    if request.user.is_authenticated:
+        user_reactions = Reaction.objects.filter(user=request.user, article=article).values_list('reaction_type', flat=True)
+
+    reactions = [
+        ('like', 'bi-hand-thumbs-up', 'blue'),
+        ('love', 'bi-heart', 'red'),
+        ('laugh', 'bi-emoji-laughing', 'yellow'),
+        ('surprise', 'bi-emoji-surprise', 'yellow'),
+        ('sad', 'bi-emoji-frown', 'blue'),
+        ('dislike', 'bi-hand-thumbs-down', 'red'),
+    ]
+    
     context = {
-        'article': article, 
+        'article': article,
         'comments': comments,
         'form': form,
         'n_form': n_form,
         'similar_article': similar_article,
         'for_u': for_u,
+        'reactions': reactions,
+        'user_reactions': user_reactions,  # Pass user reactions to the template
     }
 
     return render(request, 'posts/blog-article.html', context)
@@ -97,39 +115,29 @@ def draft_detail(request, slug):
     return render(request, 'posts/draft-detail.html', context)
 
 
-@require_POST
 @login_required
-def like_article(request, slug):
+def react_to_article(request, slug):
     article = get_object_or_404(Article, slug=slug)
-    if article.likes.filter(id=request.user.id).exists():
-        article.likes.remove(request.user)
-    else:
-        article.likes.add(request.user)
-        article.dislikes.remove(request.user)
-    
-    # Get the referring page
-    referer = request.META.get('HTTP_REFERER')
-    if referer:
-        return redirect(referer)
-    else:
-        return redirect('index')
+    reaction_type = request.POST.get('reaction_type')
 
-@require_POST
-@login_required
-def dislike_article(request, slug):
-    article = get_object_or_404(Article, slug=slug)
-    if article.dislikes.filter(id=request.user.id).exists():
-        article.dislikes.remove(request.user)
-    else:
-        article.dislikes.add(request.user)
-        article.likes.remove(request.user)
-    
+    reaction, created = Reaction.objects.get_or_create(
+        user=request.user,
+        article=article,
+        defaults={'reaction_type': reaction_type}
+    )
+
+    if not created:
+        # If the reaction already exists, update it
+        reaction.reaction_type = reaction_type
+        reaction.save()
+
     # Get the referring page
     referer = request.META.get('HTTP_REFERER')
     if referer:
         return redirect(referer)
     else:
-        return redirect('index')
+        return redirect('article_detail', slug=article.slug)
+    
 
 @login_required
 def toggle_bookmark(request, slug):
@@ -283,3 +291,12 @@ def diy_detail(request, slug):
         'for_u': for_u,
     }
     return render(request, 'posts/blog-diy.html', context)
+
+
+def author_profile(request, username):
+    profile = get_object_or_404(Profile, user__username=username)
+    context = {
+        'profile': profile,
+    }
+    return render(request, 'posts/author_profile.html', context)
+

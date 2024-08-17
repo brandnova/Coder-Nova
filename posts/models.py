@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField # type: ignore
 from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager # type: ignore
 
@@ -35,10 +36,10 @@ class Article(models.Model):
         ('published', 'Published'),
     )
     CONTENT_TYPE = [
-    ('article', 'Article'),
-    ('diy', 'DIY Project'),
-]
-    
+        ('article', 'Article'),
+        ('diy', 'DIY Project'),
+    ]
+
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -51,12 +52,10 @@ class Article(models.Model):
     file_url = models.URLField(blank=True, null=True, help_text="Paste the direct download link for the project file.")
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     tags = TaggableManager()
-    category = models.ForeignKey(Category, related_name='articles', on_delete=models.CASCADE)
-    frameworks = models.ManyToManyField(Framework, related_name='articles', blank=True)
+    category = models.ForeignKey('Category', related_name='articles', on_delete=models.CASCADE)
+    frameworks = models.ManyToManyField('Framework', related_name='articles', blank=True)
     reading_time = models.PositiveIntegerField(blank=True, null=True)
     views = models.PositiveIntegerField(default=0)
-    likes = models.ManyToManyField(User, related_name='article_likes', blank=True)
-    dislikes = models.ManyToManyField(User, related_name='article_dislikes', blank=True)
     seo_title = models.CharField(max_length=255, blank=True)
     meta_description = models.TextField(max_length=160, blank=True)
     meta_keywords = models.CharField(max_length=255, blank=True)
@@ -67,7 +66,7 @@ class Article(models.Model):
 
     def get_absolute_url(self):
         return reverse('article_detail', kwargs={'slug': self.slug})
-    
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
@@ -75,6 +74,14 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+    def reaction_summary(self):
+        """Returns a summary of reactions grouped by type."""
+        return self.reactions.values('reaction_type').annotate(count=models.Count('reaction_type')).order_by('-count')
+
+    def total_reactions(self):
+        """Returns the total number of reactions for this article."""
+        return self.reactions.count()
     
     
 class ArticleView(models.Model):
@@ -86,6 +93,29 @@ class ArticleView(models.Model):
 
     def __str__(self):
         return f"{self.ip_address} viewed {self.article.title}"
+    
+
+class Reaction(models.Model):
+    REACTION_CHOICES = [
+        ('like', 'Like'),
+        ('love', 'Love'),
+        ('laugh', 'Laugh'),
+        ('surprise', 'Surprise'),
+        ('sad', 'Sad'),
+        ('dislike', 'Dislike'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, related_name='reactions', on_delete=models.CASCADE)
+    reaction_type = models.CharField(max_length=10, choices=REACTION_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'article', 'reaction_type')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.reaction_type} - {self.article.title}"
+
 
 class Comment(models.Model):
     article = models.ForeignKey(Article, related_name='comments', on_delete=models.CASCADE)

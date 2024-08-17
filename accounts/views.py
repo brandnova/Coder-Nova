@@ -71,14 +71,12 @@ def profile(request):
     n_form = SubscriptionForm()
     bookmarks = request.user.profile.bookmarks.all()
     drafts = Article.objects.filter(status='draft').order_by('-published_date')
-    posts = Article.objects.filter(status='published').order_by('-published_date')
+    posts_a = Article.objects.filter(status='published', type='article').order_by('-published_date')
+    posts_p = Article.objects.filter(status='published', type='diy').order_by('-published_date')
     sections = InfoContent.objects.all()
 
     is_subscribed = Subscriber.objects.filter(email=request.user.email).exists()
 
-    # Count the likes and dislikes the user has given
-    total_likes = Article.objects.filter(likes=request.user).count()
-    total_dislikes = Article.objects.filter(dislikes=request.user).count()
     
     if request.method == 'POST':
         if u_form.is_valid() and p_form.is_valid():
@@ -93,11 +91,10 @@ def profile(request):
         'n_form': n_form,
         'bookmarks': bookmarks,
         'drafts': drafts,
-        'posts': posts,
+        'posts_a': posts_a,
+        'posts_p': posts_p,
         'sections': sections,
         'is_subscribed': is_subscribed,
-        'total_likes': total_likes,
-        'total_dislikes': total_dislikes,
     }
 
     return render(request, 'accounts/profile.html', context)

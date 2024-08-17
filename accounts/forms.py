@@ -86,11 +86,13 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['phone', 'avatar', 'cover_image', 'bio']
+        fields = ['phone', 'location', 'avatar', 'cover_image', 'title', 'bio']
         widgets = {
             'phone': forms.TextInput(attrs={'class': 'w-full mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}),
+            'location': forms.TextInput(attrs={'class': 'w-full mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}),
             'avatar': forms.FileInput(attrs={'class': 'w-full bg-white mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}),
             'cover_image': forms.FileInput(attrs={'class': 'w-full bg-white mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}),
+            'title': forms.TextInput(attrs={'class': 'w-full mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}),
             'bio': forms.Textarea(attrs={'class': 'w-full mt-2 p-2 border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded text-sm text-gray-900'}),
         }
 

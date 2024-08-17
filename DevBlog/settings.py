@@ -91,15 +91,15 @@ WSGI_APPLICATION = 'DevBlog.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
 
-        # 'ENGINE': 'django.db.backends.mysql',
-        # 'NAME': 'codernova',
-        # 'USER': 'codernova',
-        # 'PASSWORD': 'Uq[-KPDRZB5VAyg6',
-        # 'HOST': 'localhost',
-        # 'PORT': '3306',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'codernova',
+        'USER': 'codernova',
+        'PASSWORD': 'ndKNtRVasYvLt6s.',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 

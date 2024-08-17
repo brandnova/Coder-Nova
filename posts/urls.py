@@ -1,15 +1,15 @@
 from django.urls import path
-from .views import article_detail, uploads, projects, like_article, dislike_article, toggle_bookmark, draft_detail, permission_denied_view, diy_detail
+from . import views  
 
 urlpatterns = [
-    path('article/<slug:slug>/', article_detail, name='article_detail'),
-    path('project/<slug:slug>/', diy_detail, name='diy_detail'),
-    path('draft/<slug:slug>/', draft_detail, name='draft_detail'),
-    path('uploads/', uploads, name='uploads'),
-    path('projects/', projects, name='projects'),
-    path('article/<slug:slug>/like/', like_article, name='like_article'),
-    path('article/<slug:slug>/dislike/', dislike_article, name='dislike_article'),
-    path('toggle-bookmark/<slug:slug>/', toggle_bookmark, name='toggle_bookmark'),
-    path('permission-denied/', permission_denied_view, name='permission_denied'),
+    path('article/<slug:slug>/', views.article_detail, name='article_detail'),
+    path('project/<slug:slug>/', views.diy_detail, name='diy_detail'),
+    path('draft/<slug:slug>/', views.draft_detail, name='draft_detail'),
+    path('uploads/', views.uploads, name='uploads'),
+    path('projects/', views.projects, name='projects'),
+    path('article/<slug:slug>/react/', views.react_to_article, name='react_to_article'),   
+    path('toggle-bookmark/<slug:slug>/', views.toggle_bookmark, name='toggle_bookmark'),
+    path('permission-denied/', views.permission_denied_view, name='permission_denied'),
+    path('author/<str:username>/', views.author_profile, name='author_profile'),
 ]
 

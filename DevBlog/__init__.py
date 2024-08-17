@@ -1,2 +1,2 @@
-# import pymysql # type: ignore
-# pymysql.install_as_MySQLdb()
+import pymysql # type: ignore
+pymysql.install_as_MySQLdb()
