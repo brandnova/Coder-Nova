@@ -3,6 +3,7 @@ from django.utils import timezone
 from core.models import SiteSettings
 
 class Subscriber(models.Model):
+    fullname = models.CharField(max_length=50, null=True)
     email = models.EmailField(unique=True)
     subscribed_at = models.DateTimeField(default=timezone.now)
 

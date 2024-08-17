@@ -7,7 +7,7 @@ from posts.models import Article
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     bio = models.TextField(blank=True, null=True)
     title = models.CharField(max_length=255, blank=True, null=True, help_text="What do you do... ?")
     avatar = models.ImageField(default='default.jpg', upload_to='profile_images', null=True, blank=True)

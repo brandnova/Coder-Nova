@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Article, ArticleView, Category, Framework, Comment
+from .models import Article, ArticleView, Category, Framework, Comment, Reaction
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
@@ -29,6 +29,13 @@ class ArticleAdmin(admin.ModelAdmin):
             'fields': ('featured', 'file_url', 'youtube_url', 'references'),
         }),
     )
+
+@admin.register(Reaction)
+class ReactionAdmin(admin.ModelAdmin):
+    list_display = ('user', 'article', 'reaction_type', 'created_at')
+    list_filter = ('article', 'reaction_type', 'created_at')
+    search_fields = ('user__username', 'article__title')
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):

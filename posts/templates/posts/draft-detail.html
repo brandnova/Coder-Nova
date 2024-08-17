@@ -126,11 +126,21 @@
             margin-bottom: 0.5rem; 
         }
         
-        /* Blockquotes */
         blockquote {
-            padding-left: 1rem; 
-            margin-bottom: 1rem; 
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+            border-left: 5px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            font-style: italic;
+            font-family: Georgia, serif; 
+            font-size: 0.5rem; 
+            line-height: 1.5; 
+            color: black; 
+            padding-top: 10px;
+            padding-bottom: 10px;
         }
+          
         
         /* Tables */
         table {
@@ -157,233 +167,445 @@
         small {
             font-size: 0.875rem; 
         }
-    </style>
-    <section class="mb-10 w-full max-w-[60rem] mx-auto px-4 sm:px-6 lg:px-8 my-20">
-        <!-- Search Bar -->
-        <div class="flex items-center justify-center">
-            <form method="get" action="{% url 'uploads' %}" class="flex w-full border border-gray-400 mx-10 rounded bg-white">
-                {% csrf_token %}
-                {{ form.query }}
-                <button type="submit" class="m-2 rounded bg-blue-600 px-4 py-2 text-white">
-                    <i class="bi bi-search fill-current h-6 w-6"></i>
-                </button>
-            </form>
-        </div>
-        <div class="w-full mx-auto flex-row my-10">
-            <div class="text-gray-500 space-y-3">
-                <p>{{ article.published_date|date:"d M Y" }} by {{ article.author.first_name }} {{ article.author.last_name }}</p>
-                <p>Categories: 
-                    {{ article.category.name }}
-                </p>
-                <p>Frameworks: 
-                    {% for framework in article.frameworks.all %}
-                        {{ framework.name }}{% if not forloop.last %}, {% endif %}
-                    {% endfor %}
-                </p>
-                <p>
-                    Read Time:
-                    {{ article.reading_time }} Minute{% if article.reading_time > 1 %}s{% endif %}
-                </p>
-                <p>
-                    Status:
-                    {{ article.status }}
-                </p>
-            </div>
-        </div>
-        <div class="flex w-full">
-            <!-- Share Buttons -->
-            <div class="my-4 ms-auto">
-                <p class="text-sm my-2 font-semibold text-gray-500">Share this article</p>
-                <div class="flex-row">
-                    <a href="#" class="mx-2 no-underline hover:no-underline text-blue-600 hover:text-blue-800" rel="noopener noreferrer" title="Share Post To Facebook">
-                        <i class="bi bi-facebook text-2xl"></i>
-                    </a>
-                    
-                    <a href="#" class="mx-2 no-underline hover:no-underline text-inherit hover:text-gray-600" rel="noopener noreferrer" title="Share Post To Twitter">
-                        <i class="bi bi-twitter-x text-2xl"></i>
-                    </a>
-                    
-                    <a href="#" class="mx-2 no-underline hover:no-underline text-blue-700 hover:text-blue-900" rel="noopener noreferrer" title="Share Post To LinkedIn">
-                        <i class="bi bi-linkedin text-2xl"></i>
-                    </a>
-                    
-                    <a href="#" class="mx-2 no-underline hover:no-underline text-red-500 hover:text-red-700" rel="noopener noreferrer" title="Share Post To Mail">
-                        <i class="bi bi-envelope text-2xl"></i>
-                    </a>
-                    
-                    <a href="#" class="mx-2 no-underline hover:no-underline text-green-600 hover:text-green-800" rel="noopener noreferrer" title="Share Post To Whatsapp">
-                        <i class="bi bi-whatsapp text-2xl"></i>
-                    </a>
-                    <a id="copy-url-button" class="mx-2 no-underline hover:no-underline text-gray-400 hover:text-gray-600" title="Copy Post Link">
-                        <i class="bi bi-bi bi-copy text-2xl"></i>
-                    </a>
-                </div>
-    
-                
-                <div id="copy-alert" class="hidden fixed top-4 right-4 w-full max-w-xs md:max-w-sm lg:max-w-md bg-green-100 border border-green-400 text-green-700 rounded-lg shadow-lg p-4 z-50" role="alert">
-                    <strong><i class="bi bi-clipboard-check"></i></strong>Post Link Copied to clipboard!
-                    <button id="close-alert-button" type="button" class="absolute top-2 right-2 text-green-700 hover:text-green-900 focus:outline-none" aria-label="Close">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M6.293 6.293a1 1 0 011.414 0L10 7.586l2.293-1.293a1 1 0 111.414 1.414L11.414 9l2.293 2.293a1 1 0 01-1.414 1.414L10 10.414l-2.293 2.293a1 1 0 01-1.414-1.414L8.586 9 6.293 6.707a1 1 0 010-1.414z"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <hr>
 
-        <h1 class="my-5 text-4xl">
-            {{ article.title }}
-        </h1>
-
-        <img src="{% if article.image %}{{ article.image.url }}{% endif %}" class="object-cover h-52 w-full mb-5 rounded-lg" alt="{{ article.title }}">
-
-        <p id="content" class="mb-10 first-letter:text-7xl first-letter:font-bold first-letter:mr-3 first-letter:float-left">
-            {{ article.content|safe }}
-        </p>
-
-        {% if article.youtube_url %}
-            <span class="my-10">Related Video :</span>
-            <iframe class="w-full h-64 my-10 rounded-lg md:h-80" 
-                    src="{{ article.youtube_url }}" 
-                    title="YouTube video player" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    allowfullscreen>
-            </iframe>
-        {% endif %}
         
-        {% if article.references %}
-            <div class="text-xs pt-5">
-                <span>Sources :</span>
-                <ul class="list-disc list-inside">
-                    <li class="list-none">
-                        <p class="">
-                            -- {{ article.references }} --
-                        </p> 
-                    </li>
-                </ul>
-            </div>
+    </style>
+    <section class="ad mt-20">
+        {% if ads.articlepage_top %}
+            {{ ads.articlepage_top.code|safe }}
         {% endif %}
-        <div class="my-5">
-            <hr>
-            <div class="flex justify-between my-5">
-                <div class="flex items-center space-x-4 py-4">
-                    <!-- Like Button -->
-                    <form id="like-form" action="{% url 'like_article' article.slug %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="flex items-center{% if request.user in article.likes.all %} text-blue-500{% else %}text-dark-800{% endif %} dark:text-gray-300 hover:text-blue-500 focus:outline-none">
-                            <i class="bi bi-hand-thumbs-up"></i>
-                            <span class="ml-2 text-sm">Like ({{ article.likes.count }})</span>
-                        </button>
-                    </form>
-                
-                    <!-- Dislike Button -->
-                    <form id="dislike-form" action="{% url 'dislike_article' article.slug %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="flex items-center {% if request.user in article.dislikes.all %}text-red-500{% else %}text-dark-800{% endif %} dark:text-gray-300 hover:text-red-500 focus:outline-none">
-                            <i class="bi bi-hand-thumbs-down"></i>
-                            <span class="ml-2 text-sm">Dislike ({{ article.dislikes.count }})</span>
-                        </button>
-                    </form>
-                </div>
+    </section>
     
-                
-            </div>
+    <section class="mb-10 container max-w-[85rem] flex flex-col md:flex-row mx-auto px-4 sm:px-6 lg:px-8 my-20">
+        <!-- Left -->
+        <div class="w-full sm:w-10/12 md:w-1/12 rounded-lg">
+            <!-- component -->
+            {% if article.reaction_summary %}
+                <div>
+                    <h4>Reactions</h4>
+                    <div class="flex flex-row md:flex-col items-center space-x-4 md:space-x-0 md:space-y-4 mb-4">
+                        {% for reaction in article.reaction_summary %}
+                            <div class="flex items-center space-x-2">
+                                {% if reaction.reaction_type == 'like' %}
+                                    <i class="bi bi-hand-thumbs-up-fill text-blue-500 text-xl"></i>
+                                {% elif reaction.reaction_type == 'love' %}
+                                    <i class="bi bi-heart-fill text-red-500 text-xl"></i>
+                                {% elif reaction.reaction_type == 'laugh' %}
+                                    <i class="bi bi-emoji-laughing-fill text-yellow-500 text-xl"></i>
+                                {% elif reaction.reaction_type == 'surprise' %}
+                                    <i class="bi bi-emoji-surprise-fill text-yellow-500 text-xl"></i>
+                                {% elif reaction.reaction_type == 'sad' %}
+                                    <i class="bi bi-emoji-frown-fill text-blue-500 text-xl"></i>
+                                {% elif reaction.reaction_type == 'dislike' %}
+                                    <i class="bi bi-hand-thumbs-down-fill text-red-500 text-xl"></i>
+                                {% endif %}
+                                <span class="text-xs font-semibold">{{ reaction.count }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
         </div>
 
-        <!-- Comments List -->
-        <div class="max-w-2xl dark:bg-gray-900 shadow-lg rounded-md p-6">
-            <h2 class="text-xl mb-4 tracking-wider font-lighter dark:text-gray-200">Comments</h2>
-            <div class="space-y-6 divide-y-2 divide-gray-400">
-                {% if comments %}
-                    {% for comment in comments %}
-                    <!-- Comment Item -->
-                    <div class="flex space-x-4">
-                        <div class="mt-3">
-                            <div class="text-base">
-                                <span href="#" class="font-medium text-slate-500">
-                                    {% if comment.name %}{{ comment.name }}{% else %}Anonymous{% endif %} 
-                                </span>
-                                <span class="text-sm text-gray-500">• {{ comment.created_at|timesince }} ago</span>
-                            </div>
-                            <div class="mt-1 ps-5">
-                                {{ comment.comment }}
+        <!-- center -->
+        <div class="container sm:w-9/12 md:w-8/12 px-5">
+            <!-- Search Bar -->
+            <div class="flex items-center justify-center">
+                <form method="get" action="{% url 'uploads' %}" class="flex w-full mx-10 rounded">
+                    {% csrf_token %}
+                    {{ form.query }}
+                    <button type="submit" class="m-2 rounded bg-blue-600 px-4 py-2 text-white">
+                        <i class="bi bi-search fill-current h-6 w-6"></i>
+                    </button>
+                </form>
+            </div>
+            <div class="w-full mx-auto flex-row my-10">
+                <div class="text-gray-500 space-y-3">
+                    <p>{{ article.published_date|date:"d M Y" }} by {{ article.author.first_name }} {{ article.author.last_name }}</p>
+                    <p>Categories: 
+                        {{ article.category.name }}
+                    </p>
+                    <p>Frameworks: 
+                        {% for framework in article.frameworks.all %}
+                            {{ framework.name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                    <p>
+                        Read Time:
+                        {{ article.reading_time }} Minute{% if article.reading_time > 1 %}s{% endif %}
+                    </p>
+                    {% if request.user.is_staff %}
+                        {% if article.author.username == request.user.username %}
+                            <p>
+                                Status:
+                                {{ article.status }} <span class="text-yellow-700">(Only You  Can See This)</span>
+                            </p>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <div id="copy-alert" class="hidden fixed top-4 right-4 w-full max-w-xs md:max-w-sm lg:max-w-md bg-green-100 border border-green-400 text-green-700 rounded-lg shadow-lg p-4 z-50" role="alert">
+                <strong><i class="bi bi-clipboard-check"></i></strong>Post Link Copied to clipboard!
+                <button id="close-alert-button" type="button" class="absolute top-2 right-2 text-green-700 hover:text-green-900 focus:outline-none" aria-label="Close">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M6.293 6.293a1 1 0 011.414 0L10 7.586l2.293-1.293a1 1 0 111.414 1.414L11.414 9l2.293 2.293a1 1 0 01-1.414 1.414L10 10.414l-2.293 2.293a1 1 0 01-1.414-1.414L8.586 9 6.293 6.707a1 1 0 010-1.414z"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <hr>
+            
+            <h1 class="my-5 text-4xl">
+                {{ article.title }}
+            </h1>
+
+            <img src="{% if article.image %}{{ article.image.url }}{% endif %}" class="object-cover h-52 w-full mb-5 rounded-lg" alt="{{ article.title }}">
+
+            <p id="content" class="mb-10 first-letter:text-7xl first-letter:font-bold first-letter:mr-3 first-letter:float-left">
+                {{ article.content|safe }}
+            </p>
+
+            {% if ads.articlepage_inner %}
+                {{ ads.articlepage_inner.code|safe }}
+            {% endif %}
+
+            {% if article.youtube_url %}
+                <span class="my-10">Related Video :</span>
+                <iframe class="w-full h-64 my-10 rounded-lg md:h-80" 
+                        src="{{ article.youtube_url }}" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen>
+                </iframe>
+            {% endif %}
+            
+            {% if article.references %}
+                <div class="text-xs pt-5">
+                    <span>Sources :</span>
+                    <ul class="list-disc list-inside">
+                        <li class="list-none">
+                            <p class="">
+                                -- {{ article.references }} --
+                            </p> 
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
+            <div class="my-5">
+                <hr>
+            </div>
+            
+            <!-- Comments List -->
+            <div id="comment" class="max-w-2xl dark:bg-gray-900 shadow-lg rounded-md p-6">
+                <h2 class="text-xl mb-4 tracking-wider font-lighter dark:text-gray-200">Comments</h2>
+                <div class="space-y-6 divide-y-2 divide-gray-400">
+                    {% if comments %}
+                        {% for comment in comments %}
+                        <!-- Comment Item -->
+                        <div class="flex space-x-4">
+                            <div class="mt-3">
+                                <div class="text-base">
+                                    <span href="#" class="font-medium text-slate-500">
+                                        {% if comment.name %}{{ comment.name }}{% else %}Anonymous{% endif %} 
+                                    </span>
+                                    <span class="text-sm text-gray-500">• {{ comment.created_at|timesince }} ago</span>
+                                </div>
+                                <div class="mt-1 ps-5">
+                                    {{ comment.comment }}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- End of Comment Item -->
-                    {% endfor %}
-                {% else %}
-                No comments...
+                        <!-- End of Comment Item -->
+                        {% endfor %}
+                    {% else %}
+                    No comments...
+                    {% endif %}
+                </div>
+            </div>
+            {% if article.allow_comments == True %}
+            <!-- Comment Form -->
+            <div class="max-w-2xl my-5">
+                <div class="max-w-7xl dark:bg-gray-950 dark:text-white shadow shadow-2xl p-6 rounded-md">
+                    <form class="w-full rounded" action="" method="post">
+                        {% csrf_token %}
+                        <h2 class="text-xl mb-4 tracking-wider font-lighter dark:text-gray-200">Leave a Comment</h2>
+
+                        <div class="grid grid-cols-1 gap-3">
+
+                            {% if request.user.is_authenticated == False %}
+                                <div class="flex flex-row mb-2 ms-auto">
+                                    <input type="checkbox" id="rememberMe" class="h-4 w-4 bg-gray-400 rounded-full transition-all duration-300 checked:scale-125"/>
+                                    <label for="rememberMe" class="px-2 text-sm select-none">Remember my name and email for future comments</label>
+                                </div>
+
+                                <div class="flex flex-col md:flex-row ano space-y-4 md:space-y-0 md:space-x-4 mb-4">
+                                    <div class="flex-1">
+                                        <input type="text" id="name" name="name" class="text-gray-900 w-full px-3 py-2 dark:bg-gray-900 rounded-sm border focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300" placeholder="Name" required/>
+                                    </div>
+                                    <div class="flex-1">
+                                        <input type="email" id="email" name="email" class="text-gray-900 w-full px-3 py-2 dark:bg-gray-900 rounded-sm border focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300" placeholder="Email" required/>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            <div class="mb-4 relative">
+                                <textarea id="comment" name="comment" class="text-gray-900 rounded-l w-full px-3 py-2 dark:bg-gray-900 rounded-sm border focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300" placeholder="Type Comment..." required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button type="submit" class="py-2 px-4 h-10 w-auto bg-slate-900 text-white rounded-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-800"> Post Comment → </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% else %}
+            <div class="max-w-2xl my-5">
+                <h2 class="text-xl mb-4 tracking-wider font-lighter dark:text-gray-200">Commenting is disabled for this Post</h2>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Right -->
+        <div class="bg-opacity-30 md:w-3/12 rounded-lg">
+            <!-- component -->
+            <div class="w-auto whitespace-normal break-words rounded-lg p-4 text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none">
+                <div class="flex items-center justify-between gap-4 mb-2">
+                    <img src="{% if article.author.profile.avatar %}{{ article.author.profile.avatar.url }}{% endif %}" alt="{{ article.author.first_name }} {{ article.author.last_name }}" class="relative inline-block object-cover object-center w-12 h-12 rounded-full"/>
+                    {% comment %} <button
+                        class="select-none rounded-lg bg-gray-900 py-2 px-3 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        type="button" data-ripple-light="true">
+                        Follow
+                    </button> {% endcomment %}
+                </div>
+                <h6 class="flex items-center gap-2 mb-2 font-sans text-base antialiased font-medium leading-relaxed tracking-normal text-blue-gray-900">
+                    <span>{{ article.author.first_name }} {{ article.author.last_name }}</span>
+                    <a class="text-sm text-blue-gray-700" href="{% url 'author_profile' article.author.username %}">
+                        @{{ article.author.username }}
+                    </a>
+                </h6>
+                <p class="block font-sans text-sm antialiased font-normal leading-normal">
+                    #{{ article.tags.all|join:" #" }}
+                </p>
+                <div class="flex items-center gap-8 pt-4 mt-6 border-t border-blue-gray-50">
+                    <p class="flex items-center gap-1 font-sans text-xs antialiased font-normal">
+                        <i class="bi bi-geo-alt"></i>
+                        {{ article.author.profile.location }}
+                    </p>
+                </div>
+            </div>
+            <div class=" mt-10relative w-full rounded-lg p-4 font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none">
+                {% if ads.articlepage_sidebar %}
+                    {{ ads.articlepage_sidebar.code|safe }}
                 {% endif %}
             </div>
         </div>
-        {% if article.allow_comments == True %}
-        <!-- Comment Form -->
-        <div class="max-w-2xl my-5">
-            <div class="max-w-7xl dark:bg-gray-950 dark:text-white shadow shadow-2xl p-6 rounded-md">
-                <form class="w-full rounded" action="" method="post">
-                    {% csrf_token %}
-                    <h2 class="text-xl mb-4 tracking-wider font-lighter dark:text-gray-200">Leave a Comment</h2>
 
-                    <div class="grid grid-cols-1 gap-3">
-
-                        {% if request.user.is_authenticated == False %}
-                            <div class="flex flex-row mb-2 ms-auto">
-                                <input type="checkbox" id="cb2" value="cb2" class="h-4 w-4 bg-gray-400 rounded-full transition-all duration-300 checked:scale-125"/>
-                                <label for='cb2' class='px-2 checked:text-slate-900 text-sm select-none'>Anonymous</label>
-                            </div>
-
-                            <div class="flex flex-col md:flex-row ano space-y-4 md:space-y-0 md:space-x-4 mb-4">
-                                <div class="flex-1">
-                                    <input type="text" id="name" name="name" class="text-gray-900 w-full px-3 py-2 dark:bg-gray-900 rounded-sm border focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300" placeholder="Name"/>
-                                </div>
-                                <div class="flex-1">
-                                    <input type="email" id="email" name="email" class="text-gray-900 w-full px-3 py-2 dark:bg-gray-900 rounded-sm border focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300" placeholder="Email"/>
-                                </div>
-                            </div>
-                        {% endif %}
-
-                        <div class="mb-4 relative">
-                            <textarea id="comment" name="comment" class="text-gray-900 rounded-l w-full px-3 py-2 dark:bg-gray-900 rounded-sm border focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300" placeholder="Type Comment..." required></textarea>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-end">
-                        <button type="submit" class="py-2 px-4 h-10 w-auto bg-slate-900 text-white rounded-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-800"> Post Comment → </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        {% else %}
-        <div class="max-w-2xl my-5">
-            <h2 class="text-xl mb-4 tracking-wider font-lighter dark:text-gray-200">Commenting is disabled for this Post</h2>
-        </div>
-        {% endif %}
     </section>
-{% comment %} 
+
     <section>
         <div class="mb-20 w-full max-w-[60rem] mx-auto my-5 px-4">
             <h2 class="mb-5 text-lg font-bold">Related Articles</h2>
             <div class="mb-3 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                {% for sim in similar_article %}
-                    <a href="{% url 'article_detail' sim.slug %}" class="p-2 rounded-lg bg-gray-100 bg-opacity-30 hover:underline hover:shadow-2xl" title="{{ sim.title }}">
-                        <img src="{{ sim.image.url }}" class="mb-3 rounded-lg" alt="image article">
-                        <h3 class="w-full text-sm md:text-sm hover:underline">{{ sim.title }}</h3>
-                    </a>
-                {% endfor %}
+                {% if similar_article %}
+                    {% for sim in similar_article %}
+                        <a href="{% url 'article_detail' sim.slug %}" class="p-2 rounded-lg bg-gray-100 bg-opacity-30 text-gray-800 no-underline hover:underline hover:text-black hover:shadow-2xl" title="{{ sim.title }}">
+                            <img src="{% if sim.image %}{{ sim.image.url }}{% endif %}" class="mb-3 rounded-lg" alt="image article">
+                            <h3 class="w-full text-sm md:text-sm hover:underline">{{ sim.title }}</h3>
+                        </a>
+                    {% endfor %}
+                {% endif %}
             </div>
-            <a href="{% url 'uploads' %}" class="decoration-none hover:underline">See More <i class="bi bi-arrow-right"></i></a>
+            <a href="{% url 'uploads' %}" class="decoration-none border border-gray-300 p-2 rounded-lg bg-gray-500 hover:text-black  text-gray-800 my-3 hover:underline">See More <i class="bi bi-arrow-right"></i></a>
         </div>
-        {% if ads.articlepage_bottom %}
-            {{ ads.articlepage_bottom.code|safe }}
+    </section>
+
+    <section class="ad mt-20">
+        {% if ads.articlepage_inner %}
+            {{ ads.articlepage_inner.code|safe }}
         {% endif %}
-    </section> {% endcomment %}
+    </section>
+
+    <section>
+        <div class="mb-20 w-full max-w-[60rem] mx-auto my-5 px-4">
+            <h2 class="mb-5 text-lg font-bold">For you</h2>
+            <div class="mb-3 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                {% if for_u %}
+                    {% for 4_u in for_u %}
+                        <a href="{% url 'article_detail' 4_u.slug %}" class="p-2 rounded-lg bg-gray-100 bg-opacity-30 text-gray-800 no-underline hover:underline hover:text-black hover:shadow-2xl" title="{{ 4_u.title }}">
+                            <img src="{% if 4_u.image %}{{ 4_u.image.url }}{% endif %}" class="mb-3 rounded-lg" alt="image article">
+                            <h3 class="w-full text-sm md:text-sm hover:underline">{{ 4_u.title }}</h3>
+                        </a>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <a href="{% url 'uploads' %}" class="decoration-none border border-gray-300 p-2 rounded-lg bg-gray-500 hover:text-black  text-gray-800 my-3 hover:underline">See More <i class="bi bi-arrow-right"></i></a>
+        </div>
+    </section>
+    {% if ads.articlepage_bottom %}
+        {{ ads.articlepage_bottom.code|safe }}
+    {% endif %}
+    <style>
+        /* Custom CSS */
+        .reaction-popup {
+            background-color: var(--bg-color);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .share-popup {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease,background-color 0.3s ease, color 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .relative:hover .share-popup {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .share-popup a {
+            color: var(--text-color);
+            transition: color 0.3s ease; /* Smooth transition for icons */
+        }
+        
+        .share-popup a:hover {
+            color: #007bff; /* Add a hover color for light theme */
+        }
+        
+        .bottom-nav{
+            background-color: var(--bg-color);
+        }
+
+        .bottom-nav-icons:hover, .bottom-nav-icons:focus{
+            color: var(--text-color);
+        }
+
+        .bottom-toolbar {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .bottom-toolbar.visible {
+            opacity: 1;
+        }
+        
+    </style>
+    <div class="w-full bottom-toolbar">
+        <section id="bottom-navigation" class=" bottom-nav block fixed inset-x-0 bottom-0 z-10 shadow">
+            <div id="tabs" class="flex justify-between">
+                <!-- React Button with Popup -->
+                <div class="relative inline-block w-full text-center">
+                    <div class="w-full text-gray-500 bottom-nav-icons justify-center inline-block text-center pt-2 pb-1">
+                        <i class="bi bi-plus-circle-fill text-xl cursor-pointer react-button"></i>
+                        <span class="tab tab-kategori block text-xs">React {{ article.likes.count }}</span>
+                    </div>
+                    <!-- Reaction Popup -->
+                    <div class="reaction-popup absolute bottom-full flex flex-row left-1/2 transform-translate-x-1/2 mb-2 w-max space-x-2 p-2 bg-gray-50 dark:bg-gray-800 shadow-xl rounded-full">
+
+                        <form method="" action=".">
+                            {% csrf_token %}
+                            {% for reaction, icon, color in reactions %}
+                                <button type="submit" name="reaction_type" value="{{ reaction }}" title="{{ reaction }}" class="reaction-button mx-2">
+                                    {% if reaction in user_reactions %}
+                                        <i class="bi {{ icon }}-fill text-{{ color }}-600 text-3xl transition duration-700 ease-in-out"></i>
+                                    {% else %}
+                                        <i class="bi {{ icon }} text-{{ color }}-600 text-2xl hover:text-3xl transition duration-700 ease-in-out"></i>
+                                    {% endif %}
+                                </button>
+                            {% endfor %}
+                        </form>
+
+                    </div>
+                </div>
+                
+                <!-- Comments -->
+                <a href="#comment" class="w-full text-gray-500 bottom-nav-icons no-underline hover:no-underline justify-center inline-block text-center pt-2 pb-1">
+                    <i class="bi bi-chat-dots-fill text-xl"></i>
+                    <span class="tab tab-explore block text-xs">Comments {{ article.comments.count }}</span>
+                </a>
+                <!-- Bookmark -->
+                <form action="{% url 'toggle_bookmark' article.slug %}" method="post" class="w-full text-gray-500 bottom-nav-icons justify-center inline-block text-center pt-2 pb-1">
+                    {% csrf_token %}
+                    <button type="submit">
+                        {% if article in request.user.profile.bookmarks.all %}
+                            <i class="bi bi-bookmark-fill text-xl" title="Remove Bookmark"></i>
+                        {% else %}
+                            <i class="bi bi-bookmark-plus text-xl" title="Add Bookmark"></i>
+                        {% endif %}
+                    </button>
+                    <span class="tab tab-whishlist block text-xs">Bookmark</span>
+                </form>
+                <!-- Share -->
+                <div class="w-full text-gray-500 bottom-nav-icons justify-center inline-block text-center pt-2 pb-1">
+                    <i id="shareButtonSocial" class="bi bi-share-fill text-2xl"></i>
+                    <span class="tab tab-home block text-xs">Share</span>
+                </div>
+            
+                <!-- Social Media Icons (Initially Hidden) -->
+                <div class="share-popup absolute bottom-full right-10 mt-2 flex flex-col space-y-2 bg-white bg-opacity-50 p-5 rounded shadow-3xl opacity-0 visibility-hidden">
+                    <a href="#" class="no-underline hover:no-underline text-blue-600 hover:text-blue-800" target="_blank" rel="noopener noreferrer" title="Share Post To Facebook">
+                        <i class="bi bi-facebook text-lg me-2"></i>
+                        <span>Share On facebook</span>
+                    </a>
+                    <a href="#" class="no-underline hover:no-underline text-inherit hover:text-gray-600" target="_blank" rel="noopener noreferrer" title="Share Post To Twitter">
+                        <i class="bi bi-twitter-x text-lg me-2"></i>
+                        <span>Share On X</span>
+                    </a>
+                    <a href="#" class="no-underline hover:no-underline text-blue-700 hover:text-blue-900" target="_blank" rel="noopener noreferrer" title="Share Post To LinkedIn">
+                        <i class="bi bi-linkedin text-lg me-2"></i>
+                        <span>Share On LinkedIn </span>
+                    </a>
+                    <a href="#" class="no-underline hover:no-underline text-blue-700 hover:text-blue-900" target="_blank" rel="noopener noreferrer" title="Share Post To Telegram">
+                        <i class="bi bi-telegram text-lg me-2"></i>
+                        <span>Share On Telegram </span>
+                    </a>
+                    <a href="#" class="no-underline hover:no-underline text-red-500 hover:text-red-700" target="_blank" rel="noopener noreferrer" title="Share Post To Mail">
+                        <i class="bi bi-envelope text-lg me-2"></i>
+                        <span>Share To Mail</span>
+                    </a>
+                    <a href="#" class="no-underline hover:no-underline text-green-600 hover:text-green-800" target="_blank" rel="noopener noreferrer" title="Share Post To Whatsapp">
+                        <i class="bi bi-whatsapp text-lg me-2"></i>
+                        <span>Share To Whatsapp</span>
+                    </a>
+                    <a id="copy-url-button" class="no-underline text-gray-400 hover:text-gray-600 cursor-pointer" title="Copy Post Link">
+                        <i class="bi bi-copy text-lg me-2"></i>
+                        <span>Copy Post Link</span>
+                    </a>
+                    <a id="copy-url-button" class="mx-1 underline hover:text-gray-600 cursor-pointer" title="Share Post">
+                        <span id="shareButton" class="text-lg" data-title="{{ article.title }}">Share Via...</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Popup Modal -->
+    <div id="engagementPopup" class="fixed inset-0 flex items-center justify-center bg-opacity-50 bg-black z-50" style="display: none;">
+        <div class="bg-white text-gray-800 rounded-lg p-6 shadow-lg text-center w-80">
+            <div class="mb-4">
+                <i class="bi bi-heart-fill text-red-500 text-4xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold mb-2">Kindness is contagious</h3>
+            <p class="mb-4">If you found this post useful, consider leaving a reaction and sharing your thoughts in the comments below!</p>
+            <button id="popupCloseBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Okay
+            </button>
+        </div>
+    </div>
 
     <script>
-        // Copy code snippet to clipboard
+        
         document.addEventListener('DOMContentLoaded', function() {
+
+            // Copy code snippet to clipboard
             const preElements = document.querySelectorAll('pre');
     
             preElements.forEach(pre => {
@@ -402,12 +624,83 @@
                     alert('Code copied to clipboard!');
                 });
             });
-        });
-    </script>
 
-    <script>
-        // Copy page URL to clipboard
-        document.addEventListener('DOMContentLoaded', function() {
+
+            // Popup Modal
+            const popup = document.getElementById('engagementPopup');
+            const closeBtn = document.getElementById('popupCloseBtn');
+            
+            // Show the popup on page load
+            popup.style.display = 'flex';
+            
+            // Close the popup when the "Okay" button is clicked
+            closeBtn.addEventListener('click', function() {
+                popup.style.display = 'none';
+            });
+
+
+
+            // Reaction popup
+            const reactButton = document.querySelector(".react-button");
+            const reactionPopup = document.querySelector(".reaction-popup");
+        
+            let popupVisible = false;
+        
+            // Toggle the popup when the react button is clicked
+            reactButton.addEventListener("click", () => {
+                popupVisible = !popupVisible;
+                if (popupVisible) {
+                    reactionPopup.style.opacity = "1";
+                    reactionPopup.style.visibility = "visible";
+                } else {
+                    reactionPopup.style.opacity = "0";
+                    reactionPopup.style.visibility = "hidden";
+                }
+            });
+        
+            // Hide the popup on mouseleave
+            reactionPopup.addEventListener("mouseleave", () => {
+                reactionPopup.style.opacity = "0";
+                reactionPopup.style.visibility = "hidden";
+                popupVisible = false; // Ensure popup state is synced when hidden
+            });
+
+
+            // Social Popup
+            const shareButtonn = document.querySelector("#shareButtonSocial");
+            const sharePopup = document.querySelector(".share-popup");
+        
+            shareButtonn.addEventListener("mouseover", () => {
+                sharePopup.style.opacity = "1";
+                sharePopup.style.visibility = "visible";
+            });
+        
+            sharePopup.addEventListener("mouseleave", () => {
+                sharePopup.style.opacity = "0";
+                sharePopup.style.visibility = "hidden";
+            });
+
+
+
+            // Bottom Toolbar behavior
+            const toolbar = document.querySelector(".bottom-toolbar");
+            let isScrolling;
+        
+            window.addEventListener('scroll', function () {
+                toolbar.classList.add('visible');
+                
+                // Clear the timeout if it's already set
+                window.clearTimeout(isScrolling);
+        
+                // Set a timeout to hide the toolbar after scrolling ends
+                isScrolling = setTimeout(function() {
+                    toolbar.classList.remove('visible');
+                }, 5000); // Adjust the time as needed
+            });
+
+
+
+            // Copy page URL to clipboard
             var copyButton = document.getElementById('copy-url-button');
             var copyAlert = document.getElementById('copy-alert');
             var closeButton = document.getElementById('close-alert-button');
@@ -436,6 +729,34 @@
                     copyAlert.style.display = 'none';
                 });
             }
+
+
+
+            // Share Buttton
+            document.getElementById('shareButton').addEventListener('click', async () => {
+                const shareButton = document.getElementById('shareButton');
+                const articleTitle = shareButton.getAttribute('data-title');
+                
+                if (navigator.share) {
+                try {
+                    await navigator.share({
+                    title: articleTitle,
+                    text: `${articleTitle} - Check out this amazing content!`,
+                    url: window.location.href
+                    });
+                    console.log('Content shared successfully');
+                } catch (error) {
+                    console.error('Error sharing content: ', error);
+                }
+                } else {
+                alert('Sharing not supported on this browser.');
+                }
+            });
+
+
+
+
         });
+
     </script>
 {% endblock %}
