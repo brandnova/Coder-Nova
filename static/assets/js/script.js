@@ -102,22 +102,47 @@ document.addEventListener('DOMContentLoaded', () => {
     
 });
 
-// comment form anonymous fields
-document.addEventListener('DOMContentLoaded', function() {
-    const checkbox = document.getElementById('cb2');
-    const anoElement = document.querySelector('.ano');
 
-    checkbox.addEventListener('change', function() {
-        if (checkbox.checked) {
-            anoElement.classList.add('fade-out');
+// comment form remember name and email fields
+document.addEventListener('DOMContentLoaded', function() {
+    const rememberMeCheckbox = document.getElementById('rememberMe');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+
+    // Load saved data and prefill fields on page load
+    if (localStorage.getItem('rememberMe') === 'true') {
+        nameInput.value = localStorage.getItem('name') || '';
+        emailInput.value = localStorage.getItem('email') || '';
+        rememberMeCheckbox.checked = true;
+    }
+
+    // Save or remove data when checkbox is toggled
+    rememberMeCheckbox.addEventListener('change', function() {
+        if (this.checked) {
+            localStorage.setItem('rememberMe', 'true');
+            localStorage.setItem('name', nameInput.value);
+            localStorage.setItem('email', emailInput.value);
         } else {
-            anoElement.classList.remove('fade-out');
+            localStorage.removeItem('rememberMe');
+            localStorage.removeItem('name');
+            localStorage.removeItem('email');
         }
     });
+
+    // Update stored data when input fields change
+    nameInput.addEventListener('input', updateStorage);
+    emailInput.addEventListener('input', updateStorage);
+
+    function updateStorage() {
+        if (rememberMeCheckbox.checked) {
+            localStorage.setItem('name', nameInput.value);
+            localStorage.setItem('email', emailInput.value);
+        }
+    }
 });
 
 
-// Horizontl nav scroll
+// Horizontal nav scroll
 document.getElementById('scroll-left').addEventListener('click', function() {
     document.getElementById('scroll-container').scrollBy({
         left: -150,
@@ -132,41 +157,3 @@ document.getElementById('scroll-right').addEventListener('click', function() {
     });
 });
 
-
-// User Dashboard
-const DATA_SET_VERTICAL_BAR_CHART_1 = [68.106, 26.762, 94.255, 72.021, 74.082, 64.923, 85.565, 32.432, 54.664, 87.654, 43.013, 91.443];
-
-const labels_vertical_bar_chart = ['January', 'February', 'Mart', 'April', 'May', 'Jun', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-const dataVerticalBarChart= {
-    labels: labels_vertical_bar_chart,
-    datasets: [
-        {
-            label: 'Revenue',
-            data: DATA_SET_VERTICAL_BAR_CHART_1,
-            borderColor: 'rgb(54, 162, 235)',
-            backgroundColor: 'rgba(54, 162, 235, 0.5)',
-        }
-    ]
-};
-const configVerticalBarChart = {
-    type: 'bar',
-    data: dataVerticalBarChart,
-    options: {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'top',
-            },
-            title: {
-                display: true,
-                text: 'Last 12 Months'
-            }
-        }
-    },
-};
-
-var verticalBarChart = new Chart(
-    document.getElementById('verticalBarChart'),
-    configVerticalBarChart
-);

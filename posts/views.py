@@ -87,7 +87,7 @@ def article_detail(request, slug):
         'similar_article': similar_article,
         'for_u': for_u,
         'reactions': reactions,
-        'user_reactions': user_reactions,  # Pass user reactions to the template
+        'user_reactions': user_reactions,  
     }
 
     return render(request, 'posts/blog-article.html', context)
@@ -104,12 +104,28 @@ def draft_detail(request, slug):
     form = SearchForm()
     n_form = SubscriptionForm()
 
+    # Fetch the user's reactions to this article, if any
+    user_reactions = []
+    if request.user.is_authenticated:
+        user_reactions = Reaction.objects.filter(user=request.user, article=draft).values_list('reaction_type', flat=True)
+
+    reactions = [
+        ('like', 'bi-hand-thumbs-up', 'blue'),
+        ('love', 'bi-heart', 'red'),
+        ('laugh', 'bi-emoji-laughing', 'yellow'),
+        ('surprise', 'bi-emoji-surprise', 'yellow'),
+        ('sad', 'bi-emoji-frown', 'blue'),
+        ('dislike', 'bi-hand-thumbs-down', 'red'),
+    ]
+
     # Define the context
     context = {
         'article': draft, 
         'form': form,
         'n_form': n_form,
         'similar_article': similar_article,
+        'reactions': reactions,
+        'user_reactions': user_reactions, 
     }
 
     return render(request, 'posts/draft-detail.html', context)
