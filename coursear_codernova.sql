@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 17, 2024 at 05:11 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Host: localhost:3306
+-- Generation Time: Aug 17, 2024 at 12:22 PM
+-- Server version: 8.0.39
+-- PHP Version: 8.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `codernova`
+-- Database: `coursear_codernova`
 --
 
 -- --------------------------------------------------------
@@ -28,10 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `accounts_infocontent` (
-  `id` bigint(20) NOT NULL,
-  `title` varchar(200) NOT NULL,
-  `content` longtext NOT NULL,
-  `section_id` varchar(50) NOT NULL
+  `id` bigint NOT NULL,
+  `title` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `content` longtext COLLATE utf8mb4_general_ci NOT NULL,
+  `section_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -48,14 +48,14 @@ INSERT INTO `accounts_infocontent` (`id`, `title`, `content`, `section_id`) VALU
 --
 
 CREATE TABLE `accounts_profile` (
-  `id` bigint(20) NOT NULL,
-  `bio` longtext DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `avatar` varchar(100) DEFAULT NULL,
-  `cover_image` varchar(100) DEFAULT NULL,
-  `phone` varchar(20) DEFAULT NULL,
-  `location` varchar(200) DEFAULT NULL,
-  `user_id` int(11) NOT NULL
+  `id` bigint NOT NULL,
+  `bio` longtext COLLATE utf8mb4_general_ci,
+  `title` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `avatar` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `cover_image` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `phone` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `location` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `user_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -63,11 +63,12 @@ CREATE TABLE `accounts_profile` (
 --
 
 INSERT INTO `accounts_profile` (`id`, `bio`, `title`, `avatar`, `cover_image`, `phone`, `location`, `user_id`) VALUES
-(2, 'Cool coder', NULL, 'profile_images/IMG_2642_2.jpeg', 'cover_images/Linkedin_Cover_new.png', '08141941192', NULL, 1),
+(2, 'Cool coder', 'Web Developer, Python Programmer', 'profile_images/IMG_2642_2.jpeg', 'cover_images/Linkedin_Cover_new.png', '08141941192', 'Delta State, Nigeria', 1),
 (13, NULL, NULL, 'default.jpg', 'default.jpg', NULL, NULL, 13),
 (20, 'Full Stack web dev, using Ejs and Express', NULL, 'profile_images/IMG-20240212-WA0018.jpg', 'default.jpg', NULL, NULL, 20),
 (21, NULL, NULL, 'default.jpg', 'default.jpg', NULL, NULL, 21),
-(22, NULL, NULL, 'default.jpg', 'default.jpg', NULL, NULL, 22);
+(22, NULL, NULL, 'default.jpg', 'default.jpg', NULL, NULL, 22),
+(23, NULL, NULL, 'default.jpg', 'default.jpg', NULL, NULL, 23);
 
 -- --------------------------------------------------------
 
@@ -76,9 +77,9 @@ INSERT INTO `accounts_profile` (`id`, `bio`, `title`, `avatar`, `cover_image`, `
 --
 
 CREATE TABLE `accounts_profile_bookmarks` (
-  `id` bigint(20) NOT NULL,
-  `profile_id` bigint(20) NOT NULL,
-  `article_id` bigint(20) NOT NULL
+  `id` bigint NOT NULL,
+  `profile_id` bigint NOT NULL,
+  `article_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -98,12 +99,12 @@ INSERT INTO `accounts_profile_bookmarks` (`id`, `profile_id`, `article_id`) VALU
 --
 
 CREATE TABLE `ads_ad` (
-  `id` bigint(20) NOT NULL,
-  `code` longtext NOT NULL,
+  `id` bigint NOT NULL,
+  `code` longtext COLLATE utf8mb4_general_ci NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `active` tinyint(1) NOT NULL,
-  `location` varchar(100) NOT NULL
+  `location` varchar(100) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -121,7 +122,8 @@ INSERT INTO `ads_ad` (`id`, `code`, `start_date`, `end_date`, `active`, `locatio
 (9, '<script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4110794837764395\"\r\n     crossorigin=\"anonymous\"></script>\r\n<!-- Blog -->\r\n<ins class=\"adsbygoogle\"\r\n     style=\"display:block\"\r\n     data-ad-client=\"ca-pub-4110794837764395\"\r\n     data-ad-slot=\"7709899510\"\r\n     data-ad-format=\"auto\"\r\n     data-full-width-responsive=\"true\"></ins>\r\n<script>\r\n     (adsbygoogle = window.adsbygoogle || []).push({});\r\n</script>', '2024-08-11', '2024-08-31', 1, 'projectpage_left'),
 (10, '<script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4110794837764395\"\r\n     crossorigin=\"anonymous\"></script>\r\n<!-- Blog -->\r\n<ins class=\"adsbygoogle\"\r\n     style=\"display:block\"\r\n     data-ad-client=\"ca-pub-4110794837764395\"\r\n     data-ad-slot=\"7709899510\"\r\n     data-ad-format=\"auto\"\r\n     data-full-width-responsive=\"true\"></ins>\r\n<script>\r\n     (adsbygoogle = window.adsbygoogle || []).push({});\r\n</script>', '2024-08-11', '2024-08-31', 1, 'projectpage_right'),
 (11, '<script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4110794837764395\"\r\n     crossorigin=\"anonymous\"></script>\r\n<!-- CodaNova2 -->\r\n<ins class=\"adsbygoogle\"\r\n     style=\"display:block\"\r\n     data-ad-client=\"ca-pub-4110794837764395\"\r\n     data-ad-slot=\"6379884823\"\r\n     data-ad-format=\"auto\"\r\n     data-full-width-responsive=\"true\"></ins>\r\n<script>\r\n     (adsbygoogle = window.adsbygoogle || []).push({});\r\n</script>', '2024-08-11', '2024-08-31', 1, 'projectpage_top'),
-(12, '<script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4110794837764395\"\r\n     crossorigin=\"anonymous\"></script>\r\n<ins class=\"adsbygoogle\"\r\n     style=\"display:block; text-align:center;\"\r\n     data-ad-layout=\"in-article\"\r\n     data-ad-format=\"fluid\"\r\n     data-ad-client=\"ca-pub-4110794837764395\"\r\n     data-ad-slot=\"8945672139\"></ins>\r\n<script>\r\n     (adsbygoogle = window.adsbygoogle || []).push({});\r\n</script>', '2024-08-16', '2024-08-31', 1, 'articlepage_inner');
+(12, '<script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4110794837764395\"\r\n     crossorigin=\"anonymous\"></script>\r\n<ins class=\"adsbygoogle\"\r\n     style=\"display:block; text-align:center;\"\r\n     data-ad-layout=\"in-article\"\r\n     data-ad-format=\"fluid\"\r\n     data-ad-client=\"ca-pub-4110794837764395\"\r\n     data-ad-slot=\"8945672139\"></ins>\r\n<script>\r\n     (adsbygoogle = window.adsbygoogle || []).push({});\r\n</script>', '2024-08-16', '2024-08-31', 1, 'articlepage_inner'),
+(13, '<script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4110794837764395\"\r\n     crossorigin=\"anonymous\"></script>\r\n<!-- Blog -->\r\n<ins class=\"adsbygoogle\"\r\n     style=\"display:block\"\r\n     data-ad-client=\"ca-pub-4110794837764395\"\r\n     data-ad-slot=\"7709899510\"\r\n     data-ad-format=\"auto\"\r\n     data-full-width-responsive=\"true\"></ins>\r\n<script>\r\n     (adsbygoogle = window.adsbygoogle || []).push({});\r\n</script>', '2024-08-17', '2024-08-31', 1, 'articlepage_sidebar');
 
 -- --------------------------------------------------------
 
@@ -130,8 +132,8 @@ INSERT INTO `ads_ad` (`id`, `code`, `start_date`, `end_date`, `active`, `locatio
 --
 
 CREATE TABLE `auth_group` (
-  `id` int(11) NOT NULL,
-  `name` varchar(150) NOT NULL
+  `id` int NOT NULL,
+  `name` varchar(150) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -148,9 +150,9 @@ INSERT INTO `auth_group` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `auth_group_permissions` (
-  `id` bigint(20) NOT NULL,
-  `group_id` int(11) NOT NULL,
-  `permission_id` int(11) NOT NULL
+  `id` bigint NOT NULL,
+  `group_id` int NOT NULL,
+  `permission_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -178,10 +180,10 @@ INSERT INTO `auth_group_permissions` (`id`, `group_id`, `permission_id`) VALUES
 --
 
 CREATE TABLE `auth_permission` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `content_type_id` int(11) NOT NULL,
-  `codename` varchar(100) NOT NULL
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `content_type_id` int NOT NULL,
+  `codename` varchar(100) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -272,7 +274,15 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 (81, 'Can add info content', 21, 'add_infocontent'),
 (82, 'Can change info content', 21, 'change_infocontent'),
 (83, 'Can delete info content', 21, 'delete_infocontent'),
-(84, 'Can view info content', 21, 'view_infocontent');
+(84, 'Can view info content', 21, 'view_infocontent'),
+(85, 'Can add reaction', 22, 'add_reaction'),
+(86, 'Can change reaction', 22, 'change_reaction'),
+(87, 'Can delete reaction', 22, 'delete_reaction'),
+(88, 'Can view reaction', 22, 'view_reaction'),
+(89, 'Can add social link', 23, 'add_sociallink'),
+(90, 'Can change social link', 23, 'change_sociallink'),
+(91, 'Can delete social link', 23, 'delete_sociallink'),
+(92, 'Can view social link', 23, 'view_sociallink');
 
 -- --------------------------------------------------------
 
@@ -281,14 +291,14 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 --
 
 CREATE TABLE `auth_user` (
-  `id` int(11) NOT NULL,
-  `password` varchar(128) NOT NULL,
+  `id` int NOT NULL,
+  `password` varchar(128) COLLATE utf8mb4_general_ci NOT NULL,
   `last_login` datetime(6) DEFAULT NULL,
   `is_superuser` tinyint(1) NOT NULL,
-  `username` varchar(150) NOT NULL,
-  `first_name` varchar(150) NOT NULL,
-  `last_name` varchar(150) NOT NULL,
-  `email` varchar(254) NOT NULL,
+  `username` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
+  `first_name` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
+  `last_name` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(254) COLLATE utf8mb4_general_ci NOT NULL,
   `is_staff` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL,
   `date_joined` datetime(6) NOT NULL
@@ -299,11 +309,12 @@ CREATE TABLE `auth_user` (
 --
 
 INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
-(1, 'pbkdf2_sha256$720000$NaOUOM7UcRK73iTVqCQc9O$ZJUnKXMtf5rZpQuhXhF7WS/b51igkgJ2RTwOavgVMto=', '2024-08-17 03:10:16.702572', 1, 'admin', 'Ijeoma', 'Jahsway', 'uchennamebijay@gmail.com', 1, 1, '2024-07-28 12:11:06.000000'),
+(1, 'pbkdf2_sha256$600000$mBb40eNhWvc4vHA9F4MHub$IYEBAgw4eDNogTs/LDIk5Tgl2a7U0/6EujELN2agZsI=', '2024-08-17 14:40:40.734479', 1, 'admin', 'Ijeoma', 'Jahsway', 'uchennamebijay@gmail.com', 1, 1, '2024-07-28 12:11:06.000000'),
 (13, 'pbkdf2_sha256$720000$QCR5ndG7hR1cYYRLqtbNpo$+4EH7MWGoBdXlMDQVlNi5G4OKh7r7UXv3zC/XqwpIzU=', '2024-08-05 14:57:19.413186', 0, 'SpiderShani007', 'Muhammad', 'Usman', 'us888276@gmail.com', 1, 1, '2024-08-05 12:14:10.000000'),
 (20, 'pbkdf2_sha256$720000$ZcqvOb1UFmsrBd3rCuWtd1$yvuOfntoymuIi7NnSlknFXkWUkfOwEa9HgvksD0jh9U=', '2024-08-10 18:15:28.902227', 0, 'BlackStar54213', 'Okeme', 'Izu', 'izuokeme@gmail.com', 0, 1, '2024-08-10 18:15:18.864823'),
 (21, 'pbkdf2_sha256$720000$WVwCTHxeV6FjsQasXjaTvN$A2lDmJU2QEhzpLz2HQKHLh4Yv4knRkm25ydfb0XxE9o=', '2024-08-11 07:40:59.823266', 0, 'brandnova89@gmail.com', 'Jahsway', 'Ijeoma', 'brandnova89@gmail.com', 0, 1, '2024-08-11 07:24:27.270849'),
-(22, 'pbkdf2_sha256$720000$KumfUKHsNazdA6lzQy5rdt$Xn854aIG18bgc10ZQqZ5qGpUe29kp/E32dyCDdaglps=', '2024-08-16 10:06:46.831940', 0, 'Joshdev', 'Joshua', 'Oluchukwu', 'joshuaoluchukwu215@gmail.com', 0, 1, '2024-08-16 10:06:44.781815');
+(22, 'pbkdf2_sha256$720000$KumfUKHsNazdA6lzQy5rdt$Xn854aIG18bgc10ZQqZ5qGpUe29kp/E32dyCDdaglps=', '2024-08-16 10:06:46.831940', 0, 'Joshdev', 'Joshua', 'Oluchukwu', 'joshuaoluchukwu215@gmail.com', 0, 1, '2024-08-16 10:06:44.781815'),
+(23, 'pbkdf2_sha256$600000$hQ05I071SWP8ojZ9asU122$1GxlH+SPAteUDvU+7a6hwL66whKYRcqGPEUaTQjLvjw=', '2024-08-17 12:13:03.892161', 0, 'Stcymll', 'Ijeoma', 'JahsWay', 's99229812@gmail.com', 0, 1, '2024-08-17 12:13:02.086132');
 
 -- --------------------------------------------------------
 
@@ -312,9 +323,9 @@ INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `userna
 --
 
 CREATE TABLE `auth_user_groups` (
-  `id` bigint(20) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `group_id` int(11) NOT NULL
+  `id` bigint NOT NULL,
+  `user_id` int NOT NULL,
+  `group_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -331,9 +342,9 @@ INSERT INTO `auth_user_groups` (`id`, `user_id`, `group_id`) VALUES
 --
 
 CREATE TABLE `auth_user_user_permissions` (
-  `id` bigint(20) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `permission_id` int(11) NOT NULL
+  `id` bigint NOT NULL,
+  `user_id` int NOT NULL,
+  `permission_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -343,21 +354,21 @@ CREATE TABLE `auth_user_user_permissions` (
 --
 
 CREATE TABLE `core_sitesettings` (
-  `id` bigint(20) NOT NULL,
-  `site_name` varchar(100) NOT NULL,
-  `site_description` longtext NOT NULL,
-  `favicon` varchar(100) DEFAULT NULL,
-  `logo` varchar(100) DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `contact_email` varchar(254) NOT NULL,
-  `phone_number` varchar(20) NOT NULL,
-  `meta_keywords` varchar(255) NOT NULL,
-  `meta_description` varchar(255) NOT NULL,
-  `meta_author` varchar(100) NOT NULL,
-  `og_title` varchar(255) NOT NULL,
-  `og_description` varchar(255) NOT NULL,
-  `og_image` varchar(100) DEFAULT NULL,
-  `og_url` varchar(200) NOT NULL
+  `id` bigint NOT NULL,
+  `site_name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `site_description` longtext COLLATE utf8mb4_general_ci NOT NULL,
+  `favicon` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `logo` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `contact_email` varchar(254) COLLATE utf8mb4_general_ci NOT NULL,
+  `phone_number` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_keywords` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_description` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_author` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `og_title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `og_description` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `og_image` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `og_url` varchar(200) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -370,14 +381,57 @@ INSERT INTO `core_sitesettings` (`id`, `site_name`, `site_description`, `favicon
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `core_sitesettings_social_links`
+--
+
+CREATE TABLE `core_sitesettings_social_links` (
+  `id` bigint NOT NULL,
+  `sitesettings_id` bigint NOT NULL,
+  `sociallink_id` bigint NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `core_sitesettings_social_links`
+--
+
+INSERT INTO `core_sitesettings_social_links` (`id`, `sitesettings_id`, `sociallink_id`) VALUES
+(1, 1, 1),
+(2, 1, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `core_sociallink`
+--
+
+CREATE TABLE `core_sociallink` (
+  `id` bigint NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `url` varchar(200) NOT NULL,
+  `icon_class` varchar(50) NOT NULL,
+  `order` int UNSIGNED NOT NULL,
+  `is_active` tinyint(1) NOT NULL
+) ;
+
+--
+-- Dumping data for table `core_sociallink`
+--
+
+INSERT INTO `core_sociallink` (`id`, `name`, `url`, `icon_class`, `order`, `is_active`) VALUES
+(1, 'GitHub', 'https://github.com/brandnova', 'bi bi-github', 1, 1),
+(2, 'LinkedIn', 'http://www.linkedin.com/in/ijeoma-jahsway', 'bi bi-linkedin', 2, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `core_staticpage`
 --
 
 CREATE TABLE `core_staticpage` (
-  `id` bigint(20) NOT NULL,
-  `title` varchar(200) NOT NULL,
-  `slug` varchar(50) NOT NULL,
-  `content` longtext NOT NULL
+  `id` bigint NOT NULL,
+  `title` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `slug` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `content` longtext COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -397,15 +451,15 @@ INSERT INTO `core_staticpage` (`id`, `title`, `slug`, `content`) VALUES
 --
 
 CREATE TABLE `django_admin_log` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `action_time` datetime(6) NOT NULL,
-  `object_id` longtext DEFAULT NULL,
-  `object_repr` varchar(200) NOT NULL,
-  `action_flag` smallint(5) UNSIGNED NOT NULL CHECK (`action_flag` >= 0),
-  `change_message` longtext NOT NULL,
-  `content_type_id` int(11) DEFAULT NULL,
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `object_id` longtext COLLATE utf8mb4_general_ci,
+  `object_repr` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `action_flag` smallint UNSIGNED NOT NULL,
+  `change_message` longtext COLLATE utf8mb4_general_ci NOT NULL,
+  `content_type_id` int DEFAULT NULL,
+  `user_id` int NOT NULL
+) ;
 
 --
 -- Dumping data for table `django_admin_log`
@@ -793,6 +847,18 @@ INSERT INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`,
 (380, '2024-08-16 09:09:27.263925', '18', 'Top 5 Must-Have VSCode Extensions for Web Developers to Boost Productivity', 2, '[{\"changed\": {\"fields\": [\"Content\"]}}]', 11, 1),
 (381, '2024-08-16 09:10:17.848147', '18', 'Top 5 Must-Have VSCode Extensions for Web Developers to Boost Productivity', 2, '[{\"changed\": {\"fields\": [\"Content\"]}}]', 11, 1),
 (382, '2024-08-16 23:59:57.419220', '18', 'Top 5 Must-Have VSCode Extensions for Web Developers to Boost Productivity', 2, '[{\"changed\": {\"fields\": [\"Seo title\", \"Meta description\"]}}]', 11, 1);
+INSERT INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`, `action_flag`, `change_message`, `content_type_id`, `user_id`) VALUES
+(383, '2024-08-17 04:00:02.886147', '2', 'admin\'s Profile', 2, '[{\"changed\": {\"fields\": [\"Title\", \"Location\"]}}]', 15, 1),
+(384, '2024-08-17 04:01:37.660718', '13', 'Ad for articlepage_sidebar (Active: True)', 1, '[{\"added\": {}}]', 19, 1),
+(385, '2024-08-17 14:40:55.815655', '16', 'uchennamebijay@gmail.com', 3, '', 17, 1),
+(386, '2024-08-17 14:41:32.549197', '5', 'UI Updates', 1, '[{\"added\": {}}]', 18, 1),
+(387, '2024-08-17 15:07:41.249543', '17', 'uchennamebijay@gmail.com', 1, '[{\"added\": {}}]', 17, 1),
+(388, '2024-08-17 15:23:38.019754', '18', 'Top 5 Must-Have VSCode Extensions for Web Developers to Boost Productivity', 2, '[{\"changed\": {\"fields\": [\"Content\"]}}]', 11, 1),
+(389, '2024-08-17 15:40:16.235810', '18', 'Top 5 Must-Have VSCode Extensions for Web Developers to Boost Productivity', 2, '[{\"changed\": {\"fields\": [\"Content\"]}}]', 11, 1),
+(390, '2024-08-17 16:13:15.557131', '1', 'GitHub', 1, '[{\"added\": {}}]', 23, 1),
+(391, '2024-08-17 16:13:52.095505', '2', 'LinkedIn', 1, '[{\"added\": {}}]', 23, 1),
+(392, '2024-08-17 16:13:55.894943', '1', 'Coder Nova', 2, '[{\"added\": {\"name\": \"sitesettings-sociallink relationship\", \"object\": \"SiteSettings_social_links object (1)\"}}, {\"added\": {\"name\": \"sitesettings-sociallink relationship\", \"object\": \"SiteSettings_social_links object (2)\"}}]', 7, 1),
+(393, '2024-08-17 16:16:22.502586', '18', 'Top 5 Must-Have VSCode Extensions for Web Developers to Boost Productivity', 2, '[{\"changed\": {\"fields\": [\"Tags\", \"Frameworks\", \"Reading time\", \"Meta description\", \"Meta keywords\"]}}]', 11, 1);
 
 -- --------------------------------------------------------
 
@@ -801,9 +867,9 @@ INSERT INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`,
 --
 
 CREATE TABLE `django_content_type` (
-  `id` int(11) NOT NULL,
-  `app_label` varchar(100) NOT NULL,
-  `model` varchar(100) NOT NULL
+  `id` int NOT NULL,
+  `app_label` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `model` varchar(100) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -820,6 +886,7 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 (4, 'auth', 'user'),
 (5, 'contenttypes', 'contenttype'),
 (7, 'core', 'sitesettings'),
+(23, 'core', 'sociallink'),
 (8, 'core', 'staticpage'),
 (18, 'newsletter', 'bulkemail'),
 (17, 'newsletter', 'subscriber'),
@@ -829,6 +896,7 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 (9, 'posts', 'category'),
 (14, 'posts', 'comment'),
 (10, 'posts', 'framework'),
+(22, 'posts', 'reaction'),
 (6, 'sessions', 'session'),
 (12, 'taggit', 'tag'),
 (13, 'taggit', 'taggeditem');
@@ -840,9 +908,9 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 --
 
 CREATE TABLE `django_migrations` (
-  `id` bigint(20) NOT NULL,
-  `app` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `id` bigint NOT NULL,
+  `app` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `applied` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -898,7 +966,9 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (45, 'posts', '0012_articleview_referrer_articleview_user_agent_and_more', '2024-08-05 09:59:19.479405'),
 (46, 'accounts', '0004_infocontent', '2024-08-05 21:25:30.200229'),
 (47, 'posts', '0013_article_file_alter_article_frameworks', '2024-08-11 23:03:14.369746'),
-(48, 'posts', '0014_remove_article_file_article_file_url_and_more', '2024-08-11 23:08:59.209163');
+(48, 'posts', '0014_remove_article_file_article_file_url_and_more', '2024-08-11 23:08:59.209163'),
+(49, 'newsletter', '0002_subscriber_fullname', '2024-08-17 15:06:52.504413'),
+(50, 'core', '0002_sociallink_alter_sitesettings_options_and_more', '2024-08-17 16:11:51.947626');
 
 -- --------------------------------------------------------
 
@@ -907,8 +977,8 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 --
 
 CREATE TABLE `django_session` (
-  `session_key` varchar(40) NOT NULL,
-  `session_data` longtext NOT NULL,
+  `session_key` varchar(40) COLLATE utf8mb4_general_ci NOT NULL,
+  `session_data` longtext COLLATE utf8mb4_general_ci NOT NULL,
   `expire_date` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -923,17 +993,17 @@ INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALU
 ('6cenlcrmz7basfle92fyusyxly9qh6zs', '.eJxVjM0OwiAQhN-FsyH8yFI8evcZyMJupWpoUtqT8d2lSQ96m8x837xFxG0tcWu8xInERWgrTr9lwvzkui_0wHqfZZ7rukxJ7og81iZvM_HrerB_BwVb6faQIBhLznmH2lMXe3LgNHtl0Culx8CjRtAZ6ex9GhwwgbE2gAoQxOcL7eg3JA:1saz9D:cZQ0jze4pfqh51c-SA92yI0I0pDi7Ye22Zt29LvcuJM', '2024-08-19 14:57:19.200683'),
 ('au91ibm54dkfum3jt8gi5u9cn6qkas9m', '.eJxVjMsOwiAQRf-FtSG8GVy69xvIAINUDU1KuzL-uzbpQrf3nHNfLOK2trgNWuJU2JlJdvrdEuYH9R2UO_bbzPPc12VKfFf4QQe_zoWel8P9O2g42rfWwUopg69JFw8qV4VA1oMImLJTKVnyGq0RzsgqbHHCkcRgQANkh5W9P8mgN0w:1sf9pY:EuN8hBpXiJO9kEg4zHQ8HvAVgQ-vnx-dameVubeKpIs', '2024-08-31 03:10:16.714576'),
 ('bp5o4ietbmw142fltqmyh06rk9jn1vw5', '.eJxVjM0OwiAQhN-FsyH8yFI8evcZyMJupWpoUtqT8d2lSQ96m8x837xFxG0tcWu8xInERWgrTr9lwvzkui_0wHqfZZ7rukxJ7og81iZvM_HrerB_BwVb6faQIBhLznmH2lMXe3LgNHtl0Culx8CjRtAZ6ex9GhwwgbE2gAoQxOcL7eg3JA:1saz9D:cZQ0jze4pfqh51c-SA92yI0I0pDi7Ye22Zt29LvcuJM', '2024-08-19 14:57:19.417697'),
+('c8ru7tnsopieutdvvv5lhpieczv6oyem', '.eJxVjMsOgjAURP-la9P0AdKydO83NPdRpGpaQyHRGP9dSFjocmbOnLcIsMxjWGqcQmLRCy0Ovx0C3WLeBr5CvhRJJc9TQrkhcl-rPBeO99PO_glGqOP69g2RI8PgO0OkGJ0-OmWGhnDQSNrYto2oPXtn0bBRoK3rnAVqTbPmTVpjrankEJ-PNL1Erz5flVA--g:1sfHnH:jS7S3cqgdCEGbDR5UEZ9oL82yEHVJSFMyK58A6zmZwc', '2024-08-31 11:40:27.737154'),
 ('d0rmh18vu6ok3jkt3ys4xcbxj81qtn8b', '.eJxVjMsOwiAQRf-FtSG8GVy69xvIAINUDU1KuzL-uzbpQrf3nHNfLOK2trgNWuJU2JlJdvrdEuYH9R2UO_bbzPPc12VKfFf4QQe_zoWel8P9O2g42rfWwUopg69JFw8qV4VA1oMImLJTKVnyGq0RzsgqbHHCkcRgQANkh5W9P8mgN0w:1saWYA:Idrf198bg2e-DIf3aXIoLe_jqh5i-VaHpsB2LKQN2sA', '2024-08-18 08:25:10.050290'),
 ('frcsif2m4dib289v2vokcxuoto9zuzci', 'e30:1sY8VM:O9_S01PlA-F-G1sBQ_SnsL7xw2TenzRtEpbRLejPZg4', '2024-08-11 18:20:24.987068'),
 ('i07z5f8x6pzehfip6k7eg649h1m9n5rs', '.eJxVjMsOwiAQRf-FtSG8GVy69xvIAINUDU1KuzL-uzbpQrf3nHNfLOK2trgNWuJU2JlJdvrdEuYH9R2UO_bbzPPc12VKfFf4QQe_zoWel8P9O2g42rfWwUopg69JFw8qV4VA1oMImLJTKVnyGq0RzsgqbHHCkcRgQANkh5W9P8mgN0w:1sajUv:dIvxz4b-S2LAKG94X4brVIVFLeld9W7cLD7HQOC-pO0', '2024-08-18 22:14:41.327480'),
+('jtbsvyosx0kqdqkuo31edwmhs17e5p1x', '.eJxVjM0OwiAQhN-FsyEsWH48evcZyLKwUjU0Ke3J-O6GpAe9Teb7Zt4i4r7VuPeyxjmLi9BGnH7LhPQsbZD8wHZfJC1tW-ckhyIP2uVtyeV1Pdy_g4q9jjV7Uj4kD-AzJmWsYjNNqBx4BA1gQI-gLTMGBTqxBTaO9Dk5CiQ-X-zwN1g:1sfIIp:WLYi7H0cf-RDw2IZggxo3VHiZstA_g3OpHvapkIaivU', '2024-08-31 12:13:03.896410'),
 ('oekkodizeqpbhu10jw32yrctl63z986q', '.eJxVjMsOwiAUBf-FtSFQ3l269xvIBS4WNWBKm2iM_65NutDtmTnzIh7WZfJrx9mXREbCyeF3CxCvWDeQLlDPjcZWl7kEuil0p52eWsLbcXf_AhP06fsWTnHOnclBJGOHmAewqIxlDkLUQwgKjQAlmZY8M5U008jBSSusjRryFu3Ye2nV4-Ne5icZ2fsDZeY-iQ:1sbEYe:q-NoP83UpCKptfjp5zukddFqB_0YR64vC6Y2sXF1JJY', '2024-08-20 07:24:36.334771'),
 ('pr600e8479jyn12jaxtukmy85tjh04lq', '.eJxVjMsOwiAQRf-FtSG8GVy69xvIAINUDU1KuzL-uzbpQrf3nHNfLOK2trgNWuJU2JlJdvrdEuYH9R2UO_bbzPPc12VKfFf4QQe_zoWel8P9O2g42rfWwUopg69JFw8qV4VA1oMImLJTKVnyGq0RzsgqbHHCkcRgQANkh5W9P8mgN0w:1sb3gl:v2lr2hzTFTYOKBJSSbIvyh2fGOFg-J_Czc8yLacwR2g', '2024-08-19 19:48:15.463467'),
 ('qk4vtbxnlmfzoochkknohp5d1w4rsoea', '.eJxVjMsOwiAQRf-FtSG8GVy69xvIAINUDU1KuzL-uzbpQrf3nHNfLOK2trgNWuJU2JlJdvrdEuYH9R2UO_bbzPPc12VKfFf4QQe_zoWel8P9O2g42rfWwUopg69JFw8qV4VA1oMImLJTKVnyGq0RzsgqbHHCkcRgQANkh5W9P8mgN0w:1sbUpq:OYvRK54dj6P6Sr_WQltfRqeOF8MsuqflHyKTAeledqI', '2024-08-21 00:47:26.625070'),
-('riph7cprqrbkfj5xjycyb4khnedxrpg8', '.eJxVjMsOwiAQRf-FtSG8GVy69xvIAINUDU1KuzL-uzbpQrf3nHNfLOK2trgNWuJU2JlJdvrdEuYH9R2UO_bbzPPc12VKfFf4QQe_zoWel8P9O2g42rfWwUopg69JFw8qV4VA1oMImLJTKVnyGq0RzsgqbHHCkcRgQANkh5W9P8mgN0w:1sf6Pv:6TyoEVJsQok_ffWBjuvFSHdvpSmTpruyXAHEyZqx2qw', '2024-08-30 23:31:35.472018'),
 ('s96qer3v6h7c0j3ke70w6k1g01w4qg2b', '.eJxVjEEOwiAQRe_C2hAGaEtduvcMZJgZpGpoUtqV8e7apAvd_vfef6mI21ri1mSJE6uzskadfseE9JC6E75jvc2a5rouU9K7og_a9HVmeV4O9--gYCvfGgZANELBiEuj62DIxBAEyDpjghXsvQMHefQMHWdLWdj0QBJ8ygzq_QEApThF:1scqci:92JMZ4aJc3Md-mToL2zUpomG0esIRpGaJvDS5-7mkdQ', '2024-08-24 18:15:28.944956'),
-('t2y6rhko0xeb2is2ihbxoeu4hupnf8us', '.eJxVjMsOwiAQRf-FtSG8GVy69xvIAINUDU1KuzL-uzbpQrf3nHNfLOK2trgNWuJU2JlJdvrdEuYH9R2UO_bbzPPc12VKfFf4QQe_zoWel8P9O2g42rfWwUopg69JFw8qV4VA1oMImLJTKVnyGq0RzsgqbHHCkcRgQANkh5W9P8mgN0w:1sd720:M_5UyuyKIsAOh7BHrv1iQkd2o1OOuVfJk0iOnmpuy4o', '2024-08-25 11:46:40.431137'),
-('tib69ll7x3htb1kf23njbarlfj4e1kw8', '.eJxVjMsOwiAQRf-FtSG8GVy69xvIAINUDU1KuzL-uzbpQrf3nHNfLOK2trgNWuJU2JlJdvrdEuYH9R2UO_bbzPPc12VKfFf4QQe_zoWel8P9O2g42rfWwUopg69JFw8qV4VA1oMImLJTKVnyGq0RzsgqbHHCkcRgQANkh5W9P8mgN0w:1sbp8f:KYQ96mcKd6jtMV0UJaz66bdQ2nJA_dD7ThCP6SLJkVo', '2024-08-21 22:28:13.958370'),
-('tink6jlp1nzl7xt28n65coovpixf3sh1', '.eJxVjMsOwiAQRf-FtSHAyMul-34DGWCQqoGktCvjv2uTLnR7zzn3xQJuaw3boCXMmV2YUuz0O0ZMD2o7yXdst85Tb-syR74r_KCDTz3T83q4fwcVR_3WRQqUIEl4L8laDVgKRQuenACVwKBzYBUaUBgFQdExZ8zuTCZpLT17fwD8pjgB:1setr4:SvPRjf7YJgpiKzt0srO7Bhyxe1vBEqs25CNBBdL_S74', '2024-08-30 10:06:46.837405');
+('tink6jlp1nzl7xt28n65coovpixf3sh1', '.eJxVjMsOwiAQRf-FtSHAyMul-34DGWCQqoGktCvjv2uTLnR7zzn3xQJuaw3boCXMmV2YUuz0O0ZMD2o7yXdst85Tb-syR74r_KCDTz3T83q4fwcVR_3WRQqUIEl4L8laDVgKRQuenACVwKBzYBUaUBgFQdExZ8zuTCZpLT17fwD8pjgB:1setr4:SvPRjf7YJgpiKzt0srO7Bhyxe1vBEqs25CNBBdL_S74', '2024-08-30 10:06:46.837405'),
+('w9k01ngxawbc03grwy5t0bgv0airpfnu', '.eJxVjMsOwiAURP-FtSFwKRZcuvcbyH1QqRpI-lgZ_9026UKXM-fMvFXCdSlpnfOURlEXZdXptyPkZ647kAfWe9Pc6jKNpHdFH3TWtyb5dT3cv4OCc9nWsWMODIKxB2YjFOw5GBg6psESW3DeZ7JRYnAEAgatC31wyB66LavPF_A2N70:1sfKbg:UntY58y-i1hWMhcqzzNcRXiplNcbWVeq6lCuDE7pGeA', '2024-08-31 14:40:40.743579');
 
 -- --------------------------------------------------------
 
@@ -942,9 +1012,9 @@ INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALU
 --
 
 CREATE TABLE `newsletter_bulkemail` (
-  `id` bigint(20) NOT NULL,
-  `subject` varchar(255) NOT NULL,
-  `message` longtext NOT NULL,
+  `id` bigint NOT NULL,
+  `subject` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `message` longtext COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -953,7 +1023,8 @@ CREATE TABLE `newsletter_bulkemail` (
 --
 
 INSERT INTO `newsletter_bulkemail` (`id`, `subject`, `message`, `created_at`) VALUES
-(4, 'Bulk email', 'This is an email sent to all subscribers of the Coder Nova blog. It is a test email, please do no reply this mail.', '2024-08-01 12:06:26.835208');
+(4, 'Bulk email', 'This is an email sent to all subscribers of the Coder Nova blog. It is a test email, please do no reply this mail.', '2024-08-01 12:06:26.835208'),
+(5, 'UI Updates', 'Hello dear subscriber. This is to notify you of our upcoming UI update which is due on 21 August 2024. Thank you.', '2024-08-17 14:41:32.546148');
 
 -- --------------------------------------------------------
 
@@ -962,17 +1033,18 @@ INSERT INTO `newsletter_bulkemail` (`id`, `subject`, `message`, `created_at`) VA
 --
 
 CREATE TABLE `newsletter_subscriber` (
-  `id` bigint(20) NOT NULL,
-  `email` varchar(254) NOT NULL,
-  `subscribed_at` datetime(6) NOT NULL
+  `id` bigint NOT NULL,
+  `email` varchar(254) COLLATE utf8mb4_general_ci NOT NULL,
+  `subscribed_at` datetime(6) NOT NULL,
+  `fullname` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `newsletter_subscriber`
 --
 
-INSERT INTO `newsletter_subscriber` (`id`, `email`, `subscribed_at`) VALUES
-(16, 'uchennamebijay@gmail.com', '2024-08-07 02:18:52.938552');
+INSERT INTO `newsletter_subscriber` (`id`, `email`, `subscribed_at`, `fullname`) VALUES
+(17, 'uchennamebijay@gmail.com', '2024-08-17 15:07:41.239189', 'Ijeoma JahsWay');
 
 -- --------------------------------------------------------
 
@@ -981,29 +1053,29 @@ INSERT INTO `newsletter_subscriber` (`id`, `email`, `subscribed_at`) VALUES
 --
 
 CREATE TABLE `posts_article` (
-  `id` bigint(20) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `type` varchar(20) NOT NULL,
-  `content` longtext NOT NULL,
-  `excerpt` longtext NOT NULL,
-  `image` varchar(100) DEFAULT NULL,
+  `id` bigint NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `type` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `content` longtext COLLATE utf8mb4_general_ci NOT NULL,
+  `excerpt` longtext COLLATE utf8mb4_general_ci NOT NULL,
+  `image` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `published_date` datetime(6) NOT NULL,
   `updated_date` datetime(6) NOT NULL,
-  `file_url` varchar(200) DEFAULT NULL,
-  `status` varchar(10) NOT NULL,
-  `reading_time` int(10) UNSIGNED DEFAULT NULL CHECK (`reading_time` >= 0),
-  `views` int(10) UNSIGNED NOT NULL CHECK (`views` >= 0),
-  `seo_title` varchar(255) NOT NULL,
-  `meta_description` longtext NOT NULL,
-  `meta_keywords` varchar(255) NOT NULL,
+  `file_url` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `reading_time` int UNSIGNED DEFAULT NULL,
+  `views` int UNSIGNED NOT NULL,
+  `seo_title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_description` longtext COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_keywords` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `allow_comments` tinyint(1) NOT NULL,
   `featured` tinyint(1) NOT NULL,
-  `references` longtext NOT NULL,
-  `youtube_url` varchar(200) DEFAULT NULL,
-  `author_id` int(11) NOT NULL,
-  `category_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `references` longtext COLLATE utf8mb4_general_ci NOT NULL,
+  `youtube_url` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `author_id` int NOT NULL,
+  `category_id` bigint NOT NULL
+) ;
 
 --
 -- Dumping data for table `posts_article`
@@ -1022,15 +1094,15 @@ INSERT INTO `posts_article` (`id`, `title`, `slug`, `type`, `content`, `excerpt`
 INSERT INTO `posts_article` (`id`, `title`, `slug`, `type`, `content`, `excerpt`, `image`, `published_date`, `updated_date`, `file_url`, `status`, `reading_time`, `views`, `seo_title`, `meta_description`, `meta_keywords`, `allow_comments`, `featured`, `references`, `youtube_url`, `author_id`, `category_id`) VALUES
 (11, 'Top 10 JavaScript Frameworks for Modern Web Development', 'top-10-javascript-frameworks-for-modern-web-development', 'article', '<p>JavaScript, A powerful programming language widely used for making website frontend components lively and dynamic. but unlike most newbies to web development might think, it&#39;s reach doesn&#39;t end there, JavaScript&#39;s prowess also extends to backend functionality as well, with a wide verity of frameworks built to help developers assimilate all areas of web development, be it frontend, backend, small or large scale web applications, 2d and 3d web interface creation and design, API integration and many more. In no particular order, we&#39;re going to examine 10 JavaScript frameworks built with love and consideration for all&nbsp; JS enthusiasts in the web development industry.&nbsp;</p>\r\n\r\n<p>We&#39;re going to discuss a number of subheadings under each framework to help you get a good grasp on the it.&nbsp;</p>\r\n\r\n<p>Here are some areas we would discuss under each framework:</p>\r\n\r\n<ol>\r\n	<li>\r\n	<p><strong>Overview and Key Features</strong></p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Use Cases</strong></p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Learning Curve</strong></p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Performance and Scalability</strong></p>\r\n	</li>\r\n</ol>\r\n\r\n<p>Now that you know what to expect, lets get us started.</p>\r\n\r\n<h2><span style=\"font-family:Verdana,Geneva,sans-serif\"><span style=\"font-size:36px\"><span style=\"color:#e74c3c\">1.</span></span></span> <strong>React</strong></h2>\r\n\r\n<h4>Overview</h4>\r\n\r\n<p><strong>React</strong> is a powerful JavaScript library that has revolutionized the way we build user interfaces (UIs). Created by Facebook, it has become a cornerstone of modern web development, particularly for crafting dynamic and interactive single-page applications (SPAs).</p>\r\n\r\n<p>At its core, React excels at rendering complex UIs efficiently. Unlike traditional web development where the entire page is reloaded with every change, React employs a <strong>virtual DOM</strong>. This is a JavaScript representation of the actual DOM (Document Object Model), the structure that represents your HTML page. Whenever data changes, React updates the virtual DOM and then efficiently calculates the minimal set of changes required to update the real DOM. This optimization dramatically improves performance and user experience.</p>\r\n\r\n<p>Another key strength of React is its <strong>component-based architecture</strong>. Components are reusable pieces of code that encapsulate specific UI elements and their logic. Think of them as building blocks; you can combine and nest components to create intricate UIs. This approach promotes code reusability, modularity, and maintainability, making it easier to manage large-scale applications.</p>\r\n\r\n<p>Key features include:</p>\r\n\r\n<ul>\r\n	<li>Virtual DOM</li>\r\n	<li>JSX syntax</li>\r\n	<li>Component-based architecture</li>\r\n	<li>Unidirectional data flow</li>\r\n	<li>Extensive ecosystem (e.g., React Router, Redux)</li>\r\n</ul>\r\n\r\n<h4>Use Cases</h4>\r\n\r\n<p>React is ideal for building dynamic, high-performance web applications. It&rsquo;s commonly used for single-page applications (SPAs) and mobile apps (using React Native). Major companies like Facebook, Instagram, Airbnb, and Netflix use React in their tech stacks, showcasing its robustness and scalability.</p>\r\n\r\n<p>Examples of projects suited for React:</p>\r\n\r\n<ul>\r\n	<li>Social media platforms</li>\r\n	<li>E-commerce sites</li>\r\n	<li>Content management systems</li>\r\n	<li>Dashboards and data visualization tools</li>\r\n</ul>\r\n\r\n<h4>Learning Curve</h4>\r\n\r\n<p>React has a relatively gentle learning curve for developers familiar with JavaScript. Its ecosystem is well-documented, with a wealth of tutorials, guides, and courses available. The React community is large and active, providing extensive support through forums, blogs, and open-source contributions.</p>\r\n\r\n<p>Resources for learning React:</p>\r\n\r\n<ul>\r\n	<li><a href=\"https://react.dev/learn\" target=\"_blank\">Official React documentation</a></li>\r\n	<li>Online courses (e.g., Udemy, Coursera, freeCodeCamp)</li>\r\n	<li>Community forums and discussion groups (e.g., Stack Overflow, Reddit)</li>\r\n</ul>\r\n\r\n<h4>Performance and Scalability</h4>\r\n\r\n<p>React&#39;s virtual DOM significantly boosts performance by minimizing costly DOM manipulations. This makes it suitable for applications that require high performance and responsiveness. React&rsquo;s component-based architecture also aids in scalability, allowing developers to build and maintain large applications more efficiently.</p>\r\n\r\n<p>Performance optimization tips:</p>\r\n\r\n<ul>\r\n	<li>Use React&rsquo;s built-in tools like React Profiler</li>\r\n	<li>Implement code-splitting and lazy loading</li>\r\n	<li>Optimize component rendering with PureComponent or React.memo</li>\r\n</ul>\r\n\r\n<p>Sample website built with React js.</p>\r\n\r\n<p><a href=\"https://www.cavai.com/\" target=\"_blank\">Cavai.com</a></p>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/08/634036c8ce22c549520238.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2><span style=\"font-family:Verdana,Geneva,sans-serif\"><span style=\"font-size:36px\"><span style=\"color:#e74c3c\">2.</span></span></span> <strong>Angular</strong></h2>\r\n\r\n<h4>Overview</h4>\r\n\r\n<p><strong>Angular</strong> is a robust and full-featured JavaScript framework developed and maintained by Google. Unlike React, which primarily focuses on the view layer, Angular offers a comprehensive solution for building complex web applications from the ground up. It provides a structured approach, incorporating tools and libraries to handle various aspects of development, such as routing, form management, and HTTP communication.</p>\r\n\r\n<p>At its core, Angular also adopts a <strong>component-based architecture</strong> similar to React, enabling you to break down your application into reusable building blocks. However, Angular goes beyond this by introducing concepts like <strong>dependency injection</strong> and leveraging <strong>RxJS</strong> for reactive programming. Dependency injection simplifies managing dependencies within components, while RxJS allows you to handle asynchronous data streams and events in a declarative and observable manner.</p>\r\n\r\n<p>Key features include:</p>\r\n\r\n<ul>\r\n	<li>Two-way data binding</li>\r\n	<li>Dependency injection</li>\r\n	<li>RxJS for reactive programming</li>\r\n	<li>TypeScript support</li>\r\n	<li>Angular CLI for streamlined development</li>\r\n	<li>Built-in routing and form validation</li>\r\n</ul>\r\n\r\n<h4>Use Cases</h4>\r\n\r\n<p>Angular is well-suited for large-scale enterprise applications due to its robust architecture and powerful features. It is often used for developing complex, data-intensive applications that require real-time updates and extensive user interactions. Companies like Google, Microsoft, and IBM leverage Angular for various projects.</p>\r\n\r\n<p>Examples of projects suited for Angular:</p>\r\n\r\n<ul>\r\n	<li>Enterprise resource planning (ERP) systems</li>\r\n	<li>Customer relationship management (CRM) systems</li>\r\n	<li>E-commerce platforms</li>\r\n	<li>Progressive Web Apps (PWAs)</li>\r\n</ul>\r\n\r\n<h4>Learning Curve</h4>\r\n\r\n<p>Angular has a steeper learning curve compared to other frameworks like React or Vue.js, mainly due to its extensive features and reliance on TypeScript. However, the comprehensive official documentation and abundant online resources make it accessible to determined learners. The Angular community is also quite active, offering ample support and sharing best practices.</p>\r\n\r\n<p>Resources for learning Angular:</p>\r\n\r\n<ul>\r\n	<li><a href=\"https://v17.angular.io/docs\" target=\"_blank\">Official Angular documentation</a></li>\r\n	<li>Online courses (e.g., Pluralsight, Udemy, Angular University)</li>\r\n	<li>Community forums and discussion groups (e.g., Angular Discord, Stack Overflow)</li>\r\n</ul>\r\n\r\n<h4>Performance and Scalability</h4>\r\n\r\n<p>Angular&rsquo;s performance is generally excellent, thanks to features like Ahead-of-Time (AOT) compilation, which compiles the application during the build process, reducing runtime overhead. The framework also supports lazy loading, which helps improve load times by loading only the necessary modules when needed. Angular&rsquo;s modular structure aids in scaling applications efficiently.</p>\r\n\r\n<p>Performance optimization tips:</p>\r\n\r\n<ul>\r\n	<li>Utilize AOT compilation</li>\r\n	<li>Implement lazy loading for modules</li>\r\n	<li>Use OnPush change detection strategy for improved performance</li>\r\n	<li>Optimize template expressions to avoid unnecessary computations</li>\r\n</ul>\r\n\r\n<p>Sample website built with Angular:</p>\r\n\r\n<p><a href=\"https://webflow.com/ai?utm_source=awwwards&amp;utm_medium=referral&amp;utm_campaign=partnerships&amp;utm_content=lists\" target=\"_blank\">Webflow.com</a></p>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/08/6699f7aa134ac208633981.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2><span style=\"font-family:Verdana,Geneva,sans-serif\"><span style=\"font-size:36px\"><span style=\"color:#e74c3c\">3.</span></span></span> <strong>Vue.js</strong></h2>\r\n\r\n<h4>Overview</h4>\r\n\r\n<p><strong>Vue.js</strong> is a progressive JavaScript framework that has gained significant popularity for its flexibility and ease of use. Unlike Angular, which offers a comprehensive solution, Vue takes a more modular approach, allowing developers to adopt it incrementally based on project needs. This means you can start small by using Vue for specific UI components and gradually expand its usage as your application grows.</p>\r\n\r\n<p>Vue&#39;s core library focuses on the view layer, making it efficient for building user interfaces. It incorporates a component-based architecture, similar to React and Angular, to promote code reusability and maintainability. However, Vue distinguishes itself with its simplicity and gentle learning curve. Its syntax is often described as being closer to vanilla JavaScript, making it accessible to developers with varying experience levels.</p>\r\n\r\n<p>Key features include:</p>\r\n\r\n<ul>\r\n	<li>Reactive data binding</li>\r\n	<li>Component-based architecture</li>\r\n	<li>Virtual DOM</li>\r\n	<li>Directives for extending HTML capabilities</li>\r\n	<li>Vue CLI for project scaffolding and tooling</li>\r\n	<li>Single-file components (SFCs) with scoped styles</li>\r\n</ul>\r\n\r\n<h4>Use Cases</h4>\r\n\r\n<p>Vue.js is highly versatile and can be used for various types of applications, from simple single-page applications (SPAs) to complex enterprise systems. It is particularly popular for its ease of integration into existing projects and its gentle learning curve, making it a favorite among both beginners and experienced developers. Companies like Alibaba, Xiaomi, and GitLab use Vue.js in their projects.</p>\r\n\r\n<p>Examples of projects suited for Vue.js:</p>\r\n\r\n<ul>\r\n	<li>SPAs and PWAs</li>\r\n	<li>Interactive web interfaces</li>\r\n	<li>E-commerce platforms</li>\r\n	<li>Content management systems</li>\r\n</ul>\r\n\r\n<h4>Learning Curve</h4>\r\n\r\n<p>Vue.js is often praised for its gentle learning curve, especially when compared to Angular. Its simplicity and clear documentation make it accessible for developers of all skill levels. The Vue.js community is active and supportive, with numerous tutorials, guides, and resources available online.</p>\r\n\r\n<p>Resources for learning Vue.js:</p>\r\n\r\n<ul>\r\n	<li><a href=\"https://vuejs.org/guide/introduction.html\" target=\"_blank\">Official Vue.js documentation</a></li>\r\n	<li>Online courses (e.g., Vue Mastery, Udemy, Scrimba)</li>\r\n	<li>Community forums and discussion groups (e.g., Vue Land Discord, Stack Overflow)</li>\r\n</ul>\r\n\r\n<h4>Performance and Scalability</h4>\r\n\r\n<p>Vue.js offers excellent performance due to its efficient reactivity system and virtual DOM. The framework is designed to be lightweight and fast, making it suitable for both small and large-scale applications. Vue&#39;s modular architecture allows developers to scale applications efficiently by organizing the codebase into reusable components.</p>\r\n\r\n<p>Performance optimization tips:</p>\r\n\r\n<ul>\r\n	<li>Use the Vue Devtools for performance monitoring</li>\r\n	<li>Implement lazy loading for components and routes</li>\r\n	<li>Optimize component reactivity with computed properties and watchers</li>\r\n	<li>Minimize the use of inline styles and bindings</li>\r\n</ul>\r\n\r\n<p>Sample website built with Vue JS&nbsp;</p>\r\n\r\n<p><a href=\"https://www.poool.cc/\" target=\"_blank\">Poool.cc</a></p>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/08/6322e48009284971959838.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<h2><span style=\"font-family:Verdana,Geneva,sans-serif\"><span style=\"font-size:36px\"><span style=\"color:#e74c3c\">4.</span></span></span> <strong>Svelte</strong></h2>\r\n\r\n<h4>Overview</h4>\r\n\r\n<p><strong>Svelte</strong> represents a fresh approach to building user interfaces. Unlike its contemporaries, React, Vue, and Angular, which primarily execute logic in the browser, Svelte performs most of the heavy lifting during the build process. This paradigm shift results in significantly smaller and more efficient applications.</p>\r\n\r\n<p>When you write Svelte components, you&#39;re essentially describing the desired UI to the compiler. During the build process, Svelte transforms your code into highly optimized JavaScript that directly manipulates the DOM, eliminating the need for a virtual DOM or complex runtime. This compilation step produces leaner code that runs faster and requires less memory.</p>\r\n\r\n<p>By shifting the workload to the build step, Svelte empowers developers to create responsive and performant applications without sacrificing development experience or flexibility.</p>\r\n\r\n<p>Key features include:</p>\r\n\r\n<ul>\r\n	<li>Compile-time optimizations</li>\r\n	<li>No virtual DOM</li>\r\n	<li>Reactive declarations</li>\r\n	<li>Simplicity and minimal boilerplate</li>\r\n	<li>SvelteKit for building full-stack applications</li>\r\n</ul>\r\n\r\n<h4>Use Cases</h4>\r\n\r\n<p>Svelte is well-suited for applications where performance is critical, such as real-time applications and SPAs. Its simplicity also makes it an excellent choice for smaller projects or prototypes. Companies like The New York Times and Spotify have utilized Svelte in their projects, demonstrating its capability to handle production-level applications.</p>\r\n\r\n<p>Examples of projects suited for Svelte:</p>\r\n\r\n<ul>\r\n	<li>Real-time applications (e.g., chat apps, live updates)</li>\r\n	<li>SPAs and PWAs</li>\r\n	<li>Interactive dashboards and data visualizations</li>\r\n	<li>Prototypes and small-to-medium-sized web applications</li>\r\n</ul>\r\n\r\n<h4>Learning Curve</h4>\r\n\r\n<p>Svelte&rsquo;s learning curve is relatively gentle, especially for developers who are already familiar with JavaScript. Its syntax is straightforward and easy to understand, with minimal boilerplate code. The official Svelte documentation is comprehensive and well-organized, and the community is growing rapidly, providing plenty of resources for learners.</p>\r\n\r\n<p>Resources for learning Svelte:</p>\r\n\r\n<ul>\r\n	<li><a href=\"https://svelte.dev/docs\" target=\"_blank\">Official Svelte.js Documentation</a></li>\r\n	<li>Online courses (e.g., Svelte Mastery, Udemy)</li>\r\n	<li>Community forums and discussion groups (e.g., Svelte Society Discord, Stack Overflow)</li>\r\n</ul>\r\n\r\n<h4>Performance and Scalability</h4>\r\n\r\n<p>Svelte offers exceptional performance due to its compile-time optimizations and lack of a virtual DOM. This approach results in smaller bundle sizes and faster runtime performance. Svelte&rsquo;s reactive programming model also contributes to its efficiency. While Svelte is relatively new, its growing ecosystem and tools like SvelteKit make it increasingly capable of handling scalable applications.</p>\r\n\r\n<p>Performance optimization tips:</p>\r\n\r\n<ul>\r\n	<li>Utilize Svelte&rsquo;s built-in performance monitoring tools</li>\r\n	<li>Optimize reactive declarations to minimize unnecessary updates</li>\r\n	<li>Leverage SvelteKit for building and optimizing full-stack applications</li>\r\n	<li>Use code-splitting and lazy loading to improve initial load times</li>\r\n</ul>\r\n\r\n<p>Sample website built with Svelte JS&nbsp;</p>\r\n\r\n<p><a href=\"https://www.rebel-co.com/\" target=\"_blank\">Rebel-co.com</a></p>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/08/628baab6bd5fd098732084.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2><span style=\"font-family:Verdana,Geneva,sans-serif\"><span style=\"font-size:36px\"><span style=\"color:#e74c3c\">5.</span></span></span> <strong>Next.js</strong></h2>\r\n\r\n<h4>Overview</h4>\r\n\r\n<p><strong>Next.js</strong> is a popular React framework that has gained significant traction for its ability to streamline the development of high-performance web applications. Built on top of React, it offers a structured approach to crafting applications with features like Server-Side Rendering (SSR) and Static Site Generation (SSG).</p>\r\n\r\n<p>SSR is a technique where the server renders the initial HTML of a page, improving SEO, initial page load speed, and user experience. SSG, on the other hand, pre-renders entire pages at build time, resulting in incredibly fast load times and optimal performance. Next.js provides a flexible environment for developers to choose between these rendering strategies based on their application&#39;s requirements.</p>\r\n\r\n<p>Beyond rendering, Next.js offers a rich set of features including built-in routing, API routes, image optimization, and more, making it a comprehensive solution for building robust and scalable web applications.</p>\r\n\r\n<p>Key features include:</p>\r\n\r\n<ul>\r\n	<li>Server-side rendering (SSR)</li>\r\n	<li>Static site generation (SSG)</li>\r\n	<li>API routes</li>\r\n	<li>Automatic code splitting</li>\r\n	<li>File-based routing</li>\r\n	<li>Built-in CSS and Sass support</li>\r\n</ul>\r\n\r\n<h4>Use Cases</h4>\r\n\r\n<p>Next.js is ideal for applications that require fast load times and improved SEO, such as content-heavy websites, e-commerce platforms, and marketing sites. Its ability to handle server-side rendering makes it suitable for applications where dynamic content needs to be rendered on the server to improve performance and SEO. Companies like Netflix, Hulu, and TikTok use Next.js in their production environments.</p>\r\n\r\n<p>Examples of projects suited for Next.js:</p>\r\n\r\n<ul>\r\n	<li>E-commerce websites</li>\r\n	<li>News and content-heavy websites</li>\r\n	<li>Blogs and marketing sites</li>\r\n	<li>Complex web applications requiring both SSR and SSG</li>\r\n</ul>\r\n\r\n<h4>Learning Curve</h4>\r\n\r\n<p>Next.js has a moderate learning curve, especially for developers already familiar with React. The framework&rsquo;s conventions and built-in features simplify many aspects of web development, making it easier to get started. The official documentation is detailed and provides numerous examples and tutorials. Additionally, the Next.js community is active and supportive, with many resources available for learning.</p>\r\n\r\n<p>Resources for learning Next.js:</p>\r\n\r\n<ul>\r\n	<li><a href=\"https://nextjs.org/docs\" target=\"_blank\">Official Next.js Documentation</a></li>\r\n	<li>Online courses (e.g., Udemy, Egghead.io, freeCodeCamp)</li>\r\n	<li>Community forums and discussion groups (e.g., Next.js Discord, Stack Overflow)</li>\r\n</ul>\r\n\r\n<h4>Performance and Scalability</h4>\r\n\r\n<p>Next.js excels in performance, thanks to its ability to pre-render pages at build time (SSG) and on-demand (SSR). This results in faster load times and improved SEO. Next.js also supports automatic code splitting, ensuring that only the necessary code is loaded for each page. The framework&rsquo;s flexibility allows developers to scale applications efficiently, combining static and dynamic content as needed.</p>\r\n\r\n<p>Performance optimization tips:</p>\r\n\r\n<ul>\r\n	<li>Use static site generation (SSG) for pages that don&rsquo;t require frequent updates</li>\r\n	<li>Implement server-side rendering (SSR) for dynamic content</li>\r\n	<li>Leverage Next.js API routes for serverless functions</li>\r\n	<li>Optimize images and use built-in image optimization features</li>\r\n</ul>\r\n\r\n<p>Sample website built with Next JS&nbsp;</p>\r\n\r\n<p><a href=\"https://www.totem-configurator.com/\" target=\"_blank\">Totem-configurator.com</a></p>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/08/666083293bf83494862294.jpg\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2><span style=\"font-family:Verdana,Geneva,sans-serif\"><span style=\"font-size:36px\"><span style=\"color:#e74c3c\">6.</span></span></span> <strong>Nuxt.js</strong></h2>\r\n\r\n<h4>Overview</h4>\r\n\r\n<p><strong>Nuxt.js</strong> is a higher-level framework built on top of Vue.js that simplifies the development of universal applications. It provides a structured approach to building web applications by offering features and conventions that streamline common tasks.</p>\r\n\r\n<p>One of Nuxt.js&#39;s core strengths is its support for <strong>Server-Side Rendering (SSR)</strong>, which improves SEO, initial load times, and overall user experience. However, it also allows for <strong>Static Site Generation (SSG)</strong>, generating HTML files at build time for optimal performance, and <strong>Single Page Applications (SPA)</strong> for dynamic, interactive experiences. This flexibility empowers developers to choose the best rendering strategy for their specific project.</p>\r\n\r\n<p>Nuxt.js goes beyond rendering by providing automatic routing, state management, and other essential features out of the box. This allows developers to focus on building the application&#39;s core logic rather than spending time on infrastructure setup.</p>\r\n\r\n<p>Key features include:</p>\r\n\r\n<ul>\r\n	<li>Server-side rendering (SSR)</li>\r\n	<li>Static site generation (SSG)</li>\r\n	<li>Automatic code splitting</li>\r\n	<li>File-based routing</li>\r\n	<li>Vuex integration for state management</li>\r\n	<li>Modular architecture with over 50 modules</li>\r\n</ul>\r\n\r\n<h4>Use Cases</h4>\r\n\r\n<p>Nuxt.js is ideal for building high-performance web applications that require improved SEO and fast load times. It is particularly well-suited for content-heavy websites, blogs, and e-commerce platforms. Companies like Xiaomi, Alibaba, and Vice use Nuxt.js for their web applications, highlighting its reliability and scalability.</p>\r\n\r\n<p>Examples of projects suited for Nuxt.js:</p>\r\n\r\n<ul>\r\n	<li>E-commerce platforms</li>\r\n	<li>Blogs and content-heavy websites</li>\r\n	<li>Corporate websites</li>\r\n	<li>Complex web applications requiring SSR and SSG</li>\r\n</ul>\r\n\r\n<h4>Learning Curve</h4>\r\n\r\n<p>Nuxt.js has a moderate learning curve, especially for developers familiar with Vue.js. The framework&rsquo;s conventions and built-in features simplify many aspects of web development, making it easier to get started. The official documentation is comprehensive and provides numerous examples and tutorials. Additionally, the Nuxt.js community is active and supportive, with many resources available for learning.</p>\r\n\r\n<p>Resources for learning Nuxt.js:</p>\r\n\r\n<ul>\r\n	<li><a href=\"https://nuxt.com\" target=\"_blank\">Official Nuxt.js website</a></li>\r\n	<li><a href=\"https://michaelnthiessen.com/nuxt-tips-collection?aff=J0Emk\" target=\"_blank\">Nuxt Tips Collection</a></li>\r\n	<li>Online courses (e.g., Udemy, Vue School, freeCodeCamp)</li>\r\n	<li>Community forums and discussion groups (e.g., Nuxt.js Discord, Stack Overflow)</li>\r\n</ul>\r\n\r\n<h4>Performance and Scalability</h4>\r\n\r\n<p>Nuxt.js offers excellent performance through its server-side rendering and static site generation capabilities. This results in faster load times and improved SEO. Nuxt.js also supports automatic code splitting, ensuring that only the necessary code is loaded for each page. The framework&rsquo;s modular architecture allows developers to scale applications efficiently by adding and configuring modules as needed.</p>\r\n\r\n<p>Performance optimization tips:</p>\r\n\r\n<ul>\r\n	<li>Use static site generation (SSG) for pages that don&rsquo;t require frequent updates</li>\r\n	<li>Implement server-side rendering (SSR) for dynamic content</li>\r\n	<li>Optimize images and use built-in image optimization features</li>\r\n	<li>Leverage Nuxt.js modules for caching and performance improvements</li>\r\n</ul>\r\n\r\n<p>Sample website built with Nuxt JS&nbsp;</p>\r\n\r\n<p><a href=\"https://fresh.anytype.io/en\" target=\"_blank\">Fresh.anytype.io</a></p>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/08/6203a8dd7125b613988818.jpg\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2><span style=\"font-family:Verdana,Geneva,sans-serif\"><span style=\"font-size:36px\"><span style=\"color:#e74c3c\">7.</span></span></span> <strong>Express.js</strong></h2>\r\n\r\n<h4>Overview</h4>\r\n\r\n<p><strong>Express.js</strong>&nbsp;is a foundational framework for building web applications and APIs with Node.js. It provides a streamlined approach to handling HTTP requests and responses, making it a popular choice for developers seeking flexibility and performance. &nbsp;&nbsp;</p>\r\n\r\n<p>Unlike full-stack frameworks that offer a comprehensive set of features, Express is designed to be minimal, allowing developers to choose and incorporate the tools and libraries they need. This flexibility is a key advantage, as it enables tailored solutions for various project requirements. &nbsp;&nbsp;</p>\r\n\r\n<p>By handling routing, middleware, and server configuration efficiently, Express frees developers to focus on the core logic of their application. This minimalism, coupled with its performance and scalability, has solidified Express&#39;s position as a go-to choice for Node.js developers building a wide range of applications.&nbsp;</p>\r\n\r\n<p>Key features include:</p>\r\n\r\n<ul>\r\n	<li>Middleware support</li>\r\n	<li>Routing</li>\r\n	<li>Template engines</li>\r\n	<li>Robust API development</li>\r\n	<li>Flexibility and minimalism</li>\r\n</ul>\r\n\r\n<h4>Use Cases</h4>\r\n\r\n<p>Express.js is ideal for building RESTful APIs and server-side applications. It is commonly used for developing single-page applications (SPAs), RESTful APIs, and web applications that require a fast, scalable, and flexible backend. Companies like IBM, Uber, and Accenture use Express.js in their tech stacks.</p>\r\n\r\n<p>Examples of projects suited for Express.js:</p>\r\n\r\n<ul>\r\n	<li>RESTful APIs</li>\r\n	<li>Single-page applications (SPAs)</li>\r\n	<li>Web applications requiring server-side logic</li>\r\n	<li>Microservices architectures</li>\r\n</ul>\r\n\r\n<h4>Learning Curve</h4>\r\n\r\n<p>Express.js has a gentle learning curve, especially for developers familiar with JavaScript and Node.js. Its minimalistic and unopinionated nature makes it easy to get started, while still offering powerful features through middleware and plugins. The official documentation is concise and well-organized, and there are numerous tutorials and resources available online.</p>\r\n\r\n<p>Resources for learning Express.js:</p>\r\n\r\n<ul>\r\n	<li><a href=\"https://expressjs.com/en/starter/installing.html\" target=\"_blank\">Official Express.js Documentation</a></li>\r\n	<li>Online courses (e.g., Udemy, freeCodeCamp, Pluralsight)</li>\r\n	<li>Community forums and discussion groups (e.g., Stack Overflow, Reddit)</li>\r\n</ul>\r\n\r\n<h4>Performance and Scalability</h4>\r\n\r\n<p>Express.js offers excellent performance due to its lightweight nature and efficient handling of HTTP requests and responses. Its middleware architecture allows for the efficient management of request handling, enabling the development of high-performance web applications. Express.js is highly scalable, making it suitable for both small projects and large-scale applications.</p>\r\n\r\n<p>Performance optimization tips:</p>\r\n\r\n<ul>\r\n	<li>Use middleware effectively to manage request handling</li>\r\n	<li>Implement caching strategies to reduce server load</li>\r\n	<li>Optimize database queries and use connection pooling</li>\r\n	<li>Leverage load balancing and clustering for high-traffic applications</li>\r\n</ul>\r\n\r\n<p>Sample website built with Express.js (Node.Js)</p>\r\n\r\n<p><a href=\"https://avocode.com/sdk\" target=\"_blank\">Avocode.com</a></p>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/08/5c5305348537d431672306.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2><span style=\"font-family:Verdana,Geneva,sans-serif\"><span style=\"font-size:36px\"><span style=\"color:#e74c3c\">8.</span></span></span> <strong>NestJS</strong></h2>\r\n\r\n<h4>Overview</h4>\r\n\r\n<p><strong>NestJS</strong> is a progressive Node.js framework that has gained significant popularity for building scalable and maintainable server-side applications. Inspired by Angular&#39;s architecture, NestJS brings a structured approach to Node.js development, emphasizing modularity, testability, and reusability.</p>\r\n\r\n<p>By leveraging TypeScript, NestJS provides strong type checking, improving code quality and reducing errors. Its modular architecture allows for the organization of code into well-defined components, making it easier to manage complex applications. NestJS also offers a command-line interface (CLI) to streamline development and a rich ecosystem of plugins and modules.</p>\r\n\r\n<p>This framework is well-suited for building a wide range of applications, from RESTful APIs to microservices. Its emphasis on best practices and its ability to handle large-scale projects make it a compelling choice for many developers.</p>\r\n\r\n<p>Key features include:</p>\r\n\r\n<ul>\r\n	<li>Modular architecture</li>\r\n	<li>Dependency injection</li>\r\n	<li>Built-in support for TypeScript</li>\r\n	<li>Middleware and guards</li>\r\n	<li>Microservices architecture support</li>\r\n	<li>Comprehensive CLI</li>\r\n</ul>\r\n\r\n<h4>Use Cases</h4>\r\n\r\n<p>NestJS is ideal for developing enterprise-level applications, RESTful APIs, and microservices architectures. Its modular and scalable design makes it well-suited for complex applications requiring maintainability and scalability. Companies like Adidas, Roche, and Capgemini use NestJS for their server-side applications.</p>\r\n\r\n<p>Examples of projects suited for NestJS:</p>\r\n\r\n<ul>\r\n	<li>Enterprise-level applications</li>\r\n	<li>RESTful APIs</li>\r\n	<li>Microservices architectures</li>\r\n	<li>Real-time applications (e.g., chat apps, live updates)</li>\r\n</ul>\r\n\r\n<h4>Learning Curve</h4>\r\n\r\n<p>NestJS has a moderate learning curve, especially for developers familiar with TypeScript and object-oriented programming. Its similarity to Angular&#39;s architecture can make it easier for developers experienced with Angular to transition to NestJS. The official documentation is extensive and provides numerous examples and tutorials. The NestJS community is also active and supportive, offering plenty of resources for learners.</p>\r\n\r\n<p>Resources for learning NestJS:</p>\r\n\r\n<ul>\r\n	<li><a href=\"https://docs.nestjs.com/\" target=\"_blank\">Official NestJS Documentation </a></li>\r\n	<li>Online courses (e.g., Udemy, Pluralsight, NestJS courses)</li>\r\n	<li>Community forums and discussion groups (e.g., NestJS Discord, Stack Overflow)</li>\r\n</ul>\r\n\r\n<h4>Performance and Scalability</h4>\r\n\r\n<p>NestJS is designed for performance and scalability, leveraging Node.js&#39;s non-blocking I/O model. Its modular architecture and dependency injection system enable developers to build highly scalable applications. NestJS also supports microservices architectures, making it suitable for large-scale, distributed systems.</p>\r\n\r\n<p>Performance optimization tips:</p>\r\n\r\n<ul>\r\n	<li>Use middleware and guards effectively to manage request handling</li>\r\n	<li>Implement caching strategies to reduce server load</li>\r\n	<li>Optimize database queries and use connection pooling</li>\r\n	<li>Leverage microservices architecture for scalability and fault tolerance</li>\r\n</ul>\r\n\r\n<p>Sample website built with NestJs</p>\r\n\r\n<p><a href=\"https://feedr-three.vercel.app/\" target=\"_blank\">Feedr-three.vercel.app</a></p>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/08/screenshot-266.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2><span style=\"font-family:Verdana,Geneva,sans-serif\"><span style=\"font-size:36px\"><span style=\"color:#e74c3c\">9.</span></span></span><strong> Ember.js</strong></h2>\r\n\r\n<h4>Overview</h4>\r\n\r\n<p><strong>Ember.js</strong> is a robust and opinionated JavaScript framework designed for crafting large-scale, feature-rich web applications. It prioritizes developer productivity and application performance by providing a comprehensive set of tools and conventions. Unlike some frameworks that offer flexibility over structure, Ember leans towards a convention-over-configuration approach, guiding developers towards best practices and reducing decision fatigue.</p>\r\n\r\n<p>Ember&#39;s core philosophy revolves around creating a stable and predictable development environment. It offers a rich feature set including:</p>\r\n\r\n<ul>\r\n	<li><strong>Component-based architecture:</strong> For building reusable UI elements.</li>\r\n	<li><strong>Data management:</strong> With Ember Data for interacting with backend APIs.</li>\r\n	<li><strong>Routing:</strong> For handling navigation within the application.</li>\r\n	<li><strong>Testing:</strong> With built-in support for unit and integration tests.</li>\r\n</ul>\r\n\r\n<p>By adhering to its conventions, Ember empowers developers to focus on building application features rather than spending excessive time on infrastructure setup. This results in faster development cycles and more maintainable codebases.</p>\r\n\r\n<p>Key features include:</p>\r\n\r\n<ul>\r\n	<li>Convention-over-configuration</li>\r\n	<li>Two-way data binding</li>\r\n	<li>Ember CLI for project scaffolding and tooling</li>\r\n	<li>Ember Data for data management</li>\r\n	<li>Built-in router with nested routes</li>\r\n	<li>Component-based architecture</li>\r\n</ul>\r\n\r\n<h4>Use Cases</h4>\r\n\r\n<p>Ember.js is well-suited for large-scale web applications that require a strong convention-based structure and a comprehensive set of tools. It excels in projects that need to be built quickly and maintained over time, making it ideal for enterprise-level applications and long-term projects. Companies like Discourse, LinkedIn, and Apple use Ember.js for their web applications.</p>\r\n\r\n<p>Examples of projects suited for Ember.js:</p>\r\n\r\n<ul>\r\n	<li>Large-scale enterprise applications</li>\r\n	<li>CRM systems</li>\r\n	<li>Collaborative platforms</li>\r\n	<li>Content management systems</li>\r\n</ul>\r\n\r\n<h4>Learning Curve</h4>\r\n\r\n<p>Ember.js has a steeper learning curve compared to some other frameworks due to its opinionated nature and extensive feature set. However, its convention-over-configuration approach can simplify development once the initial learning curve is overcome. The official documentation is detailed and includes a variety of tutorials and guides. The Ember.js community is active and provides valuable support through forums and discussions.</p>\r\n\r\n<p>Resources for learning Ember.js:</p>\r\n\r\n<ul>\r\n	<li><a href=\"https://guides.emberjs.com/release/\" target=\"_blank\">Official Ember.Js Documentation</a></li>\r\n	<li>Online courses (e.g., Ember Learning, Udemy)</li>\r\n	<li>Community forums and discussion groups (e.g., Ember Discord, Stack Overflow)</li>\r\n</ul>\r\n\r\n<h4>Performance and Scalability</h4>\r\n\r\n<p>Ember.js is designed for performance and scalability, with features like the Ember CLI and Ember Data optimizing development workflows and data management. Its built-in router and component-based architecture help in building scalable applications with efficient performance. Ember.js applications can be scaled effectively through its modular design and best practices.</p>\r\n\r\n<p>Performance optimization tips:</p>\r\n\r\n<ul>\r\n	<li>Use Ember CLI to manage and optimize builds</li>\r\n	<li>Implement lazy loading for routes and components</li>\r\n	<li>Optimize data management with Ember Data</li>\r\n	<li>Use performance monitoring tools to identify and address bottlenecks</li>\r\n</ul>\r\n\r\n<p>Sample website built using Ember.Js</p>\r\n\r\n<p><a href=\"https://digitalocean.com/\" target=\"_blank\">Digitalocean.com</a></p>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/08/screenshot-267.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2><span style=\"font-family:Verdana,Geneva,sans-serif\"><span style=\"font-size:36px\"><span style=\"color:#e74c3c\">10.</span></span></span> <strong>Meteor.js</strong></h2>\r\n\r\n<h4>Overview</h4>\r\n\r\n<p><strong>Meteor.js</strong> is a comprehensive JavaScript platform designed to streamline the creation of real-time web and mobile applications. It offers a unified environment for both front-end and back-end development, allowing developers to build applications using a single language: JavaScript.</p>\r\n\r\n<p>Meteor&#39;s core strength lies in its ability to handle real-time data synchronization effortlessly. With Meteor, changes made on the server are instantly reflected on the client, without requiring manual updates or complex coding. This makes it ideal for applications like chat apps, collaborative tools, and online gaming.</p>\r\n\r\n<p>Beyond real-time capabilities, Meteor provides a rich set of features including:</p>\r\n\r\n<ul>\r\n	<li><strong>Isomorphic code:</strong> Write JavaScript code that runs both on the client and server.</li>\r\n	<li><strong>Reactive patterns:</strong> Build applications that automatically update as data changes.</li>\r\n	<li><strong>Built-in accounts system:</strong> Easily implement user authentication and authorization.</li>\r\n	<li><strong>Extensive package ecosystem:</strong> Access a wide range of community-contributed packages.</li>\r\n</ul>\r\n\r\n<p>Meteor&#39;s focus on rapid development and developer experience has made it a popular choice for building prototypes and MVPs. However, it&#39;s essential to consider the trade-offs, such as potential performance implications for large-scale applications, when making technology choices.</p>\r\n\r\n<p>Key features include:</p>\r\n\r\n<ul>\r\n	<li>Real-time data updates</li>\r\n	<li>Full-stack integration</li>\r\n	<li>Simple API for working with MongoDB</li>\r\n	<li>Built-in user authentication</li>\r\n	<li>Meteor packages for adding functionality</li>\r\n	<li>Reactive programming model</li>\r\n</ul>\r\n\r\n<h4>Use Cases</h4>\r\n\r\n<p>Meteor.js is particularly well-suited for applications that require real-time data synchronization, such as chat applications, collaborative tools, and live data dashboards. Its ease of use and integrated environment make it a good choice for rapid prototyping and MVP (minimum viable product) development. Companies like Xiaomi and Roche have used Meteor.js in their projects.</p>\r\n\r\n<p>Examples of projects suited for Meteor.js:</p>\r\n\r\n<ul>\r\n	<li>Real-time chat applications</li>\r\n	<li>Collaborative platforms (e.g., project management tools)</li>\r\n	<li>Live data dashboards</li>\r\n	<li>Prototyping and MVPs</li>\r\n</ul>\r\n\r\n<h4>Learning Curve</h4>\r\n\r\n<p>Meteor.js has a relatively gentle learning curve, especially for developers familiar with JavaScript. Its integrated approach and simplicity allow developers to get up and running quickly. The official documentation provides a clear guide to getting started, and the Meteor community offers additional resources and support.</p>\r\n\r\n<p>Resources for learning Meteor.js:</p>\r\n\r\n<ul>\r\n	<li><a href=\"https://docs.meteor.com/\" target=\"_blank\">Official Meteor.js Documentation </a></li>\r\n	<li>Online courses (e.g., Meteor Tutorials on Udemy, freeCodeCamp)</li>\r\n	<li>Community forums and discussion groups (e.g., Meteor Forum, Stack Overflow)</li>\r\n</ul>\r\n\r\n<h4>Performance and Scalability</h4>\r\n\r\n<p>Meteor.js is designed for real-time performance, with features like live data updates and reactive programming enhancing responsiveness. However, its all-in-one approach can sometimes lead to performance bottlenecks for very large applications. To ensure scalability, developers should carefully manage database interactions and optimize the use of Meteor&rsquo;s features.</p>\r\n\r\n<p>Performance optimization tips:</p>\r\n\r\n<ul>\r\n	<li>Use Meteor&rsquo;s pub/sub system efficiently to minimize data transfer</li>\r\n	<li>Optimize database queries and use indexes effectively</li>\r\n	<li>Implement server-side caching and load balancing</li>\r\n	<li>Modularize code and use Meteor packages wisely to manage dependencies</li>\r\n</ul>\r\n\r\n<p>Sample website built using Meteor.Js</p>\r\n\r\n<p><a href=\"https://dockercon.com\" target=\"_blank\">Dockercon.com</a></p>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/08/screenshot-268.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2>Conclusion</h2>\r\n\r\n<p>Choosing the best JavaScript framework depends largely on the specific needs of your project and your familiarity with the technology. Each of the frameworks discussed has its strengths and ideal use cases:</p>\r\n\r\n<ul>\r\n	<li><strong>React</strong> is highly versatile and excellent for building interactive user interfaces with a large ecosystem of tools and libraries.</li>\r\n	<li><strong>Angular</strong> provides a comprehensive solution with strong support for enterprise-level applications and robust features like dependency injection and a powerful CLI.</li>\r\n	<li><strong>Vue.js</strong> stands out for its simplicity and ease of integration, making it a great choice for both beginners and advanced users looking for flexibility.</li>\r\n	<li><strong>Svelte</strong> offers a unique approach by compiling code at build time, resulting in highly optimized and performant applications with less browser overhead.</li>\r\n	<li><strong>Next.js</strong> excels in server-side rendering and static site generation, making it perfect for SEO-focused and performance-sensitive applications.</li>\r\n	<li><strong>Nuxt.js</strong> provides similar benefits to Next.js but for Vue.js applications, with a focus on server-side rendering and static generation.</li>\r\n	<li><strong>Express.js</strong> is a lightweight and flexible choice for server-side applications and APIs, renowned for its simplicity and scalability.</li>\r\n	<li><strong>NestJS</strong> combines TypeScript with a modular architecture, making it suitable for building enterprise-grade applications and microservices.</li>\r\n	<li><strong>Ember.js</strong> offers a convention-over-configuration approach, which can speed up development for complex applications but requires a steeper learning curve.</li>\r\n	<li><strong>Meteor.js</strong> provides a full-stack solution with built-in real-time capabilities, ideal for rapid development of real-time applications and prototypes.</li>\r\n</ul>\r\n\r\n<p>Ultimately, the &quot;best&quot; framework is the one that aligns with your project&#39;s requirements and your development preferences. Consider factors such as the complexity of your application, performance needs, and your team&#39;s expertise when making your choice. Experimenting with different frameworks and exploring their documentation and communities can also help you make an informed decision that best suits your needs.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>This concludes our Top 10 JavaScript Frameworks for Modern Web Development. Share your thought and opinions on the frameworks that caught your interest in the comments and subscribe to our newsletter to get notified when we post new contents.</p>', 'In the scope of web development, staying updated with the latest tools and frameworks is crucial. As a beginner or a JavaScript enthusiast, we bring you an in-depth look at the top 10 JavaScript frameworks that should be on your radar. Whether you\'re building dynamic UIs, robust backends, or real-time applications, these frameworks offer the features and capabilities to streamline your development process and enhance your projects.', 'articles/20240806_170802.jpg', '2024-08-03 07:47:04.008672', '2024-08-09 06:49:01.557888', NULL, 'published', 15, 66, 'Top 10 JavaScript Frameworks To Learn For Modern Web Development', 'Discover the top 10 JavaScript frameworks to learn for modern development. Enhance your web projects with our in-depth analysis of some JavaScript frameworks,', 'JavaScript, frameworks, web development, React, Angular, Vue.js, Svelte, Next.js, Nuxt.js, Express.js, NestJS, Ember.js, Meteor.js, 2024 trends, programming', 1, 0, '-- https://www.reddit.com/ --\r\n-- https://www.awwwards.com/websites --  \r\n-- https://hunter.io/technologies --', NULL, 1, 12);
 INSERT INTO `posts_article` (`id`, `title`, `slug`, `type`, `content`, `excerpt`, `image`, `published_date`, `updated_date`, `file_url`, `status`, `reading_time`, `views`, `seo_title`, `meta_description`, `meta_keywords`, `allow_comments`, `featured`, `references`, `youtube_url`, `author_id`, `category_id`) VALUES
-(12, 'Essential Git Commands Every Developer Should Know', 'essential-git-commands-every-developer-should-know', 'article', '<p>Git, a distributed version control system used primarily in software development. It is used to track changes in files, allowing multiple people to work on projects simultaneously. Git enables developers to manage different versions of their code, collaborate effectively, and revert changes when necessary.</p>\r\n\r\n<p>Git has become an essential part of modern software development, easing the process of how developers manage and collaborate on code projects. Whether you&#39;re a solo programmer or part of a large team, mastering Git can significantly enhance your workflow, making it more efficient and less prone to errors and file loss. This version control system allows you to track changes, revert to previous stages, and work on different features simultaneously without fear of losing progress.</p>\r\n\r\n<p>To get a better grasp of this powerful version control tool, we&#39;ll explore some of the most crucial Git commands that every developer should know. We will discuss their practical applications in real-world scenarios, helping you understand not just the how, but also the why behind each command. By the end, you&#39;ll have a solid understanding for using Git effectively in your projects, whether you&#39;re working on a personal hobby or a large-scale professional application.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2>The Essentials&nbsp;</h2>\r\n\r\n<p>At is core, Git functions through it&#39;s commands, each serving a specific purpose in the development process. From initializing a repository with &#39;git init&#39; to pushing your changes to a remote server with &#39;git push&#39;, these commands form the backbone of version control. Understanding when and how to use commands like &#39;git commit&#39;, &#39;git branch&#39;, and &#39;git merge&#39; can make the difference between a smooth development process and a chaotic one filled with bugs and gut wrenching errors.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h3>1. <code>git init</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Starting a new project and want to keep track of changes from the beginning.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git init</code> command is used to create a new Git repository. This sets up the necessary files and directories that Git uses to keep track of changes in your project.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git init</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> By initializing a Git repository at the start of your project, you ensure that every change is tracked from the very beginning, making it easier to manage and revert changes if needed.</p>\r\n\r\n<h3>2. <code>git clone</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Downloading an existing repository from a remote source.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git clone</code> command is used to create a copy of an existing remote Git repository. This is commonly used to clone repositories from platforms like GitHub, GitLab, or Bitbucket.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git clone https://github.com/user/repo.git</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> Cloning repositories allows you to easily collaborate on projects by working on a local copy of the repository, making it easy to contribute to open-source projects or share your own work.</p>\r\n\r\n<h3>3. <code>git add</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Staging changes to be committed to the repository.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git add</code> command is used to stage changes for the next commit. This can be used to add individual files or entire directories.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git add file.txt\r\ngit add .</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> Staging changes before committing allows you to review what will be included in your next commit, ensuring that only the necessary changes are recorded.</p>\r\n\r\n<h3>4. <code>git commit</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Saving changes to the repository with a message describing the changes.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git commit</code> command is used to save your staged changes to the repository. Each commit should include a message that describes the changes made.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git commit -m \"Add new feature to user login\"</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> Committing changes with descriptive messages creates a clear history of your project&#39;s development, making it easier to understand the evolution of your codebase.</p>\r\n\r\n<h3>5. <code>git status</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Checking the status of your working directory and staging area.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git status</code> command provides information about the current state of your working directory and staging area. It shows which files are modified, staged for commit, or untracked.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git status</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> Regularly checking the status of your repository helps you keep track of your changes and ensures that you don&#39;t accidentally miss any important updates before committing. This is especially useful in large scale projects where little changes can make huge difference.</p>\r\n\r\n<h3>6. <code>git push</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Uploading your local changes to a remote repository.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git push</code> command is used to upload your local commits to a remote repository. This is typically used to share your changes with collaborators or back up your work, depending on the structure of your project, you can either push to the main branch or the master branch.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git push origin main # or origin master</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> Pushing changes to a remote repository ensures that your work is safely backed up and available to others who need access to the project.</p>\r\n\r\n<h3>7. <code>git pull</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Fetching and merging changes from a remote repository.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git pull</code> command is used to fetch changes from a remote repository and merge them into your local branch. This ensures that your local repository is up-to-date with the remote repository.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git pull origin main</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> Pulling changes regularly keeps your local repository synchronized and up to date with the remote repository, preventing conflicts and ensuring you have the latest updates. It is especially useful if you&#39;ve had any issues with your local repository or somehow lost your files, just a quick pull will get you back on track.</p>\r\n\r\n<h3>8. <code>git branch</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Creating and managing branches in your repository.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git branch</code> command is used to create, list, and/or delete branches in your repository. Branches are used to develop features, fix bugs, or experiment with new ideas without affecting the main codebase.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git branch new-feature\r\ngit branch -d old-feature</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> Using branches allows you to work on multiple features or fixes simultaneously without interfering with the main codebase, promoting a clean and organized development workflow.</p>\r\n\r\n<h3>9. <code>git merge</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Combining changes from different branches.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git merge</code> command is used to combine changes from one branch into another. This is typically done to integrate new features or fixes into the main branch.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git merge new-feature</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> Merging branches allows you to integrate and test changes in isolation before incorporating them into the main codebase, ensuring stability and reducing the risk of introducing bugs.</p>\r\n\r\n<h3>10. <code>git log</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Viewing the commit history of the repository.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git log</code> command displays the commit history of your repository, showing information about each commit, including the commit message, author, and date.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git log</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> Reviewing the commit history helps you understand the evolution of your project, track down when specific changes were made, see who made what changes, and identify the cause of issues.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2>Conclusion</h2>\r\n\r\n<p>Mastering these essential Git commands is invaluable for developers, regardless of whether you&#39;re flying solo or working as part of a team. By employing Git&#39;s powerful version control capabilities into your projects, you&#39;ll be able to manage codebase more effectively, track changes with precision, and collaborate seamlessly with others and ensure that you&#39;re better equipped to handle complex projects, easily revert changes when needed, and maintain a clear history of your workflow. This leads to a more organized, efficient, and error-resistant development process. Ultimately, investing time in learning and utilizing Git pays dividends in the form of smoother development cycles and more convenient code management, giving you the freedom to explore possibilities in your project and making it an indispensable tool in any developer&#39;s arsenal.</p>\r\n\r\n<p>&nbsp;</p>', 'Git is an essential tool for developers, providing powerful version control capabilities to manage code changes effectively. This guide covers the most important Git commands, offering use cases and real-life benefits to enhance your development workflow.', 'articles/20240804_152815.jpg', '2024-08-03 10:14:28.183846', '2024-08-16 07:03:50.837827', NULL, 'published', 5, 40, 'Essential Git Commands Every Developer Should Know: A Comprehensive Guide', 'Discover the essential Git commands every developer should know. Learn how to use Git effectively with real-life examples and benefits for your development work', 'Git, Git commands, version control, software development, programming, coding, developer tools, Git tutorial, GitHub, coding best practices, learn Git, Git guide, Git tips', 1, 0, '', NULL, 1, 2),
-(13, 'How to Build a REST API with Django and Django REST Framework', 'how-to-build-a-rest-api-with-django-and-django-rest-framework', 'article', '<p>Picture this: You&#39;re at a fancy restaurant, and you&rsquo;re the hungry customer. The kitchen is where the magic happens, but you can&#39;t go back there yourself. Instead, you tell the waiter your order, and they deliver it to the kitchen. After a while, the waiter returns with your delicious meal. In the world of tech, an API (Application Programming Interface) is just like that waiter! It takes your requests, tells the system what you need, and brings back the goodies.</p>\r\n\r\n<p>Although you can build your own API directly from a programming language of your choice, namely;</p>\r\n\r\n<p>1. Python</p>\r\n\r\n<p>2. JavaScript (Node.js)</p>\r\n\r\n<p>3. Java</p>\r\n\r\n<p>4. C#</p>\r\n\r\n<p>5. PHP</p>\r\n\r\n<p>There are various frameworks built specifically for creating robust APIs, here are a few of them</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>1. <strong>Django</strong> <strong>REST</strong> <strong>Framework</strong>: Django in a superhero cape, ready to build robust APIs.</p>\r\n\r\n<p>2. <strong>Express.j</strong><strong>s</strong>: A quick and nimble node.js framework, like a speedy waiter on roller skates.</p>\r\n\r\n<p>3. <strong>Flask</strong>: A lightweight and flexible Python framework, like a friendly neighborhood diner.</p>\r\n\r\n<p>4. <strong>Spring</strong> <strong>Boot</strong>: Java-powered and reliable, like a top-notch butler.</p>\r\n\r\n<p>In this article, we&#39;ll walk through the steps of creating a simple REST API using Django and Django REST Framework (DRF). We&#39;ll create a basic API for a to-do list application. By the end of this guide, you&#39;ll understand how to set up a Django project, configure Django REST Framework, and create CRUD operations for a to-do list. Let&#39;s get started!</p>\r\n\r\n<h2>Prerequisites</h2>\r\n\r\n<p>Before we start, make sure you have the following installed:</p>\r\n\r\n<ul>\r\n	<li><a href=\"https://python.org/download\" target=\"_blank\">Python</a> (version 3.7 or higher)</li>\r\n	<li>Django (version 3.0 or higher)</li>\r\n	<li>Django REST Framework</li>\r\n	<li>Basic understanding of Django framework and it&#39;s structure and setup.</li>\r\n</ul>\r\n\r\n<p>You can install Django and DRF from your terminal using pip:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">pip install django\r\npip install djangorestframework</code></pre>\r\n\r\n<h2>Step 1: Set Up the Django Project</h2>\r\n\r\n<p>First, let&#39;s create a new Django project. Open your terminal and run the following commands:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">django-admin startproject todo_project\r\n\r\n# Change directory into the new project\r\ncd todo_project</code></pre>\r\n\r\n<p>Next, create a new app called <code>todos</code>:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">python manage.py startapp todos</code></pre>\r\n\r\n<p>Add the new app and Django REST Framework to your <code>INSTALLED_APPS</code> in <code>todo_project/settings.py</code>:</p>\r\n\r\n<pre>\r\n<code class=\"language-python\"># todo_project/settings.py\r\n\r\nINSTALLED_APPS = [\r\n    ...\r\n    \'rest_framework\',\r\n    \'todos\',\r\n]</code></pre>\r\n\r\n<h2>Step 2: Create the To-Do Model</h2>\r\n\r\n<p>In the <code>todos</code> app, create a simple model for the to-do items. Open <code>todos/models.py</code> and define the model:</p>\r\n\r\n<pre>\r\n<code class=\"language-python\"># todos/models.py\r\n\r\nfrom django.db import models\r\n\r\nclass Todo(models.Model):\r\n    title = models.CharField(max_length=100)\r\n    description = models.TextField(blank=True, null=True)\r\n    completed = models.BooleanField(default=False)\r\n\r\n    def __str__(self):\r\n        return self.title</code></pre>\r\n\r\n<p>After defining the model, create and apply the migrations:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">python manage.py makemigrations\r\npython manage.py migrate</code></pre>\r\n\r\n<h2>Step 3: Create the Serializers</h2>\r\n\r\n<p>Serializers in Django REST Framework convert complex data types (like Django models) into JSON and vice versa.</p>\r\n\r\n<p>Imagine you&#39;re writing a letter to a friend who speaks another language. You need a translator to convert your message so they can understand it. Here, serializers are those translators! They take complex data from your application (like Python objects and in this case, your Django models) and convert it into a format that can be easily sent over the internet (like JSON). And when data comes back, serializers translate it back into a form your app can understand.</p>\r\n\r\n<p>Now let&#39;s create a new file <code>todos/serializers.py</code> and define a serializer for the <code>Todo</code> model:</p>\r\n\r\n<pre>\r\n<code class=\"language-python\"># todos/serializers.py\r\n\r\nfrom rest_framework import serializers\r\nfrom .models import Todo\r\n\r\nclass TodoSerializer(serializers.ModelSerializer):\r\n    class Meta:\r\n        model = Todo\r\n        fields = \'__all__\'</code></pre>\r\n\r\n<h2>Step 4: Create the Views</h2>\r\n\r\n<p>Next, create views to handle the API endpoints. Open <code>todos/views.py</code> and define the views using Django REST Framework&#39;s generic views:</p>\r\n\r\n<pre>\r\n<code class=\"language-python\"># todos/views.py\r\n\r\nfrom rest_framework import generics\r\nfrom .models import Todo\r\nfrom .serializers import TodoSerializer\r\n\r\nclass TodoListCreate(generics.ListCreateAPIView):\r\n    queryset = Todo.objects.all()\r\n    serializer_class = TodoSerializer\r\n\r\nclass TodoRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):\r\n    queryset = Todo.objects.all()\r\n    serializer_class = TodoSerializer</code></pre>\r\n\r\n<h2>Step 5: Define the URLs</h2>\r\n\r\n<p>Now, let&#39;s define the URLs for the API endpoints. Create a new file <code>todos/urls.py</code> and add the following code:</p>\r\n\r\n<pre>\r\n<code class=\"language-python\"># todos/urls.py\r\n\r\nfrom django.urls import path\r\nfrom .views import TodoListCreate, TodoRetrieveUpdateDestroy\r\n\r\nurlpatterns = [\r\n    path(\'todos/\', TodoListCreate.as_view(), name=\'todo-list-create\'),\r\n    path(\'todos/&lt;int:pk&gt;/\', TodoRetrieveUpdateDestroy.as_view(), name=\'todo-retrieve-update-destroy\'),\r\n]</code></pre>\r\n\r\n<p>Include the <code>todos</code> URLs in the main project&#39;s URL configuration. Open <code>todo_project/urls.py</code> and modify it as follows:</p>\r\n\r\n<pre>\r\n<code class=\"language-python\"># todo_project/urls.py\r\n\r\nfrom django.contrib import admin\r\nfrom django.urls import path, include\r\n\r\nurlpatterns = [\r\n    path(\'admin/\', admin.site.urls),\r\n    path(\'api/\', include(\'todos.urls\')),\r\n]</code></pre>\r\n\r\n<h2>Step 6: Test the API</h2>\r\n\r\n<p>With everything set up, you can now run the Django development server and test the API:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">python manage.py runserver</code></pre>\r\n\r\n<p>You can use tools like Postman or curl to interact with the API endpoints. Here are some examples using curl:</p>\r\n\r\n<ol>\r\n	<li>\r\n	<p><strong>Create a new to-do item</strong>:</p>\r\n	</li>\r\n</ol>\r\n\r\n<pre>\r\n<code class=\"language-bash\">curl -X POST -H \"Content-Type: application/json\" -d \'{\"title\": \"Buy groceries\", \"description\": \"Milk, Eggs, Bread\"}\' http://127.0.0.1:8000/api/todos/</code></pre>\r\n\r\n<p><strong>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</strong>2.<strong> List all to-do items</strong>:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">curl http://127.0.0.1:8000/api/todos/</code></pre>\r\n\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; 3.<strong> Retrieve a specific to-do item</strong>:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">curl http://127.0.0.1:8000/api/todos/1/</code></pre>\r\n\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; 4.<strong> Update a to-do item</strong>:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">curl -X PUT -H \"Content-Type: application/json\" -d \'{\"title\": \"Buy groceries\", \"description\": \"Milk, Eggs, Bread, Cheese\", \"completed\": true}\' http://127.0.0.1:8000/api/todos/1/</code></pre>\r\n\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; 5.<strong> Delete a to-do item</strong>:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">curl -X DELETE http://127.0.0.1:8000/api/todos/1/</code></pre>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2>Conclusion</h2>\r\n\r\n<p>In this guide, we&#39;ve covered some interesting things like how to set up a Django project, how to create a model, and how touse Django REST Framework to build a REST API. This basic setup can be extended and customized to fit more complex requirements, such as user authentication, permissions, and more sophisticated data handling.</p>\r\n\r\n<p>Subscribe to our newsletter to get notified when new articles are uploaded so you don&#39;t miss out on the next steps for creating a more robust API.&nbsp;</p>\r\n\r\n<p>Feel free to engage in the comments and share you thoughts, opinion and any questions you might have concerning the topic. Thank you.</p>\r\n\r\n<p>&nbsp;</p>', 'Learn how to build a simple REST API using Django and Django REST Framework in this comprehensive tutorial. We cover setting up a Django project, creating models, serializers, views, and configuring URLs to handle CRUD operations for a to-do list application.', 'articles/20240804_202057.jpg', '2024-08-03 14:54:37.093464', '2024-08-07 09:13:36.796249', NULL, 'published', 10, 23, 'Building a REST API with Django and Django REST Framework: A Step-by-Step Guide', 'Discover how to create a REST API with Django and Django REST Framework in this detailed guide. Learn to set up models, serializers, views, and URLs for a to-do', 'Django, Django REST Framework, REST API, Web Development, Python, API Tutorial, Django Tutorial, CRUD Operations, To-Do List API, Backend Development', 1, 0, '', NULL, 1, 12),
-(14, 'How to Install and Run Uncensored ChatGPT on Your PC (Offline): A Step-by-Step Guide', 'how-to-install-and-run-uncensored-chatgpt-on-your-pc-offline-a-step-by-step-guide', 'article', '<p>Hey, I know you&#39;ve heard of Chat GPT, y&#39;know, the super intelligent AI from Open AI... Yeah, that one, What if I told you that you could have it running on your PC completely offline... Pretty crazy right? But it&#39;s true, allot of people and companies have put in allot of time, resources and energy into making this possible, and I am going to show you how you can download and run these LLMs (Large Language Models) on you PC completely offline.</p>\r\n\r\n<p>If you&#39;re interested in experimenting with Large Language Models (LLMs) locally on your PC, or you just want to have the power of artificial intelligence at your disposal, then you&#39;re in the right place. In this guide, I will show you how to install Ollama and AnythingLLM, configure your environment, and get your model up and running. This guide is tailored for Windows users but can be adapted for other operating systems.</p>\r\n\r\n<h2>Requirements</h2>\r\n\r\n<ul>\r\n	<li>You&#39;ll need a PC...Obviously.</li>\r\n	<li>Fast and stable internet connection</li>\r\n	<li>Ollama running on your PC</li>\r\n	<li>An LLM</li>\r\n	<li>And AnythingLLM</li>\r\n</ul>\r\n\r\n<p>Let&#39;s move on.</p>\r\n\r\n<h2>Steps</h2>\r\n\r\n<h3>1. Installing Ollama and Adding it to Your Environmental Path (For Windows).</h3>\r\n\r\n<p>This is so you can run Ollama commands directly from your command line.</p>\r\n\r\n<p><strong>Step 1: Download Ollama</strong></p>\r\n\r\n<ol>\r\n	<li>Visit the <a href=\"https://ollama.com\" rel=\"noreferrer\" target=\"_blank\">Ollama website</a> and navigate to the downloads section.</li>\r\n	<li>Choose the Windows installer and download it to your PC.</li>\r\n</ol>\r\n\r\n<p><strong>Step 2: Install Ollama</strong></p>\r\n\r\n<ol>\r\n	<li>Run the downloaded installer.</li>\r\n	<li>Follow the installation wizard to complete the setup.</li>\r\n</ol>\r\n\r\n<p>Once installed, open the file installation location in your file manager. Just search for Ollama, then open file location. Once you&#39;re there, you should see a folder or file named Ollama, if you do, you&#39;re in the right place. Just copy the path to the directory you&#39;re currently in and move on to the next step.</p>\r\n\r\n<p><strong>Step 3: Add Ollama to Your Environmental Path</strong></p>\r\n\r\n<ol>\r\n	<li>Open the Start Menu and search for &quot;Environment Variables.&quot;</li>\r\n	<li>Select &quot;Edit the system environment variables.&quot;</li>\r\n	<li>In the System Properties window, click on &quot;Environment Variables.&quot;</li>\r\n	<li>In the Environment Variables window, find and select the &quot;Path&quot; variable under System variables, then click &quot;Edit.&quot;</li>\r\n	<li>Click &quot;New&quot; and add the path to the Ollama installation directory which you copied previously&nbsp;(e.g., <code>C:\\User\\Program Files\\Programs</code>). This means the Ollama file or folder is in this directory.</li>\r\n	<li>Click &quot;OK&quot; to close all windows.</li>\r\n</ol>\r\n\r\n<p><strong>Step 4: Verify Installation</strong></p>\r\n\r\n<ol>\r\n	<li>Open Command Prompt and type <code>ollama --version</code> to ensure Ollama is installed correctly and is accessible from any directory.</li>\r\n</ol>\r\n\r\n<p>Alright. You have Ollama installed, and you system now recognizes <code>ollama</code> as a valid system command. It&#39;s now time to download an LLM. Yeah that&#39;s right, we&#39;re about to download our own preferred GPT. Yeah, you heard that right. &quot;Preferred&quot;.</p>\r\n\r\n<p>We all know how most AIs available through Open AI, Gemini, Bing, Copilot and others have this guideline that prevents them from y&#39;know, going all out. These guidlines are programmed into them by their creators so they can&#39;t be used for illegal and criminal acts. And though this is good, it greatly limits the extent to which you can use the power of AI. Plus, not everyone would want to use AI for illegal stuff, that&#39;s why I am going to show you how to get an Uncensored LLM.These&nbsp;Uncensored LLMs have been trained with all those guidelines removed, and won&#39;t hold back when responding to your prompts. And the one we&#39;re going to install is called <code>Dolphin-llama3</code>. Although there are many others, including <code>LLama3</code>, which is trained by Meta on an insane amount of data and of course, it&#39;s censored. So whichever your preference is, just go with it. But where&#39;s the fun in have guidelines tell you what and what not to do, and that&#39;s why we&#39;re going with Dolphin.</p>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/04/screenshot-251.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<h3>&nbsp;2. Downloading Dolphin-llama3&nbsp;</h3>\r\n\r\n<ol>\r\n	<li>Go to the <a href=\"http://ollama.com\" target=\"_blank\">Ollama Website</a>.</li>\r\n	<li>Look to the upper right and clock on Models.</li>\r\n	<li>Search for Dolphin-llama3&nbsp;</li>\r\n	<li>Click it and copy the ollama run command for dolphin-llama3. (Note that depending on your systems capabilities, you could either run the 8B data size model, 70B and others. Unless you have a really powerful computer, let&#39;s just stick with the 8B model.</li>\r\n</ol>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/04/screenshot-250.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>5. Open your command line and type <code>ollama run dolphin-llama3</code>. You&#39;ll see the installation start so just wait for it to finish.</p>\r\n\r\n<p>Is your LLM done downloading? Congratulations! You now have your own personal <u>Uncensored</u>&nbsp;AI to do your bidding. Try it. Type in a prompt and get the response of your dreams.</p>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/04/screenshot-245_ECpYzsg.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<h2>Disclaimer: I do not recommend any of the actions listed in this image...</h2>\r\n\r\n<p>But you get the point. No limitations. In comparison to Other Censored models...</p>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/04/screenshot-252.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<p>Now that you have your LLM up and running, you&#39;re good to go right? Not quite. You see, not everyone will be comfortable with running their LLM fron the command line. Well, that&#39;s why we have AnythingLLM. They have provided us with a means of running arioud kinds of LLMs including Open AI&#39;s Chat GPT, But we want to run our own local model, so let&#39;s download and install AnythingLLM.</p>\r\n\r\n<h3>3. Downloading and Installing AnythingLLM</h3>\r\n\r\n<p><strong>Step 1: Download AnythingLLM</strong></p>\r\n\r\n<ol>\r\n	<li>Visit the <a href=\"https://useanything.com/download\" target=\"_blank\">AnythingLLM Official website</a>.</li>\r\n	<li>Download the latest release suitable for your operating system.</li>\r\n</ol>\r\n\r\n<p><strong>Step 2: Install AnythingLLM</strong></p>\r\n\r\n<ol>\r\n	<li>Follow the installation prompts and have it installed.</li>\r\n</ol>\r\n\r\n<p><strong>Step 3: Configuration</strong></p>\r\n\r\n<ol>\r\n	<li>After installation, configure AnythingLLM according to your preferences.&nbsp;</li>\r\n	<li>Open AnythingLLM and click on Get Started.</li>\r\n	<li>We&#39;re running a local LLM through Ollama, so scroll through the list and click on Ollama</li>\r\n	<li>The setup should automatically detect the running Ollama model in your PC so just click the right arrow to continue.</li>\r\n	<li>Follow the prompts and name your workspace whatever you want, I&#39;ll name mine <code>Dolphin-llama3&nbsp;</code></li>\r\n	<li>Proceed until you see a chat interface.</li>\r\n</ol>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/04/screenshot-243.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<p>Nice right, you now have a chat interface where you can communicate with your LLM just like Open AIs Chat GPT, or Gemini. Your personal assistant. And the best part...It&#39;s completely offline.</p>\r\n\r\n<h2>Conclusion</h2>\r\n\r\n<p>By following these steps, you should have Ollama and AnythingLLM installed and running your local LLM on your PC. This setup allows you to explore and interact with LLMs directly from your PC, offering a great way to experiment with AI models without relying on cloud services. I hope you enjoyed this guide and you arre able to explore the capabilities of an Uncensored LLM.</p>\r\n\r\n<p>Feel free to leave a comment if you encounter any issues during the setup process or have any questions! And Subscribe to our newsletter to get notified on more posts like these.</p>', 'Learn how to set up a Large Language Model (LLM) on your PC with this detailed guide. We\'ll walk you through the installation of Ollama and AnythingLLM, configure your system, and get your model up and running locally.', 'articles/20240804_160128.jpg', '2024-08-03 16:35:08.220302', '2024-08-05 08:44:08.797286', NULL, 'published', 10, 76, 'How to Install and Run Uncensored Chat GPT Locally on Your PC: Ollama & AnythingLLM Setup', 'Discover how to install and configure a Large Language Model (LLM) on your PC. This guide covers the installation of Ollama, adding it to your environmental pat', 'LLM installation, Ollama setup, AnythingLLM installation, local AI models, chat gpt on PC, AI setup guide, Install chat gpt on pc', 1, 1, '', NULL, 1, 15),
+(12, 'Essential Git Commands Every Developer Should Know', 'essential-git-commands-every-developer-should-know', 'article', '<p>Git, a distributed version control system used primarily in software development. It is used to track changes in files, allowing multiple people to work on projects simultaneously. Git enables developers to manage different versions of their code, collaborate effectively, and revert changes when necessary.</p>\r\n\r\n<p>Git has become an essential part of modern software development, easing the process of how developers manage and collaborate on code projects. Whether you&#39;re a solo programmer or part of a large team, mastering Git can significantly enhance your workflow, making it more efficient and less prone to errors and file loss. This version control system allows you to track changes, revert to previous stages, and work on different features simultaneously without fear of losing progress.</p>\r\n\r\n<p>To get a better grasp of this powerful version control tool, we&#39;ll explore some of the most crucial Git commands that every developer should know. We will discuss their practical applications in real-world scenarios, helping you understand not just the how, but also the why behind each command. By the end, you&#39;ll have a solid understanding for using Git effectively in your projects, whether you&#39;re working on a personal hobby or a large-scale professional application.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2>The Essentials&nbsp;</h2>\r\n\r\n<p>At is core, Git functions through it&#39;s commands, each serving a specific purpose in the development process. From initializing a repository with &#39;git init&#39; to pushing your changes to a remote server with &#39;git push&#39;, these commands form the backbone of version control. Understanding when and how to use commands like &#39;git commit&#39;, &#39;git branch&#39;, and &#39;git merge&#39; can make the difference between a smooth development process and a chaotic one filled with bugs and gut wrenching errors.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h3>1. <code>git init</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Starting a new project and want to keep track of changes from the beginning.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git init</code> command is used to create a new Git repository. This sets up the necessary files and directories that Git uses to keep track of changes in your project.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git init</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> By initializing a Git repository at the start of your project, you ensure that every change is tracked from the very beginning, making it easier to manage and revert changes if needed.</p>\r\n\r\n<h3>2. <code>git clone</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Downloading an existing repository from a remote source.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git clone</code> command is used to create a copy of an existing remote Git repository. This is commonly used to clone repositories from platforms like GitHub, GitLab, or Bitbucket.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git clone https://github.com/user/repo.git</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> Cloning repositories allows you to easily collaborate on projects by working on a local copy of the repository, making it easy to contribute to open-source projects or share your own work.</p>\r\n\r\n<h3>3. <code>git add</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Staging changes to be committed to the repository.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git add</code> command is used to stage changes for the next commit. This can be used to add individual files or entire directories.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git add file.txt\r\ngit add .</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> Staging changes before committing allows you to review what will be included in your next commit, ensuring that only the necessary changes are recorded.</p>\r\n\r\n<h3>4. <code>git commit</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Saving changes to the repository with a message describing the changes.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git commit</code> command is used to save your staged changes to the repository. Each commit should include a message that describes the changes made.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git commit -m \"Add new feature to user login\"</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> Committing changes with descriptive messages creates a clear history of your project&#39;s development, making it easier to understand the evolution of your codebase.</p>\r\n\r\n<h3>5. <code>git status</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Checking the status of your working directory and staging area.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git status</code> command provides information about the current state of your working directory and staging area. It shows which files are modified, staged for commit, or untracked.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git status</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> Regularly checking the status of your repository helps you keep track of your changes and ensures that you don&#39;t accidentally miss any important updates before committing. This is especially useful in large scale projects where little changes can make huge difference.</p>\r\n\r\n<h3>6. <code>git push</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Uploading your local changes to a remote repository.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git push</code> command is used to upload your local commits to a remote repository. This is typically used to share your changes with collaborators or back up your work, depending on the structure of your project, you can either push to the main branch or the master branch.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git push origin main # or origin master</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> Pushing changes to a remote repository ensures that your work is safely backed up and available to others who need access to the project.</p>\r\n\r\n<h3>7. <code>git pull</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Fetching and merging changes from a remote repository.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git pull</code> command is used to fetch changes from a remote repository and merge them into your local branch. This ensures that your local repository is up-to-date with the remote repository.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git pull origin main</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> Pulling changes regularly keeps your local repository synchronized and up to date with the remote repository, preventing conflicts and ensuring you have the latest updates. It is especially useful if you&#39;ve had any issues with your local repository or somehow lost your files, just a quick pull will get you back on track.</p>\r\n\r\n<h3>8. <code>git branch</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Creating and managing branches in your repository.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git branch</code> command is used to create, list, and/or delete branches in your repository. Branches are used to develop features, fix bugs, or experiment with new ideas without affecting the main codebase.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git branch new-feature\r\ngit branch -d old-feature</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> Using branches allows you to work on multiple features or fixes simultaneously without interfering with the main codebase, promoting a clean and organized development workflow.</p>\r\n\r\n<h3>9. <code>git merge</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Combining changes from different branches.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git merge</code> command is used to combine changes from one branch into another. This is typically done to integrate new features or fixes into the main branch.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git merge new-feature</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> Merging branches allows you to integrate and test changes in isolation before incorporating them into the main codebase, ensuring stability and reducing the risk of introducing bugs.</p>\r\n\r\n<h3>10. <code>git log</code></h3>\r\n\r\n<p><strong>Use Case:</strong></p>\r\n\r\n<ul>\r\n	<li>Viewing the commit history of the repository.</li>\r\n</ul>\r\n\r\n<p><strong>Description:</strong> The <code>git log</code> command displays the commit history of your repository, showing information about each commit, including the commit message, author, and date.</p>\r\n\r\n<p><strong>Example:</strong></p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">git log</code></pre>\r\n\r\n<p><strong>Real-Life Benefit:</strong> Reviewing the commit history helps you understand the evolution of your project, track down when specific changes were made, see who made what changes, and identify the cause of issues.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2>Conclusion</h2>\r\n\r\n<p>Mastering these essential Git commands is invaluable for developers, regardless of whether you&#39;re flying solo or working as part of a team. By employing Git&#39;s powerful version control capabilities into your projects, you&#39;ll be able to manage codebase more effectively, track changes with precision, and collaborate seamlessly with others and ensure that you&#39;re better equipped to handle complex projects, easily revert changes when needed, and maintain a clear history of your workflow. This leads to a more organized, efficient, and error-resistant development process. Ultimately, investing time in learning and utilizing Git pays dividends in the form of smoother development cycles and more convenient code management, giving you the freedom to explore possibilities in your project and making it an indispensable tool in any developer&#39;s arsenal.</p>\r\n\r\n<p>&nbsp;</p>', 'Git is an essential tool for developers, providing powerful version control capabilities to manage code changes effectively. This guide covers the most important Git commands, offering use cases and real-life benefits to enhance your development workflow.', 'articles/20240804_152815.jpg', '2024-08-03 10:14:28.183846', '2024-08-16 07:03:50.837827', NULL, 'published', 5, 46, 'Essential Git Commands Every Developer Should Know: A Comprehensive Guide', 'Discover the essential Git commands every developer should know. Learn how to use Git effectively with real-life examples and benefits for your development work', 'Git, Git commands, version control, software development, programming, coding, developer tools, Git tutorial, GitHub, coding best practices, learn Git, Git guide, Git tips', 1, 0, '', NULL, 1, 2),
+(13, 'How to Build a REST API with Django and Django REST Framework', 'how-to-build-a-rest-api-with-django-and-django-rest-framework', 'article', '<p>Picture this: You&#39;re at a fancy restaurant, and you&rsquo;re the hungry customer. The kitchen is where the magic happens, but you can&#39;t go back there yourself. Instead, you tell the waiter your order, and they deliver it to the kitchen. After a while, the waiter returns with your delicious meal. In the world of tech, an API (Application Programming Interface) is just like that waiter! It takes your requests, tells the system what you need, and brings back the goodies.</p>\r\n\r\n<p>Although you can build your own API directly from a programming language of your choice, namely;</p>\r\n\r\n<p>1. Python</p>\r\n\r\n<p>2. JavaScript (Node.js)</p>\r\n\r\n<p>3. Java</p>\r\n\r\n<p>4. C#</p>\r\n\r\n<p>5. PHP</p>\r\n\r\n<p>There are various frameworks built specifically for creating robust APIs, here are a few of them</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>1. <strong>Django</strong> <strong>REST</strong> <strong>Framework</strong>: Django in a superhero cape, ready to build robust APIs.</p>\r\n\r\n<p>2. <strong>Express.j</strong><strong>s</strong>: A quick and nimble node.js framework, like a speedy waiter on roller skates.</p>\r\n\r\n<p>3. <strong>Flask</strong>: A lightweight and flexible Python framework, like a friendly neighborhood diner.</p>\r\n\r\n<p>4. <strong>Spring</strong> <strong>Boot</strong>: Java-powered and reliable, like a top-notch butler.</p>\r\n\r\n<p>In this article, we&#39;ll walk through the steps of creating a simple REST API using Django and Django REST Framework (DRF). We&#39;ll create a basic API for a to-do list application. By the end of this guide, you&#39;ll understand how to set up a Django project, configure Django REST Framework, and create CRUD operations for a to-do list. Let&#39;s get started!</p>\r\n\r\n<h2>Prerequisites</h2>\r\n\r\n<p>Before we start, make sure you have the following installed:</p>\r\n\r\n<ul>\r\n	<li><a href=\"https://python.org/download\" target=\"_blank\">Python</a> (version 3.7 or higher)</li>\r\n	<li>Django (version 3.0 or higher)</li>\r\n	<li>Django REST Framework</li>\r\n	<li>Basic understanding of Django framework and it&#39;s structure and setup.</li>\r\n</ul>\r\n\r\n<p>You can install Django and DRF from your terminal using pip:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">pip install django\r\npip install djangorestframework</code></pre>\r\n\r\n<h2>Step 1: Set Up the Django Project</h2>\r\n\r\n<p>First, let&#39;s create a new Django project. Open your terminal and run the following commands:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">django-admin startproject todo_project\r\n\r\n# Change directory into the new project\r\ncd todo_project</code></pre>\r\n\r\n<p>Next, create a new app called <code>todos</code>:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">python manage.py startapp todos</code></pre>\r\n\r\n<p>Add the new app and Django REST Framework to your <code>INSTALLED_APPS</code> in <code>todo_project/settings.py</code>:</p>\r\n\r\n<pre>\r\n<code class=\"language-python\"># todo_project/settings.py\r\n\r\nINSTALLED_APPS = [\r\n    ...\r\n    \'rest_framework\',\r\n    \'todos\',\r\n]</code></pre>\r\n\r\n<h2>Step 2: Create the To-Do Model</h2>\r\n\r\n<p>In the <code>todos</code> app, create a simple model for the to-do items. Open <code>todos/models.py</code> and define the model:</p>\r\n\r\n<pre>\r\n<code class=\"language-python\"># todos/models.py\r\n\r\nfrom django.db import models\r\n\r\nclass Todo(models.Model):\r\n    title = models.CharField(max_length=100)\r\n    description = models.TextField(blank=True, null=True)\r\n    completed = models.BooleanField(default=False)\r\n\r\n    def __str__(self):\r\n        return self.title</code></pre>\r\n\r\n<p>After defining the model, create and apply the migrations:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">python manage.py makemigrations\r\npython manage.py migrate</code></pre>\r\n\r\n<h2>Step 3: Create the Serializers</h2>\r\n\r\n<p>Serializers in Django REST Framework convert complex data types (like Django models) into JSON and vice versa.</p>\r\n\r\n<p>Imagine you&#39;re writing a letter to a friend who speaks another language. You need a translator to convert your message so they can understand it. Here, serializers are those translators! They take complex data from your application (like Python objects and in this case, your Django models) and convert it into a format that can be easily sent over the internet (like JSON). And when data comes back, serializers translate it back into a form your app can understand.</p>\r\n\r\n<p>Now let&#39;s create a new file <code>todos/serializers.py</code> and define a serializer for the <code>Todo</code> model:</p>\r\n\r\n<pre>\r\n<code class=\"language-python\"># todos/serializers.py\r\n\r\nfrom rest_framework import serializers\r\nfrom .models import Todo\r\n\r\nclass TodoSerializer(serializers.ModelSerializer):\r\n    class Meta:\r\n        model = Todo\r\n        fields = \'__all__\'</code></pre>\r\n\r\n<h2>Step 4: Create the Views</h2>\r\n\r\n<p>Next, create views to handle the API endpoints. Open <code>todos/views.py</code> and define the views using Django REST Framework&#39;s generic views:</p>\r\n\r\n<pre>\r\n<code class=\"language-python\"># todos/views.py\r\n\r\nfrom rest_framework import generics\r\nfrom .models import Todo\r\nfrom .serializers import TodoSerializer\r\n\r\nclass TodoListCreate(generics.ListCreateAPIView):\r\n    queryset = Todo.objects.all()\r\n    serializer_class = TodoSerializer\r\n\r\nclass TodoRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):\r\n    queryset = Todo.objects.all()\r\n    serializer_class = TodoSerializer</code></pre>\r\n\r\n<h2>Step 5: Define the URLs</h2>\r\n\r\n<p>Now, let&#39;s define the URLs for the API endpoints. Create a new file <code>todos/urls.py</code> and add the following code:</p>\r\n\r\n<pre>\r\n<code class=\"language-python\"># todos/urls.py\r\n\r\nfrom django.urls import path\r\nfrom .views import TodoListCreate, TodoRetrieveUpdateDestroy\r\n\r\nurlpatterns = [\r\n    path(\'todos/\', TodoListCreate.as_view(), name=\'todo-list-create\'),\r\n    path(\'todos/&lt;int:pk&gt;/\', TodoRetrieveUpdateDestroy.as_view(), name=\'todo-retrieve-update-destroy\'),\r\n]</code></pre>\r\n\r\n<p>Include the <code>todos</code> URLs in the main project&#39;s URL configuration. Open <code>todo_project/urls.py</code> and modify it as follows:</p>\r\n\r\n<pre>\r\n<code class=\"language-python\"># todo_project/urls.py\r\n\r\nfrom django.contrib import admin\r\nfrom django.urls import path, include\r\n\r\nurlpatterns = [\r\n    path(\'admin/\', admin.site.urls),\r\n    path(\'api/\', include(\'todos.urls\')),\r\n]</code></pre>\r\n\r\n<h2>Step 6: Test the API</h2>\r\n\r\n<p>With everything set up, you can now run the Django development server and test the API:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">python manage.py runserver</code></pre>\r\n\r\n<p>You can use tools like Postman or curl to interact with the API endpoints. Here are some examples using curl:</p>\r\n\r\n<ol>\r\n	<li>\r\n	<p><strong>Create a new to-do item</strong>:</p>\r\n	</li>\r\n</ol>\r\n\r\n<pre>\r\n<code class=\"language-bash\">curl -X POST -H \"Content-Type: application/json\" -d \'{\"title\": \"Buy groceries\", \"description\": \"Milk, Eggs, Bread\"}\' http://127.0.0.1:8000/api/todos/</code></pre>\r\n\r\n<p><strong>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</strong>2.<strong> List all to-do items</strong>:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">curl http://127.0.0.1:8000/api/todos/</code></pre>\r\n\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; 3.<strong> Retrieve a specific to-do item</strong>:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">curl http://127.0.0.1:8000/api/todos/1/</code></pre>\r\n\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; 4.<strong> Update a to-do item</strong>:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">curl -X PUT -H \"Content-Type: application/json\" -d \'{\"title\": \"Buy groceries\", \"description\": \"Milk, Eggs, Bread, Cheese\", \"completed\": true}\' http://127.0.0.1:8000/api/todos/1/</code></pre>\r\n\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; 5.<strong> Delete a to-do item</strong>:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">curl -X DELETE http://127.0.0.1:8000/api/todos/1/</code></pre>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2>Conclusion</h2>\r\n\r\n<p>In this guide, we&#39;ve covered some interesting things like how to set up a Django project, how to create a model, and how touse Django REST Framework to build a REST API. This basic setup can be extended and customized to fit more complex requirements, such as user authentication, permissions, and more sophisticated data handling.</p>\r\n\r\n<p>Subscribe to our newsletter to get notified when new articles are uploaded so you don&#39;t miss out on the next steps for creating a more robust API.&nbsp;</p>\r\n\r\n<p>Feel free to engage in the comments and share you thoughts, opinion and any questions you might have concerning the topic. Thank you.</p>\r\n\r\n<p>&nbsp;</p>', 'Learn how to build a simple REST API using Django and Django REST Framework in this comprehensive tutorial. We cover setting up a Django project, creating models, serializers, views, and configuring URLs to handle CRUD operations for a to-do list application.', 'articles/20240804_202057.jpg', '2024-08-03 14:54:37.093464', '2024-08-07 09:13:36.796249', NULL, 'published', 10, 27, 'Building a REST API with Django and Django REST Framework: A Step-by-Step Guide', 'Discover how to create a REST API with Django and Django REST Framework in this detailed guide. Learn to set up models, serializers, views, and URLs for a to-do', 'Django, Django REST Framework, REST API, Web Development, Python, API Tutorial, Django Tutorial, CRUD Operations, To-Do List API, Backend Development', 1, 0, '', NULL, 1, 12),
+(14, 'How to Install and Run Uncensored ChatGPT on Your PC (Offline): A Step-by-Step Guide', 'how-to-install-and-run-uncensored-chatgpt-on-your-pc-offline-a-step-by-step-guide', 'article', '<p>Hey, I know you&#39;ve heard of Chat GPT, y&#39;know, the super intelligent AI from Open AI... Yeah, that one, What if I told you that you could have it running on your PC completely offline... Pretty crazy right? But it&#39;s true, allot of people and companies have put in allot of time, resources and energy into making this possible, and I am going to show you how you can download and run these LLMs (Large Language Models) on you PC completely offline.</p>\r\n\r\n<p>If you&#39;re interested in experimenting with Large Language Models (LLMs) locally on your PC, or you just want to have the power of artificial intelligence at your disposal, then you&#39;re in the right place. In this guide, I will show you how to install Ollama and AnythingLLM, configure your environment, and get your model up and running. This guide is tailored for Windows users but can be adapted for other operating systems.</p>\r\n\r\n<h2>Requirements</h2>\r\n\r\n<ul>\r\n	<li>You&#39;ll need a PC...Obviously.</li>\r\n	<li>Fast and stable internet connection</li>\r\n	<li>Ollama running on your PC</li>\r\n	<li>An LLM</li>\r\n	<li>And AnythingLLM</li>\r\n</ul>\r\n\r\n<p>Let&#39;s move on.</p>\r\n\r\n<h2>Steps</h2>\r\n\r\n<h3>1. Installing Ollama and Adding it to Your Environmental Path (For Windows).</h3>\r\n\r\n<p>This is so you can run Ollama commands directly from your command line.</p>\r\n\r\n<p><strong>Step 1: Download Ollama</strong></p>\r\n\r\n<ol>\r\n	<li>Visit the <a href=\"https://ollama.com\" rel=\"noreferrer\" target=\"_blank\">Ollama website</a> and navigate to the downloads section.</li>\r\n	<li>Choose the Windows installer and download it to your PC.</li>\r\n</ol>\r\n\r\n<p><strong>Step 2: Install Ollama</strong></p>\r\n\r\n<ol>\r\n	<li>Run the downloaded installer.</li>\r\n	<li>Follow the installation wizard to complete the setup.</li>\r\n</ol>\r\n\r\n<p>Once installed, open the file installation location in your file manager. Just search for Ollama, then open file location. Once you&#39;re there, you should see a folder or file named Ollama, if you do, you&#39;re in the right place. Just copy the path to the directory you&#39;re currently in and move on to the next step.</p>\r\n\r\n<p><strong>Step 3: Add Ollama to Your Environmental Path</strong></p>\r\n\r\n<ol>\r\n	<li>Open the Start Menu and search for &quot;Environment Variables.&quot;</li>\r\n	<li>Select &quot;Edit the system environment variables.&quot;</li>\r\n	<li>In the System Properties window, click on &quot;Environment Variables.&quot;</li>\r\n	<li>In the Environment Variables window, find and select the &quot;Path&quot; variable under System variables, then click &quot;Edit.&quot;</li>\r\n	<li>Click &quot;New&quot; and add the path to the Ollama installation directory which you copied previously&nbsp;(e.g., <code>C:\\User\\Program Files\\Programs</code>). This means the Ollama file or folder is in this directory.</li>\r\n	<li>Click &quot;OK&quot; to close all windows.</li>\r\n</ol>\r\n\r\n<p><strong>Step 4: Verify Installation</strong></p>\r\n\r\n<ol>\r\n	<li>Open Command Prompt and type <code>ollama --version</code> to ensure Ollama is installed correctly and is accessible from any directory.</li>\r\n</ol>\r\n\r\n<p>Alright. You have Ollama installed, and you system now recognizes <code>ollama</code> as a valid system command. It&#39;s now time to download an LLM. Yeah that&#39;s right, we&#39;re about to download our own preferred GPT. Yeah, you heard that right. &quot;Preferred&quot;.</p>\r\n\r\n<p>We all know how most AIs available through Open AI, Gemini, Bing, Copilot and others have this guideline that prevents them from y&#39;know, going all out. These guidlines are programmed into them by their creators so they can&#39;t be used for illegal and criminal acts. And though this is good, it greatly limits the extent to which you can use the power of AI. Plus, not everyone would want to use AI for illegal stuff, that&#39;s why I am going to show you how to get an Uncensored LLM.These&nbsp;Uncensored LLMs have been trained with all those guidelines removed, and won&#39;t hold back when responding to your prompts. And the one we&#39;re going to install is called <code>Dolphin-llama3</code>. Although there are many others, including <code>LLama3</code>, which is trained by Meta on an insane amount of data and of course, it&#39;s censored. So whichever your preference is, just go with it. But where&#39;s the fun in have guidelines tell you what and what not to do, and that&#39;s why we&#39;re going with Dolphin.</p>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/04/screenshot-251.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<h3>&nbsp;2. Downloading Dolphin-llama3&nbsp;</h3>\r\n\r\n<ol>\r\n	<li>Go to the <a href=\"http://ollama.com\" target=\"_blank\">Ollama Website</a>.</li>\r\n	<li>Look to the upper right and clock on Models.</li>\r\n	<li>Search for Dolphin-llama3&nbsp;</li>\r\n	<li>Click it and copy the ollama run command for dolphin-llama3. (Note that depending on your systems capabilities, you could either run the 8B data size model, 70B and others. Unless you have a really powerful computer, let&#39;s just stick with the 8B model.</li>\r\n</ol>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/04/screenshot-250.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>5. Open your command line and type <code>ollama run dolphin-llama3</code>. You&#39;ll see the installation start so just wait for it to finish.</p>\r\n\r\n<p>Is your LLM done downloading? Congratulations! You now have your own personal <u>Uncensored</u>&nbsp;AI to do your bidding. Try it. Type in a prompt and get the response of your dreams.</p>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/04/screenshot-245_ECpYzsg.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<h2>Disclaimer: I do not recommend any of the actions listed in this image...</h2>\r\n\r\n<p>But you get the point. No limitations. In comparison to Other Censored models...</p>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/04/screenshot-252.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<p>Now that you have your LLM up and running, you&#39;re good to go right? Not quite. You see, not everyone will be comfortable with running their LLM fron the command line. Well, that&#39;s why we have AnythingLLM. They have provided us with a means of running arioud kinds of LLMs including Open AI&#39;s Chat GPT, But we want to run our own local model, so let&#39;s download and install AnythingLLM.</p>\r\n\r\n<h3>3. Downloading and Installing AnythingLLM</h3>\r\n\r\n<p><strong>Step 1: Download AnythingLLM</strong></p>\r\n\r\n<ol>\r\n	<li>Visit the <a href=\"https://useanything.com/download\" target=\"_blank\">AnythingLLM Official website</a>.</li>\r\n	<li>Download the latest release suitable for your operating system.</li>\r\n</ol>\r\n\r\n<p><strong>Step 2: Install AnythingLLM</strong></p>\r\n\r\n<ol>\r\n	<li>Follow the installation prompts and have it installed.</li>\r\n</ol>\r\n\r\n<p><strong>Step 3: Configuration</strong></p>\r\n\r\n<ol>\r\n	<li>After installation, configure AnythingLLM according to your preferences.&nbsp;</li>\r\n	<li>Open AnythingLLM and click on Get Started.</li>\r\n	<li>We&#39;re running a local LLM through Ollama, so scroll through the list and click on Ollama</li>\r\n	<li>The setup should automatically detect the running Ollama model in your PC so just click the right arrow to continue.</li>\r\n	<li>Follow the prompts and name your workspace whatever you want, I&#39;ll name mine <code>Dolphin-llama3&nbsp;</code></li>\r\n	<li>Proceed until you see a chat interface.</li>\r\n</ol>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/04/screenshot-243.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<p>Nice right, you now have a chat interface where you can communicate with your LLM just like Open AIs Chat GPT, or Gemini. Your personal assistant. And the best part...It&#39;s completely offline.</p>\r\n\r\n<h2>Conclusion</h2>\r\n\r\n<p>By following these steps, you should have Ollama and AnythingLLM installed and running your local LLM on your PC. This setup allows you to explore and interact with LLMs directly from your PC, offering a great way to experiment with AI models without relying on cloud services. I hope you enjoyed this guide and you arre able to explore the capabilities of an Uncensored LLM.</p>\r\n\r\n<p>Feel free to leave a comment if you encounter any issues during the setup process or have any questions! And Subscribe to our newsletter to get notified on more posts like these.</p>', 'Learn how to set up a Large Language Model (LLM) on your PC with this detailed guide. We\'ll walk you through the installation of Ollama and AnythingLLM, configure your system, and get your model up and running locally.', 'articles/20240804_160128.jpg', '2024-08-03 16:35:08.220302', '2024-08-05 08:44:08.797286', NULL, 'published', 10, 80, 'How to Install and Run Uncensored Chat GPT Locally on Your PC: Ollama & AnythingLLM Setup', 'Discover how to install and configure a Large Language Model (LLM) on your PC. This guide covers the installation of Ollama, adding it to your environmental pat', 'LLM installation, Ollama setup, AnythingLLM installation, local AI models, chat gpt on PC, AI setup guide, Install chat gpt on pc', 1, 1, '', NULL, 1, 15),
 (15, 'Mastering CSS Grid Layout: Tips and Tricks for Web Developers', 'mastering-css-grid-layout-tips-and-tricks-for-web-developers', 'article', '<p>CSS Grid Layout is a powerful layout system that allows web developers to create complex, two-dimensional grid-based layouts with ease. While it may seem intimidating at first, mastering CSS Grid can greatly improve your skills as a web developer. In this post, we&rsquo;ll cover some tips and tricks to help you get the most out of CSS Grid.</p>\r\n\r\n<p><strong>Understanding the Basics</strong></p>\r\n\r\n<p>Before diving into advanced techniques, let&rsquo;s make sure you have a solid understanding of the basics. A grid container is defined using&nbsp;<code>display: grid</code>, while child elements are placed within the grid using&nbsp;<code>grid-row</code>&nbsp;and&nbsp;<code>grid-column</code>.</p>\r\n\r\n<pre>\r\n<code class=\"language-css\">.container {\r\n  display: grid;\r\n  grid-template-columns: repeat(3, 1fr);\r\n  grid-gap: 10px;\r\n}\r\n\r\n.item {\r\n  background-color: #f0f0f0;\r\n}</code></pre>\r\n\r\n<p>In this example, we have a container with three columns and a gap of 10px between each item.</p>\r\n\r\n<p><strong>Flexible Grid Columns</strong></p>\r\n\r\n<p>CSS Grid allows you to create flexible grid columns using the&nbsp;<code>fr</code>&nbsp;unit. This means that the column will automatically adjust its width based on available space.</p>\r\n\r\n<pre>\r\n<code class=\"language-css\">.container {\r\n  display: grid;\r\n  grid-template-columns: repeat(3, 1fr);\r\n}\r\n\r\n.item {\r\n  background-color: #f0f0f0;\r\n  grid-column: span 2;\r\n}</code></pre>\r\n\r\n<p>Here, we&rsquo;ve created a container with three flexible columns and placed an item that spans two columns.</p>\r\n\r\n<p><strong>Auto-Placement</strong></p>\r\n\r\n<p>One of the most powerful features of CSS Grid is auto-placement. This allows you to automatically place items within the grid without specifying their exact position.</p>\r\n\r\n<pre>\r\n<code class=\"language-css\">.container {\r\n  display: grid;\r\n  grid-template-columns: repeat(3, 1fr);\r\n}\r\n\r\n.item {\r\n  background-color: #f0f0f0;\r\n}</code></pre>\r\n\r\n<p>In this example, we&rsquo;ve placed three items within the container and let CSS Grid handle their positioning. Note that you can also use&nbsp;<code>grid-auto-flow</code>&nbsp;to control how items are placed.</p>\r\n\r\n<p><strong>Grid Auto-Flow</strong></p>\r\n\r\n<p>As mentioned earlier, grid auto-flow allows you to specify how items should be automatically placed within the grid. There are two options:&nbsp;<code>row</code>&nbsp;(default) and&nbsp;<code>column</code>.</p>\r\n\r\n<pre>\r\n<code class=\"language-css\">.container {\r\n  display: grid;\r\n  grid-template-columns: repeat(3, 1fr);\r\n  grid-auto-flow: column;\r\n}\r\n\r\n.item {\r\n  background-color: #f0f0f0;\r\n}</code></pre>\r\n\r\n<p>Here, we&rsquo;ve used&nbsp;<code>grid-auto-flow: column</code>&nbsp;to place items horizontally.</p>\r\n\r\n<p>By mastering these tips and tricks, you&rsquo;ll be able to create complex, responsive layouts using CSS Grid. Remember to experiment with different grid configurations and use the browser&rsquo;s built-in debugging tools to visualize your grid layout.</p>\r\n\r\n<p><strong>What&rsquo;s next?</strong></p>\r\n\r\n<p>Want to learn more about CSS Grid Layout? Stay tuned for our upcoming post on advanced CSS Grid techniques!</p>', '', '', '2024-08-03 18:38:09.024513', '2024-08-03 18:38:09.024513', NULL, 'draft', NULL, 0, '', '', '', 1, 0, '', NULL, 1, 12),
 (16, 'Top Programming Languages to Dominate the Tech Industry in 2025', 'top-programming-languages-to-dominate-the-tech-industry-in-2025', 'article', '<p>The tech industry is constantly evolving, and with it, the programming languages that are in demand. In this blog post, we will take a look at the top programming languages that are expected to dominate the tech industry in 2025.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>What are the top programming languages for 2025?</p>\r\n\r\n<p>There are many different programming languages that are popular in the tech industry, but some are more in demand than others. Here are some of the top programming languages for 2025:</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>* **Python:** Python is a versatile language that is used for a variety of purposes, including web development, data science, and machine learning. It is also easy to learn, which makes it a popular choice for beginners.</p>\r\n\r\n<p>* **Java:** Java is a widely used language that is known for its stability and performance. It is used for a variety of purposes, including enterprise applications, Android app development, and big data processing.</p>\r\n\r\n<p>* **JavaScript:** JavaScript is the language of the web, and it is used for a variety of purposes, including front-end development, back-end development, and game development.</p>\r\n\r\n<p>* **C#:** C# is a language that is used for a variety of purposes, including game development, web development, and enterprise applications. It is known for its performance and scalability.</p>\r\n\r\n<p>* **C++:** C++ is a powerful language that is used for a variety of purposes, including system programming, game development, and scientific computing. It is known for its speed and efficiency.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>**Why are these programming languages so popular?**</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>There are a number of reasons why these programming languages are so popular. First, they are all very versatile and can be used for a variety of purposes. Second, they are all well-supported by a large community of developers. Third, they are all constantly being updated and improved.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>**How to learn these programming languages**</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>If you are interested in learning one of these programming languages, there are a number of resources available to you. You can find tutorials, courses, and books on a variety of websites and platforms. You can also find a number of online communities where you can ask questions and get help from other developers.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>**Conclusion**</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>The tech industry is constantly changing, and it is important to stay up-to-date on the latest trends. By learning one of the top programming languages for 2025, you can increase your chances of success in the tech industry.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>**Additional tips for learning programming languages**</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>* **Start with a language that you are interested in.** There are a number of different programming languages available, so it is important to choose one that you are interested in learning.</p>\r\n\r\n<p>* **Set realistic goals.** Don&#39;t try to learn everything at once. Start with the basics and gradually build your knowledge.</p>\r\n\r\n<p>* **Practice regularly.** The best way to learn a programming language is to practice regularly.</p>\r\n\r\n<p>* **Don&#39;t be afraid to ask for help.** There are a number of online communities where you can ask questions and get help from other developers.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>I hope this blog post has been helpful. If you have any questions, please feel free to leave a comment below.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>**Additional resources**</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>* [Python tutorial](https://www.python.org/about/gettingstarted/)</p>\r\n\r\n<p>* [Java tutorial](https://docs.oracle.com/javase/tutorial/)</p>\r\n\r\n<p>* [JavaScript tutorial](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)</p>\r\n\r\n<p>* [C# tutorial](https://docs.microsoft.com/en-us/dotnet/csharp/getting-started/)</p>\r\n\r\n<p>* [C++ tutorial](https://www.tutorialspoint.com/cplusplus/index.htm)</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>### Introduction</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>The tech industry is constantly evolving, and with it, the programming languages that are in demand. In this blog post, we will take a look at the top programming languages that are expected to dominate the tech industry in 2025. Staying updated with these languages can give developers a competitive edge in their careers.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>### The Rise of Programming Languages in 2025</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>#### 1. **Python**</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Python has been one of the most popular programming languages for several years, and its dominance is expected to continue in 2025. Known for its simplicity and readability, Python is widely used in web development, data science, artificial intelligence, and more.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- **Web Development**: Frameworks like Django and Flask make web development quick and efficient.</p>\r\n\r\n<p>- **Data Science and AI**: Libraries such as Pandas, NumPy, and TensorFlow are crucial for data analysis and machine learning.</p>\r\n\r\n<p>- **Community Support**: Python&#39;s large and active community ensures continuous improvement and support.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>#### 2. **JavaScript**</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>JavaScript remains the backbone of web development, and its importance is not diminishing any time soon. With the rise of frameworks and libraries like React, Angular, and Vue.js, JavaScript continues to be a critical skill for front-end developers.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- **Front-End Development**: Essential for creating interactive and dynamic web pages.</p>\r\n\r\n<p>- **Back-End Development**: With Node.js, JavaScript can also be used for server-side programming.</p>\r\n\r\n<p>- **Versatility**: JavaScript is used in various domains, including mobile app development with React Native.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>#### 3. **Java**</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Java has been a reliable and robust programming language for decades, and it remains a staple in the tech industry. Its use in enterprise-level applications and Android app development ensures its continued relevance.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- **Enterprise Applications**: Java is commonly used in large-scale enterprise environments due to its stability and scalability.</p>\r\n\r\n<p>- **Android Development**: As the primary language for Android app development, Java remains crucial for mobile developers.</p>\r\n\r\n<p>- **Platform Independence**: Java&#39;s &quot;write once, run anywhere&quot; capability makes it versatile across different platforms.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>#### 4. **C++**</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>C++ continues to be a powerful language, especially in system programming, game development, and performance-critical applications. Its performance and efficiency make it a preferred choice for developing high-performance software.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- **System Programming**: C++ is used for developing operating systems, browsers, and other system-level software.</p>\r\n\r\n<p>- **Game Development**: Many game engines, such as Unreal Engine, rely on C++ for performance-intensive tasks.</p>\r\n\r\n<p>- **Performance**: C++ offers fine-grained control over system resources, making it ideal for performance-critical applications.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>#### 5. **Go**</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Go, also known as Golang, has gained popularity for its simplicity and efficiency in building scalable and high-performance applications. Developed by Google, Go is particularly well-suited for cloud services and backend development.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- **Cloud Services**: Go&#39;s concurrency model makes it ideal for cloud-native applications and microservices.</p>\r\n\r\n<p>- **Performance**: Go compiles to machine code, offering excellent performance with fast execution times.</p>\r\n\r\n<p>- **Simplicity**: The language is designed to be simple and easy to learn, reducing the complexity of development.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>#### 6. **Rust**</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Rust has been gaining traction for its emphasis on safety and performance. It is particularly popular in systems programming and is known for preventing memory leaks and other common bugs.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- **Safety**: Rust&rsquo;s ownership system ensures memory safety without a garbage collector.</p>\r\n\r\n<p>- **Concurrency**: Rust makes it easier to write concurrent programs without data races.</p>\r\n\r\n<p>- **Performance**: Rust is as fast as C++ but offers safer abstractions.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>### Conclusion</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>As we look towards 2025, staying ahead in the tech industry means keeping up with the languages that will drive innovation and development. Python, JavaScript, Java, C++, Go, and Rust are poised to dominate the industry. By mastering these languages, developers can ensure they remain relevant and competitive in a rapidly evolving field.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>---</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>### SEO Tips:</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>1. **Use Long-Tail Keywords**: Include phrases like &quot;best programming languages 2025,&quot; &quot;top coding languages for developers,&quot; and &quot;future of programming.&quot;</p>\r\n\r\n<p>2. **Optimize Headings and Subheadings**: Use descriptive, keyword-rich headings and subheadings.</p>\r\n\r\n<p>3. **Internal Linking**: Link to other relevant articles on your blog.</p>\r\n\r\n<p>4. **External Linking**: Link to authoritative sources for credibility.</p>\r\n\r\n<p>5. **Meta Descriptions**: Write a compelling meta description for your post.</p>\r\n\r\n<p>6. **Image Alt Text**: Use descriptive alt text for any images you include.</p>\r\n\r\n<p>7. **Mobile Optimization**: Ensure your blog is mobile-friendly.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Let me know if you need any more sections or additional improvements!</p>', 'The tech landscape is in constant flux, with new programming languages emerging and existing ones evolving. To stay ahead in this dynamic environment, it\'s crucial to identify the languages poised to dominate the industry in the coming years. This post delves into the top programming languages predicted to be in high demand in 2025, exploring their key features, applications, and reasons for their projected prominence.', '', '2024-08-07 10:13:08.717008', '2024-08-08 07:56:49.031087', NULL, 'draft', 10, 0, 'Top Programming Languages to Master in 2025: Future-Proof Your Career', 'Discover the most in-demand programming languages for 2025. Learn about Python, Java, JavaScript, C#, C++ and more. Stay ahead of the curve and build a successf', 'programming languages, tech trends, 2025, Python, Java, JavaScript, C#, C++, software development, coding, web development, mobile development, data science, artificial intelligence, machine learning', 1, 0, '', NULL, 1, 15);
 INSERT INTO `posts_article` (`id`, `title`, `slug`, `type`, `content`, `excerpt`, `image`, `published_date`, `updated_date`, `file_url`, `status`, `reading_time`, `views`, `seo_title`, `meta_description`, `meta_keywords`, `allow_comments`, `featured`, `references`, `youtube_url`, `author_id`, `category_id`) VALUES
 (17, 'Step-by-Step Guide: Building a Django Website with Pre-Built HTML Template (Beginner-Friendly)', 'step-by-step-guide-building-a-django-website-with-pre-built-html-template-beginner-friendly', 'article', '<p><strong>Introduction</strong></p>\r\n\r\n<p>Creating a website from scratch can be overwhelming, especially if you&#39;re new to web development. However, with Django, a powerful Python web framework, and a pre-built HTML template, you can quickly set up a professional-looking website. In this tutorial, I&#39;ll walk you through the process of building a simple Django website using a pre-built HTML template, perfect for beginners or those looking to speed up their development process.</p>\r\n\r\n<p><strong>What You&rsquo;ll Need</strong></p>\r\n\r\n<ul>\r\n	<li>Basic knowledge of Python and Django</li>\r\n	<li>A pre-built HTML template (you can find free templates on sites like <a href=\"https://html5up.net/\" rel=\"noreferrer\" target=\"_new\">HTML5 UP</a> or <a href=\"https://bootstrapmade.com/\" rel=\"noreferrer\" target=\"_blank\">BootstrapMade</a>)</li>\r\n	<li>Python installed on your computer</li>\r\n	<li>A code editor (like VSCode)</li>\r\n</ul>\r\n\r\n<p><strong>Step 1: Set Up Your Django Project</strong></p>\r\n\r\n<p>First, ensure you have Django installed. If you haven&rsquo;t installed Django yet, you can do so with the following command:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">pip install django</code></pre>\r\n\r\n<p>Now, create a new Django project:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">django-admin startproject mysite\r\ncd mysite</code></pre>\r\n\r\n<p>This will create a new directory called <code>mysite</code> with the necessary files and folders for a Django project.</p>\r\n\r\n<p><strong>Step 2: Create a Django App</strong></p>\r\n\r\n<p>Within your project, you&rsquo;ll need to create an app. Django projects are split into apps, which are like modules or components of your project.</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">python manage.py startapp core</code></pre>\r\n\r\n<p>This creates a new app called <code>core</code> where we&rsquo;ll handle the core functionalities of our website.</p>\r\n\r\n<p><strong>Step 3: Set Up the HTML Template</strong></p>\r\n\r\n<p>Next, download a pre-built HTML template. For this example, let&#39;s say you&#39;ve downloaded a template named <code>simple-website</code>.</p>\r\n\r\n<p>Create a directory within your <code>core</code> app called <code>templates</code>:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">mkdir -p core/templates/core</code></pre>\r\n\r\n<p>Move the HTML files from your template into this directory. If your template has assets like CSS and JavaScript, create a <code>static</code> directory to store them:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">mkdir -p static</code></pre>\r\n\r\n<p>Place the CSS, JavaScript, and image files from your template into the <code>static/main</code> folder.</p>\r\n\r\n<p><strong>Step 4: Configure Django to Use the Template</strong></p>\r\n\r\n<p>In the <code>mysite/settings.py</code> file, add your <code>core</code> app to the <code>INSTALLED_APPS</code> list:</p>\r\n\r\n<pre>\r\n<code class=\"language-python\">INSTALLED_APPS = [\r\n    ...\r\n    \'main\',\r\n]</code></pre>\r\n\r\n<p>Now, tell Django where to look for static files by adding the following settings:</p>\r\n\r\n<pre>\r\n<code class=\"language-python\">STATIC_URL = \'/static/\'\r\nSTATICFILES_DIRS = [BASE_DIR / \"static\"]</code></pre>\r\n\r\n<p>Next, create a view in the <code>main/views.py</code> file to render the template:</p>\r\n\r\n<pre>\r\n<code class=\"language-python\">from django.shortcuts import render\r\n\r\ndef home(request):\r\n    return render(request, \'core/index.html\')</code></pre>\r\n\r\n<p>Here, <code>index.html</code> is the main HTML file from your pre-built template.</p>\r\n\r\n<p><strong>Step 5: Set Up URL Routing</strong></p>\r\n\r\n<p>To make sure Django knows which view to display, set up URL routing, create the <code>core/urls.py</code> file:</p>\r\n\r\n<pre>\r\n<code class=\"language-python\">from django.urls import path\r\nfrom . import views\r\n\r\nurlpatterns = [\r\n    path(\'\', views.home, name=\'home\'),\r\n]</code></pre>\r\n\r\n<p>Then, include this in your main <code>mysite/urls.py</code> file:</p>\r\n\r\n<pre>\r\n<code class=\"language-python\">from django.contrib import admin\r\nfrom django.urls import include, path\r\n\r\nurlpatterns = [\r\n    path(\'admin/\', admin.site.urls),\r\n    path(\'\', include(\'core.urls\')),\r\n]</code></pre>\r\n\r\n<p><strong>Step 6: Run the Server</strong></p>\r\n\r\n<p>You&#39;re now ready to see your website in action! Run the Django development server with the following command:</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">python manage.py runserver</code></pre>\r\n\r\n<p>Visit <code>http://127.0.0.1:8000/</code> in your web browser, and you should see your HTML template rendered as a Django website.</p>\r\n\r\n<p><strong>Step 7: Customize the Template</strong></p>\r\n\r\n<p>Now that your template is integrated with Django, you can start customizing it. Replace static content with dynamic content from your database, add forms, or even set up user authentication.</p>\r\n\r\n<p>For example, to display dynamic content, you can pass context data from your view to the template:</p>\r\n\r\n<pre>\r\n<code class=\"language-python\">def home(request):\r\n    context = {\r\n        \'title\': \'Welcome to My Site\',\r\n        \'content\': \'This is a simple website built with Django.\',\r\n    }\r\n    return render(request, \'core/index.html\', context)</code></pre>\r\n\r\n<p>In your <code>index.html</code> file, you can use Django&#39;s template language to display this data:</p>\r\n\r\n<pre>\r\n<code class=\"language-html\">&lt;h1&gt;{{ title }}&lt;/h1&gt;\r\n&lt;p&gt;{{ content }}&lt;/p&gt;</code></pre>\r\n\r\n<p><strong>Conclusion</strong></p>\r\n\r\n<p>And that&#39;s it! You&#39;ve successfully built a Django website using a pre-built HTML template. From here, you can explore more Django features to enhance your site, such as adding forms, handling user authentication, or setting up a database.</p>\r\n\r\n<p>Building websites with Django doesn&rsquo;t have to be complicated, especially when you start with a pre-built template. This approach saves time and lets you focus on adding the unique features that make your site stand out.</p>\r\n\r\n<p>Happy coding!</p>\r\n\r\n<hr />\r\n<p><strong>Call to Action</strong></p>\r\n\r\n<p>If you found this guide helpful, be sure to subscribe to our newsletter for more tutorials and updates. And don&rsquo;t forget to leave a comment below if you have any questions or need further assistance!</p>', 'Learn how to build a simple Django website using a pre-built HTML template in this step-by-step guide. Perfect for beginners, this tutorial will help you quickly set up a professional-looking website with Django, saving time and effort.', '', '2024-08-08 18:17:26.419892', '2024-08-08 18:52:58.744484', NULL, 'draft', NULL, 0, 'How to Build a Django Website Using Pre-Built HTML Template: Step-by-Step Guide for Beginners', 'Discover how to build a simple Django website using a pre-built HTML template with this step-by-step tutorial. Get started quickly and efficiently!', 'Django website tutorial, build website with Django, Django HTML template, Django beginner guide, web development, Python Django, HTML templates, Django project setup', 1, 0, '', NULL, 1, 12),
-(18, 'Top 5 Must-Have VSCode Extensions for Web Developers to Boost Productivity', 'top-5-must-have-vscode-extensions-for-web-developers-to-boost-productivity', 'article', '<p>As a web developer, your code editor is your primary tool, and Visual Studio Code (VSCode) is one of the most popular choices for good reasons. It&rsquo;s lightweight, fast, and highly customizable, thanks to its wide array of extensions. These extensions can significantly enhance your productivity by streamlining your workflow and providing powerful features. Here are the top 10 VSCode extensions every web developer should consider:</p>\r\n\r\n<h2>1. <strong>Prettier &ndash; Code Formatter</strong></h2>\r\n\r\n<p>Prettier is an opinionated code formatter that supports many languages. It enforces a consistent style by parsing your code and re-printing it with its own rules. This ensures your code is clean and easy to read.</p>\r\n\r\n<ul>\r\n	<li><strong>Key Features:</strong>\r\n\r\n	<ul>\r\n		<li>Consistent code formatting</li>\r\n		<li>Supports many languages</li>\r\n		<li>Integrates with most code editors</li>\r\n	</ul>\r\n	</li>\r\n</ul>\r\n\r\n<h2>2. <strong>CodeSnap</strong></h2>\r\n\r\n<p>ESLint is a powerful tool for identifying and fixing linting issues in your JavaScript code. It helps maintain code quality by enforcing coding standards and highlighting potential errors.</p>\r\n\r\n<ul>\r\n	<li><strong>Key Features:</strong>\r\n\r\n	<ul>\r\n		<li>Customizable linting rules</li>\r\n		<li>Supports ECMAScript versions</li>\r\n		<li>Integrates with Prettier</li>\r\n	</ul>\r\n	</li>\r\n</ul>\r\n\r\n<h2>3. <strong>Live Server</strong></h2>\r\n\r\n<p>Live Server allows you to launch a local development server with a live reload feature for static and dynamic pages. It&rsquo;s a must-have for any web developer working on HTML, CSS, and JavaScript projects.</p>\r\n\r\n<ul>\r\n	<li><strong>Key Features:</strong>\r\n\r\n	<ul>\r\n		<li>Live reload for static and dynamic pages</li>\r\n		<li>Easy setup and configuration</li>\r\n		<li>Seamless development workflow</li>\r\n	</ul>\r\n	</li>\r\n</ul>\r\n\r\n<h2>4. <strong>Auto Rename Tag</strong></h2>\r\n\r\n<p>Auto Rename Tag automatically renames the corresponding HTML tag when you edit an opening or closing tag. This extension helps maintain consistency and reduces the likelihood of mismatched tags.</p>\r\n\r\n<ul>\r\n	<li><strong>Key Features:</strong>\r\n\r\n	<ul>\r\n		<li>Automatically rename paired HTML tags</li>\r\n		<li>Supports JSX and other templating languages</li>\r\n		<li>Improves coding efficiency</li>\r\n	</ul>\r\n	</li>\r\n</ul>\r\n\r\n<h2>5. <strong>Tabnine</strong></h2>\r\n\r\n<h2>Conclusion</h2>\r\n\r\n<p>These top 10 VSCode extensions can transform your development experience by adding valuable features and streamlining your workflow. Whether you&#39;re a beginner or an experienced web developer, incorporating these tools into your VSCode setup will undoubtedly boost your productivity. Try them out and see the difference they make in your coding journey!</p>', 'Discover the top 10 VSCode extensions that every web developer should have to boost productivity. From code formatting to live server and Git integration, these extensions will streamline your workflow and enhance your coding experience.', 'articles/IMG-20240816-WA0008.jpg', '2024-08-08 19:36:26.515347', '2024-08-16 23:59:57.411447', NULL, 'draft', NULL, 0, 'Top 5 Must-Have VSCode Extensions for Web Developers to Boost Productivity', 'Enhance your coding experience with these top 5 VSCode extensions for web developers. Boost productivity with tools for formatting, linting, live reload, Git i', 'VSCode extensions, web development, code formatting, productivity tools, Prettier, ESLint, Live Server, GitLens, REST Client, HTML, CSS, JavaScript, debugging, API testing', 1, 0, '', NULL, 1, 4),
-(19, 'Reviewing 3 HTML-Only Websites: Developer Insights on Speed Optimization and Minimalist Design', 'reviewing-3-html-only-websites-developer-insights-on-speed-optimization-and-minimalist-design', 'article', '<p>With the popularity of visually complex, feature-rich and animated websites today, it&rsquo;s easy to forget the power and efficiency of a well-structured HTML-only website owing&nbsp;to the face that everyone ants to build something beautiful and visually appealing. After all, the best marketing&nbsp;strategies are those that can appeal to what the user can see. As a beginner web developer with decent skills, you might have fallen pery to that trend, but good designs are often the simplest and most applicable. I&#39;ve taken the time to review three websites that stick to the basics, relying solely on HTML. In this post, I&rsquo;ll rate each website based on key performance metrics, highlight the advantages of minimalist design, and offer advice to aspiring web developers on how to maximize website speed and load time by focusing on what truly matters.</p>\r\n\r\n<h2>Why HTML-Only Websites?</h2>\r\n\r\n<p>Before we continue, it&rsquo;s important to understand why someone might choose to create an HTML-only website in the first place. HTML-only websites are stripped of the complexities of JavaScript, CSS frameworks, and heavy images or videos. This makes them incredibly fast to load, easy to maintain, responsive by default and highly efficient. These websites are often used for quick-loading pages, landing pages, or situations where content is prioritized over esthetics.</p>\r\n\r\n<h2>Website 1: <a href=\"https://info.cern.ch/hypertext/WWW/TheProject.html\" target=\"_blank\">WWW/TheProject.html</a></h2>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/10/screenshot-273.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<h3><strong>Overview</strong>:</h3>\r\n\r\n<p>The first website on the list is the first ever website on the internet, The WWW Project. The site uses basic HTML tags to structure its content, with no external stylesheets or scripts owing to the fact that those didn&#39;t exist at the time. Published by Tim Bernes Lee in 1991.</p>\r\n\r\n<h3><strong>Performance:</strong></h3>\r\n\r\n<ul>\r\n	<li><strong>Load Time:</strong> 402&nbsp;ms (0.4&nbsp;Milliseconds)</li>\r\n	<li><strong>Page Size:</strong> 196&nbsp;B</li>\r\n	<li><strong>SEO:</strong> Well-structured, with appropriate use of headings and links.</li>\r\n</ul>\r\n\r\n<p><strong>Rating:</strong> 4.0/5<br />\r\n<strong>Review:</strong><br />\r\nI don&#39;t mean to exaggerate my fondness for the site, but considering the time it was made and the existence of no other means of styling, Tim Bernes did a pretty good job of keeping the contents in order. The load time is almost instantaneous, and the minimalist design ensures that the reader&#39;s attention is solely on the content. However, a slight downside is the lack of visual appeal, which might deter some users. For its purpose, though, this site excels.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2>Website 2: <a href=\"https://fatih-erikli.com/\" target=\"_blank\">fatih-erikli.com</a></h2>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/10/screenshot-275.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<h3><strong>Overview</strong>:</h3>\r\n\r\n<p>The second site is a portfolio for a freelancer. It includes only a name, skill, and a call to action button to send a mail if you want to hire, all built with just HTML.</p>\r\n\r\n<h3><strong>Performance:</strong></h3>\r\n\r\n<ul>\r\n	<li><strong>Load Time:</strong> 1.87&nbsp;s</li>\r\n	<li><strong>Page Size:</strong>&nbsp;2.3&nbsp;KB</li>\r\n	<li><strong>SEO:</strong> The only media on the site is a favicon.</li>\r\n</ul>\r\n\r\n<p><strong>Rating:</strong>&nbsp;2.5/5<br />\r\n<strong>Review:</strong><br />\r\nI am rating it this low because I really believe the creator could have done more for content. The site is practically empty containing only a name and a button, and not even up to ten words yet it took almost two seconds to load. Definitely contradicts the idea of a fast loading website with minimal design. It&#39;s a good one though.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2>Website 3: <a href=\"https://motherfuckingwebsite.com/\" target=\"_blank\">You Really Need To Check This One Out</a>&nbsp;😅</h2>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/10/screenshot-274_zFvuTqG.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<h2><strong>Overview</strong>:</h2>\r\n\r\n<p>The final site is a m***********g website 😂. it features a single page with no links, no images and just some headers, paragraphs and lists. It&#39;s main selling point though is it&#39;s aggressive use of strong language, definitely got the point through.</p>\r\n\r\n<h2><strong>Performance:</strong></h2>\r\n\r\n<ul>\r\n	<li><strong>Load Time:</strong> 799&nbsp;ms (0.7 Milliseconds)</li>\r\n	<li><strong>Page Size:</strong> 215&nbsp;B</li>\r\n	<li><strong>SEO:</strong> Plenty of content, but strong language... Really strong language.&nbsp;It gets about 1600 visitors per day.</li>\r\n</ul>\r\n\r\n<p><strong>Rating:</strong>&nbsp;4.5/5<br />\r\n<strong>Review:</strong><br />\r\nThis landing page does its job effectively, Despite the intense language, it still manages to prove the point of effective communication and site efficiency. It has quite the content yet it managed to turn a blind eye to the temptation of adding even a single media or styling. The creator definitely deserves an award 🏆</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2>Tips for Aspiring Web Developers</h2>\r\n\r\n<p>If you&rsquo;re an aspiring or an established web developer, here are some key takeaways from these HTML-only websites:</p>\r\n\r\n<ol>\r\n	<li>\r\n	<p><strong>Prioritize Speed:</strong><br />\r\n	The less you load, the faster your site will be. Stick to the essentials and avoid unnecessary code or assets. It might be difficult to ignore the temptation of designing beautiful website, but the most important thing is getting your message across, and slow loading websites will discourage some people.</p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Optimize for SEO:</strong><br />\r\n	Even with limited content, ensure your HTML is well-structured. Use appropriate headings, meta tags, and alt text for any images. For&nbsp;those already into building complex web apps, this is a good point to take note of.</p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Minimalist Design:</strong><br />\r\n	Focus on delivering the core message or functionality of your site. Minimalist design is not about stripping everything away but about emphasizing what&rsquo;s truly necessary.Over complicating designs and site functions just confuses the majority of you visitors. Keep it simple</p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Consider User Experience:</strong><br />\r\n	While speed is crucial, don&rsquo;t neglect the user experience. A touch of styling, even if minimal, can enhance readability and engagement.&nbsp;</p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Testing and Iteration:</strong><br />\r\n	Test your site across different devices and browsers to ensure consistent performance.</p>\r\n	</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2>Conclusion</h2>\r\n\r\n<p>HTML-only websites may seem outdated in a world filled with dynamic, interactive sites, but they still hold a significant place in web development.&nbsp;Build a fast-loading landing page, a minimalist blog, or a simple portfolio, keeping your design and code minimal can lead to excellent performance and user satisfaction. Remember, it&rsquo;s not always about the number of features you can pack into a site; sometimes, less truly is more.</p>\r\n\r\n<blockquote>\r\n<p>&quot;Good Design Is As Little Design As Possible.&quot;</p>\r\n\r\n<p>--&nbsp;Dieter Rams</p>\r\n</blockquote>\r\n\r\n<p>If you&#39;ve gained valuable insight from this post, or have a question or remark, please leave a comment below and share your thoughts. Be sure to subscribe to our newsletter to get notified on new interesting contents like this one. Share this post to friends and others you feel will gain from it as you have.</p>', 'Explore the power of simplicity with our review of three HTML-only websites. Discover how minimalist design can enhance website speed and performance, and learn tips for building fast, efficient websites that prioritize user experience.', 'articles/3_HTML-Only_Websites.png', '2024-08-10 07:34:14.792839', '2024-08-10 16:33:44.703361', NULL, 'published', 5, 90, 'Top 3 HTML-Only Websites Reviewed: Speed, Performance & Minimalist Design Tips', 'Discover how HTML-only websites can maximize speed and performance with our review of three minimalist sites. Learn tips for building fast, efficient websites.', 'HTML websites, minimalist design, website speed, load time optimization, web development tips, SEO optimization, website performance, web developer advice', 1, 0, 'https://devpractical.com/html-only-websites/', NULL, 1, 12);
+(18, 'Top 5 Must-Have VSCode Extensions for Web Developers to Boost Productivity', 'top-5-must-have-vscode-extensions-for-web-developers-to-boost-productivity', 'article', '<p>As a web developer, your code editor is your most crucial tool. Visual Studio Code (VSCode) has become the go-to choice for many developers due to its lightweight nature, robust features, and the ability to extend its capabilities through extensions. To help you make the most of VSCode, I&rsquo;ve compiled a list of the top 5 must-have extensions that can significantly boost your productivity.</p>\r\n\r\n<hr />\r\n<h3>1. <strong>Prettier &ndash; Code Formatter</strong></h3>\r\n\r\n<p>Maintaining a consistent coding style across your projects is essential for readability and collaboration. Prettier is an opinionated code formatter that enforces a consistent style by parsing your code and re-printing it with its own rules. It supports many languages, including JavaScript, TypeScript, CSS, HTML, and more. With Prettier, you can forget about manually formatting your code&mdash;it will take care of indentation, line breaks, and other formatting issues automatically.</p>\r\n\r\n<p><strong>Key Features:</strong></p>\r\n\r\n<ul>\r\n	<li>Automatic code formatting on save.</li>\r\n	<li>Support for a wide range of languages.</li>\r\n	<li>Easy configuration through <code>.prettierrc</code> files.</li>\r\n</ul>\r\n\r\n<p><strong>Why You Need It:</strong> Prettier saves time and eliminates debates about code style, allowing you to focus more on coding and less on formatting.</p>\r\n\r\n<hr />\r\n<h3>2. <strong>CodeSnap</strong></h3>\r\n\r\n<p>Ever wanted to share a snippet of your code with others, but found screenshots of plain text too bland? CodeSnap is here to make your code screenshots beautiful and more presentable. This extension allows you to capture your code in a stylish way, making it perfect for sharing on social media, blogs, or even in presentations.</p>\r\n\r\n<p><strong>Key Features:</strong></p>\r\n\r\n<ul>\r\n	<li>Easily select and capture code snippets.</li>\r\n	<li>Customizable themes and settings.</li>\r\n	<li>Option to add a background color or remove it entirely.</li>\r\n</ul>\r\n\r\n<p><strong>Why You Need It:</strong> Whether you&#39;re sharing code snippets on Twitter or adding them to your blog, CodeSnap makes your code look professional and visually appealing.</p>\r\n\r\n<hr />\r\n<h3>3. <strong>Live Server</strong></h3>\r\n\r\n<p>One of the most crucial aspects of web development is the ability to see your changes in real time. The Live Server extension enables you to launch a local development server with a live reload feature. As you save your changes, the browser automatically refreshes, showing the updated content instantly.</p>\r\n\r\n<p><strong>Key Features:</strong></p>\r\n\r\n<ul>\r\n	<li>Real-time browser updates as you code.</li>\r\n	<li>Support for both static and dynamic content.</li>\r\n	<li>Integrated with VSCode for easy setup.</li>\r\n</ul>\r\n\r\n<p><strong>Why You Need It:</strong> Live Server eliminates the need to manually refresh your browser, speeding up your development process and allowing you to see the impact of your changes immediately.</p>\r\n\r\n<hr />\r\n<h3>4. <strong>Auto Rename Tag</strong></h3>\r\n\r\n<p>If you&rsquo;re working with HTML or XML, you know the pain of manually renaming opening and closing tags. Auto Rename Tag is a simple yet powerful extension that automatically renames the closing tag when you change the opening one, and vice versa.</p>\r\n\r\n<p><strong>Key Features:</strong></p>\r\n\r\n<ul>\r\n	<li>Real-time tag renaming.</li>\r\n	<li>Support for HTML, XML, and JSX.</li>\r\n	<li>No configuration needed&mdash;just install and use.</li>\r\n</ul>\r\n\r\n<p><strong>Why You Need It:</strong> This extension reduces the chances of mismatched tags and speeds up your workflow, especially when dealing with complex nested structures.</p>\r\n\r\n<hr />\r\n<h3>5. <strong>Tabnine</strong></h3>\r\n\r\n<p>Tabnine is an AI-powered code completion tool that helps you write code faster by providing intelligent suggestions based on your coding patterns. It supports a wide range of programming languages and frameworks, and it learns from your codebase to improve its suggestions over time.</p>\r\n\r\n<p><strong>Key Features:</strong></p>\r\n\r\n<ul>\r\n	<li>AI-driven code completion.</li>\r\n	<li>Support for multiple languages and frameworks.</li>\r\n	<li>Context-aware suggestions that improve over time.</li>\r\n</ul>\r\n\r\n<p><strong>Why You Need It:</strong> Tabnine enhances your coding efficiency by predicting and suggesting entire lines of code, reducing the amount of typing you need to do and helping you avoid common mistakes.</p>\r\n\r\n<hr />\r\n<h3>Conclusion</h3>\r\n\r\n<p>Incorporating these five VSCode extensions into your workflow can greatly enhance your productivity as a web developer. Whether you&#39;re looking to maintain clean and consistent code with Prettier, capture beautiful code snippets with CodeSnap, or speed up your development process with Live Server, Auto Rename Tag, and Tabnine, these tools are sure to make your coding experience smoother and more efficient.</p>\r\n\r\n<p>Give them a try, and watch your productivity soar!</p>', 'Discover the top 10 VSCode extensions that every web developer should have to boost productivity. From code formatting to live server and Git integration, these extensions will streamline your workflow and enhance your coding experience.', 'articles/IMG-20240816-WA0008.jpg', '2024-08-08 19:36:26.515347', '2024-08-17 16:16:22.460926', NULL, 'draft', 5, 0, 'Top 5 Must-Have VSCode Extensions for Web Developers to Boost Productivity', 'Boost your productivity as a web developer with these top 5 VSCode extensions. Learn how Prettier, CodeSnap, Live Server, Auto Rename Tag, and Tabnine can strea', 'VSCode extensions, web development tools, Prettier, CodeSnap, Live Server, Auto Rename Tag, Tabnine, productivity, code formatting', 1, 0, '', NULL, 1, 4),
+(19, 'Reviewing 3 HTML-Only Websites: Developer Insights on Speed Optimization and Minimalist Design', 'reviewing-3-html-only-websites-developer-insights-on-speed-optimization-and-minimalist-design', 'article', '<p>With the popularity of visually complex, feature-rich and animated websites today, it&rsquo;s easy to forget the power and efficiency of a well-structured HTML-only website owing&nbsp;to the face that everyone ants to build something beautiful and visually appealing. After all, the best marketing&nbsp;strategies are those that can appeal to what the user can see. As a beginner web developer with decent skills, you might have fallen pery to that trend, but good designs are often the simplest and most applicable. I&#39;ve taken the time to review three websites that stick to the basics, relying solely on HTML. In this post, I&rsquo;ll rate each website based on key performance metrics, highlight the advantages of minimalist design, and offer advice to aspiring web developers on how to maximize website speed and load time by focusing on what truly matters.</p>\r\n\r\n<h2>Why HTML-Only Websites?</h2>\r\n\r\n<p>Before we continue, it&rsquo;s important to understand why someone might choose to create an HTML-only website in the first place. HTML-only websites are stripped of the complexities of JavaScript, CSS frameworks, and heavy images or videos. This makes them incredibly fast to load, easy to maintain, responsive by default and highly efficient. These websites are often used for quick-loading pages, landing pages, or situations where content is prioritized over esthetics.</p>\r\n\r\n<h2>Website 1: <a href=\"https://info.cern.ch/hypertext/WWW/TheProject.html\" target=\"_blank\">WWW/TheProject.html</a></h2>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/10/screenshot-273.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<h3><strong>Overview</strong>:</h3>\r\n\r\n<p>The first website on the list is the first ever website on the internet, The WWW Project. The site uses basic HTML tags to structure its content, with no external stylesheets or scripts owing to the fact that those didn&#39;t exist at the time. Published by Tim Bernes Lee in 1991.</p>\r\n\r\n<h3><strong>Performance:</strong></h3>\r\n\r\n<ul>\r\n	<li><strong>Load Time:</strong> 402&nbsp;ms (0.4&nbsp;Milliseconds)</li>\r\n	<li><strong>Page Size:</strong> 196&nbsp;B</li>\r\n	<li><strong>SEO:</strong> Well-structured, with appropriate use of headings and links.</li>\r\n</ul>\r\n\r\n<p><strong>Rating:</strong> 4.0/5<br />\r\n<strong>Review:</strong><br />\r\nI don&#39;t mean to exaggerate my fondness for the site, but considering the time it was made and the existence of no other means of styling, Tim Bernes did a pretty good job of keeping the contents in order. The load time is almost instantaneous, and the minimalist design ensures that the reader&#39;s attention is solely on the content. However, a slight downside is the lack of visual appeal, which might deter some users. For its purpose, though, this site excels.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2>Website 2: <a href=\"https://fatih-erikli.com/\" target=\"_blank\">fatih-erikli.com</a></h2>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/10/screenshot-275.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<h3><strong>Overview</strong>:</h3>\r\n\r\n<p>The second site is a portfolio for a freelancer. It includes only a name, skill, and a call to action button to send a mail if you want to hire, all built with just HTML.</p>\r\n\r\n<h3><strong>Performance:</strong></h3>\r\n\r\n<ul>\r\n	<li><strong>Load Time:</strong> 1.87&nbsp;s</li>\r\n	<li><strong>Page Size:</strong>&nbsp;2.3&nbsp;KB</li>\r\n	<li><strong>SEO:</strong> The only media on the site is a favicon.</li>\r\n</ul>\r\n\r\n<p><strong>Rating:</strong>&nbsp;2.5/5<br />\r\n<strong>Review:</strong><br />\r\nI am rating it this low because I really believe the creator could have done more for content. The site is practically empty containing only a name and a button, and not even up to ten words yet it took almost two seconds to load. Definitely contradicts the idea of a fast loading website with minimal design. It&#39;s a good one though.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2>Website 3: <a href=\"https://motherfuckingwebsite.com/\" target=\"_blank\">You Really Need To Check This One Out</a>&nbsp;😅</h2>\r\n\r\n<p><img alt=\"\" src=\"/media/media/2024/08/10/screenshot-274_zFvuTqG.png\" style=\"margin-bottom:30px; margin-top:30px; width:100%\" /></p>\r\n\r\n<h2><strong>Overview</strong>:</h2>\r\n\r\n<p>The final site is a m***********g website 😂. it features a single page with no links, no images and just some headers, paragraphs and lists. It&#39;s main selling point though is it&#39;s aggressive use of strong language, definitely got the point through.</p>\r\n\r\n<h2><strong>Performance:</strong></h2>\r\n\r\n<ul>\r\n	<li><strong>Load Time:</strong> 799&nbsp;ms (0.7 Milliseconds)</li>\r\n	<li><strong>Page Size:</strong> 215&nbsp;B</li>\r\n	<li><strong>SEO:</strong> Plenty of content, but strong language... Really strong language.&nbsp;It gets about 1600 visitors per day.</li>\r\n</ul>\r\n\r\n<p><strong>Rating:</strong>&nbsp;4.5/5<br />\r\n<strong>Review:</strong><br />\r\nThis landing page does its job effectively, Despite the intense language, it still manages to prove the point of effective communication and site efficiency. It has quite the content yet it managed to turn a blind eye to the temptation of adding even a single media or styling. The creator definitely deserves an award 🏆</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2>Tips for Aspiring Web Developers</h2>\r\n\r\n<p>If you&rsquo;re an aspiring or an established web developer, here are some key takeaways from these HTML-only websites:</p>\r\n\r\n<ol>\r\n	<li>\r\n	<p><strong>Prioritize Speed:</strong><br />\r\n	The less you load, the faster your site will be. Stick to the essentials and avoid unnecessary code or assets. It might be difficult to ignore the temptation of designing beautiful website, but the most important thing is getting your message across, and slow loading websites will discourage some people.</p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Optimize for SEO:</strong><br />\r\n	Even with limited content, ensure your HTML is well-structured. Use appropriate headings, meta tags, and alt text for any images. For&nbsp;those already into building complex web apps, this is a good point to take note of.</p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Minimalist Design:</strong><br />\r\n	Focus on delivering the core message or functionality of your site. Minimalist design is not about stripping everything away but about emphasizing what&rsquo;s truly necessary.Over complicating designs and site functions just confuses the majority of you visitors. Keep it simple</p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Consider User Experience:</strong><br />\r\n	While speed is crucial, don&rsquo;t neglect the user experience. A touch of styling, even if minimal, can enhance readability and engagement.&nbsp;</p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Testing and Iteration:</strong><br />\r\n	Test your site across different devices and browsers to ensure consistent performance.</p>\r\n	</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2>Conclusion</h2>\r\n\r\n<p>HTML-only websites may seem outdated in a world filled with dynamic, interactive sites, but they still hold a significant place in web development.&nbsp;Build a fast-loading landing page, a minimalist blog, or a simple portfolio, keeping your design and code minimal can lead to excellent performance and user satisfaction. Remember, it&rsquo;s not always about the number of features you can pack into a site; sometimes, less truly is more.</p>\r\n\r\n<blockquote>\r\n<p>&quot;Good Design Is As Little Design As Possible.&quot;</p>\r\n\r\n<p>--&nbsp;Dieter Rams</p>\r\n</blockquote>\r\n\r\n<p>If you&#39;ve gained valuable insight from this post, or have a question or remark, please leave a comment below and share your thoughts. Be sure to subscribe to our newsletter to get notified on new interesting contents like this one. Share this post to friends and others you feel will gain from it as you have.</p>', 'Explore the power of simplicity with our review of three HTML-only websites. Discover how minimalist design can enhance website speed and performance, and learn tips for building fast, efficient websites that prioritize user experience.', 'articles/3_HTML-Only_Websites.png', '2024-08-10 07:34:14.792839', '2024-08-10 16:33:44.703361', NULL, 'published', 5, 91, 'Top 3 HTML-Only Websites Reviewed: Speed, Performance & Minimalist Design Tips', 'Discover how HTML-only websites can maximize speed and performance with our review of three minimalist sites. Learn tips for building fast, efficient websites.', 'HTML websites, minimalist design, website speed, load time optimization, web development tips, SEO optimization, website performance, web developer advice', 1, 0, 'https://devpractical.com/html-only-websites/', NULL, 1, 12);
 
 -- --------------------------------------------------------
 
@@ -1039,12 +1111,12 @@ INSERT INTO `posts_article` (`id`, `title`, `slug`, `type`, `content`, `excerpt`
 --
 
 CREATE TABLE `posts_articleview` (
-  `id` bigint(20) NOT NULL,
-  `ip_address` char(39) NOT NULL,
-  `user_agent` longtext DEFAULT NULL,
-  `referrer` varchar(200) DEFAULT NULL,
+  `id` bigint NOT NULL,
+  `ip_address` char(39) COLLATE utf8mb4_general_ci NOT NULL,
+  `user_agent` longtext COLLATE utf8mb4_general_ci,
+  `referrer` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `viewed_on` datetime(6) NOT NULL,
-  `article_id` bigint(20) NOT NULL
+  `article_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1437,7 +1509,22 @@ INSERT INTO `posts_articleview` (`id`, `ip_address`, `user_agent`, `referrer`, `
 (382, '66.249.92.164', 'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/[WEBKIT_VERSION] (KHTML, like Gecko; Mediapartners-Google) Chrome/[CHROME_VERSION] Mobile Safari/[WEBKIT_VERSION]', '', '2024-08-16 22:48:39.840573', 13),
 (383, '66.249.92.163', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/[WEBKIT_VERSION] (KHTML, like Gecko, Mediapartners-Google) Chrome/[CHROME_VERSION] Safari/[WEBKIT_VERSION]', '', '2024-08-16 22:48:40.212237', 13),
 (384, '66.249.92.164', 'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/[WEBKIT_VERSION] (KHTML, like Gecko; Mediapartners-Google) Chrome/[CHROME_VERSION] Mobile Safari/[WEBKIT_VERSION]', '', '2024-08-16 22:48:40.324441', 11),
-(385, '140.238.83.181', 'Mozilla/5.0 (compatible; GrapeshotCrawler/2.0; +http://www.grapeshot.co.uk/crawler.php)', '', '2024-08-17 01:03:38.023573', 19);
+(385, '140.238.83.181', 'Mozilla/5.0 (compatible; GrapeshotCrawler/2.0; +http://www.grapeshot.co.uk/crawler.php)', '', '2024-08-17 01:03:38.023573', 19),
+(386, '197.210.55.177', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36', 'https://cn.coursearena.com.ng/', '2024-08-17 03:58:40.311097', 13),
+(387, '178.250.7.71', 'CriteoBot/0.1 (+https://www.criteo.com/criteo-crawler/)', '', '2024-08-17 03:58:45.258815', 13),
+(388, '152.67.137.35', 'Mozilla/5.0 (compatible; GrapeshotCrawler/2.0; +http://www.grapeshot.co.uk/crawler.php)', '', '2024-08-17 04:00:22.447182', 13),
+(389, '207.38.88.75', 'ias-va/3.3 (former https://www.admantx.com + https://integralads.com/about-ias/)', '', '2024-08-17 04:01:47.026492', 13),
+(390, '197.210.55.177', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36', 'https://cn.coursearena.com.ng/', '2024-08-17 04:08:44.820829', 14),
+(391, '188.138.57.86', 'ias-ie/3.3 (former https://www.admantx.com + https://integralads.com/about-ias/)', '', '2024-08-17 04:08:47.738557', 14),
+(392, '152.67.137.35', 'Mozilla/5.0 (compatible; GrapeshotCrawler/2.0; +http://www.grapeshot.co.uk/crawler.php)', '', '2024-08-17 04:10:23.263987', 14),
+(393, '197.210.54.249', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36', 'https://cn.coursearena.com.ng/posts/article/how-to-install-and-run-uncensored-chatgpt-on-your-pc-offline-a-step-by-step-guide/', '2024-08-17 04:35:07.344741', 14),
+(394, '102.90.64.252', 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Mobile Safari/537.36', 'https://cn.coursearena.com.ng/accounts/profile/', '2024-08-17 11:14:02.661632', 12),
+(395, '207.38.88.21', 'ias-va/3.3 (former https://www.admantx.com + https://integralads.com/about-ias/)', '', '2024-08-17 11:16:18.033477', 12),
+(396, '140.238.83.181', 'Mozilla/5.0 (compatible; GrapeshotCrawler/2.0; +http://www.grapeshot.co.uk/crawler.php)', '', '2024-08-17 11:24:54.881588', 12),
+(397, '197.210.227.99', 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/127.0.6533.107 Mobile/15E148 Safari/604.1', 'https://cn.coursearena.com.ng/', '2024-08-17 11:39:21.004065', 19),
+(398, '204.15.208.28', 'peer39_crawler/1.0', '', '2024-08-17 13:38:19.749870', 12),
+(399, '102.90.64.254', 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1', '', '2024-08-17 13:48:24.761997', 12),
+(400, '66.249.92.164', 'Mediapartners-Google', '', '2024-08-17 14:34:18.742031', 12);
 
 -- --------------------------------------------------------
 
@@ -1446,9 +1533,9 @@ INSERT INTO `posts_articleview` (`id`, `ip_address`, `user_agent`, `referrer`, `
 --
 
 CREATE TABLE `posts_article_dislikes` (
-  `id` int(11) NOT NULL,
-  `article_id` bigint(20) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `id` int NOT NULL,
+  `article_id` bigint DEFAULT NULL,
+  `user_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1465,9 +1552,9 @@ INSERT INTO `posts_article_dislikes` (`id`, `article_id`, `user_id`) VALUES
 --
 
 CREATE TABLE `posts_article_frameworks` (
-  `id` bigint(20) NOT NULL,
-  `article_id` bigint(20) NOT NULL,
-  `framework_id` bigint(20) NOT NULL
+  `id` bigint NOT NULL,
+  `article_id` bigint NOT NULL,
+  `framework_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1514,8 +1601,6 @@ INSERT INTO `posts_article_frameworks` (`id`, `article_id`, `framework_id`) VALU
 (44, 18, 3),
 (45, 18, 4),
 (46, 18, 5),
-(47, 18, 16),
-(48, 18, 18),
 (49, 19, 3);
 
 -- --------------------------------------------------------
@@ -1525,9 +1610,9 @@ INSERT INTO `posts_article_frameworks` (`id`, `article_id`, `framework_id`) VALU
 --
 
 CREATE TABLE `posts_article_likes` (
-  `id` int(11) NOT NULL,
-  `article_id` bigint(20) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `id` int NOT NULL,
+  `article_id` bigint DEFAULT NULL,
+  `user_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1547,9 +1632,9 @@ INSERT INTO `posts_article_likes` (`id`, `article_id`, `user_id`) VALUES
 --
 
 CREATE TABLE `posts_bookmark` (
-  `id` bigint(20) NOT NULL,
-  `article_id` bigint(20) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `id` bigint NOT NULL,
+  `article_id` bigint NOT NULL,
+  `user_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1559,9 +1644,9 @@ CREATE TABLE `posts_bookmark` (
 --
 
 CREATE TABLE `posts_category` (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `slug` varchar(100) NOT NULL
+  `id` bigint NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `slug` varchar(100) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1592,14 +1677,14 @@ INSERT INTO `posts_category` (`id`, `name`, `slug`) VALUES
 --
 
 CREATE TABLE `posts_comment` (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `email` varchar(254) DEFAULT NULL,
-  `comment` longtext NOT NULL,
+  `id` bigint NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email` varchar(254) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `comment` longtext COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   `approved` tinyint(1) NOT NULL,
-  `article_id` bigint(20) NOT NULL
+  `article_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1609,9 +1694,9 @@ CREATE TABLE `posts_comment` (
 --
 
 CREATE TABLE `posts_framework` (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `slug` varchar(100) NOT NULL
+  `id` bigint NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `slug` varchar(100) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1653,12 +1738,21 @@ INSERT INTO `posts_framework` (`id`, `name`, `slug`) VALUES
 --
 
 CREATE TABLE `posts_reaction` (
-  `id` bigint(20) NOT NULL,
-  `reaction_type` varchar(10) NOT NULL,
+  `id` bigint NOT NULL,
+  `reaction_type` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` datetime(6) NOT NULL,
-  `article_id` bigint(20) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `article_id` bigint NOT NULL,
+  `user_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `posts_reaction`
+--
+
+INSERT INTO `posts_reaction` (`id`, `reaction_type`, `created_at`, `article_id`, `user_id`) VALUES
+(1, 'love', '2024-08-17 04:05:46.546664', 13, 1),
+(2, 'laugh', '2024-08-17 04:12:40.827515', 14, 1),
+(3, 'love', '2024-08-17 12:13:47.884315', 12, 23);
 
 -- --------------------------------------------------------
 
@@ -1667,9 +1761,9 @@ CREATE TABLE `posts_reaction` (
 --
 
 CREATE TABLE `taggit_tag` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `slug` varchar(100) NOT NULL
+  `id` int NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `slug` varchar(100) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1777,7 +1871,12 @@ INSERT INTO `taggit_tag` (`id`, `name`, `slug`) VALUES
 (108, 'minimalist design', 'minimalist-design'),
 (109, 'SEO', 'seo'),
 (110, 'website speed', 'website-speed'),
-(111, 'web developer advice', 'web-developer-advice');
+(111, 'web developer advice', 'web-developer-advice'),
+(112, 'Auto Rename Tag', 'auto-rename-tag'),
+(113, 'Prettier', 'prettier'),
+(114, 'Tabnine', 'tabnine'),
+(115, 'productivity tools', 'productivity-tools'),
+(116, 'CodeSnap', 'codesnap');
 
 -- --------------------------------------------------------
 
@@ -1786,10 +1885,10 @@ INSERT INTO `taggit_tag` (`id`, `name`, `slug`) VALUES
 --
 
 CREATE TABLE `taggit_taggeditem` (
-  `id` int(11) NOT NULL,
-  `object_id` int(11) NOT NULL,
-  `content_type_id` int(11) NOT NULL,
-  `tag_id` int(11) NOT NULL
+  `id` int NOT NULL,
+  `object_id` int NOT NULL,
+  `content_type_id` int NOT NULL,
+  `tag_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1904,19 +2003,16 @@ INSERT INTO `taggit_taggeditem` (`id`, `object_id`, `content_type_id`, `tag_id`)
 (112, 17, 11, 89),
 (113, 17, 11, 90),
 (124, 18, 11, 16),
-(123, 18, 11, 40),
-(125, 18, 11, 50),
-(126, 18, 11, 91),
-(127, 18, 11, 92),
-(128, 18, 11, 93),
-(129, 18, 11, 94),
-(130, 18, 11, 95),
+(143, 18, 11, 64),
 (117, 18, 11, 96),
-(118, 18, 11, 97),
 (119, 18, 11, 98),
 (120, 18, 11, 99),
-(121, 18, 11, 100),
 (122, 18, 11, 101),
+(144, 18, 11, 112),
+(145, 18, 11, 113),
+(146, 18, 11, 114),
+(147, 18, 11, 115),
+(148, 18, 11, 116),
 (142, 19, 11, 16),
 (132, 19, 11, 95),
 (134, 19, 11, 104),
@@ -2009,6 +2105,20 @@ ALTER TABLE `auth_user_user_permissions`
 -- Indexes for table `core_sitesettings`
 --
 ALTER TABLE `core_sitesettings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `core_sitesettings_social_links`
+--
+ALTER TABLE `core_sitesettings_social_links`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `core_sitesettings_social_sitesettings_id_socialli_bf7a25cc_uniq` (`sitesettings_id`,`sociallink_id`),
+  ADD KEY `core_sitesettings_so_sociallink_id_b517d4b7_fk_core_soci` (`sociallink_id`);
+
+--
+-- Indexes for table `core_sociallink`
+--
+ALTER TABLE `core_sociallink`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2158,175 +2268,187 @@ ALTER TABLE `taggit_taggeditem`
 -- AUTO_INCREMENT for table `accounts_infocontent`
 --
 ALTER TABLE `accounts_infocontent`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `accounts_profile`
 --
 ALTER TABLE `accounts_profile`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `accounts_profile_bookmarks`
 --
 ALTER TABLE `accounts_profile_bookmarks`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `ads_ad`
 --
 ALTER TABLE `ads_ad`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `auth_group`
 --
 ALTER TABLE `auth_group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `auth_group_permissions`
 --
 ALTER TABLE `auth_group_permissions`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `auth_permission`
 --
 ALTER TABLE `auth_permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT for table `auth_user`
 --
 ALTER TABLE `auth_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `auth_user_groups`
 --
 ALTER TABLE `auth_user_groups`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `auth_user_user_permissions`
 --
 ALTER TABLE `auth_user_user_permissions`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `core_sitesettings`
 --
 ALTER TABLE `core_sitesettings`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `core_sitesettings_social_links`
+--
+ALTER TABLE `core_sitesettings_social_links`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `core_sociallink`
+--
+ALTER TABLE `core_sociallink`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `core_staticpage`
 --
 ALTER TABLE `core_staticpage`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=383;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `django_content_type`
 --
 ALTER TABLE `django_content_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `newsletter_bulkemail`
 --
 ALTER TABLE `newsletter_bulkemail`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `newsletter_subscriber`
 --
 ALTER TABLE `newsletter_subscriber`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `posts_article`
 --
 ALTER TABLE `posts_article`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `posts_articleview`
 --
 ALTER TABLE `posts_articleview`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=386;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=401;
 
 --
 -- AUTO_INCREMENT for table `posts_article_dislikes`
 --
 ALTER TABLE `posts_article_dislikes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `posts_article_frameworks`
 --
 ALTER TABLE `posts_article_frameworks`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `posts_article_likes`
 --
 ALTER TABLE `posts_article_likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `posts_bookmark`
 --
 ALTER TABLE `posts_bookmark`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `posts_category`
 --
 ALTER TABLE `posts_category`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `posts_comment`
 --
 ALTER TABLE `posts_comment`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `posts_framework`
 --
 ALTER TABLE `posts_framework`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `posts_reaction`
 --
 ALTER TABLE `posts_reaction`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `taggit_tag`
 --
 ALTER TABLE `taggit_tag`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
 
 --
 -- AUTO_INCREMENT for table `taggit_taggeditem`
 --
 ALTER TABLE `taggit_taggeditem`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
 
 --
 -- Constraints for dumped tables
@@ -2371,6 +2493,13 @@ ALTER TABLE `auth_user_groups`
 ALTER TABLE `auth_user_user_permissions`
   ADD CONSTRAINT `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
   ADD CONSTRAINT `auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
+
+--
+-- Constraints for table `core_sitesettings_social_links`
+--
+ALTER TABLE `core_sitesettings_social_links`
+  ADD CONSTRAINT `core_sitesettings_so_sitesettings_id_019b2105_fk_core_site` FOREIGN KEY (`sitesettings_id`) REFERENCES `core_sitesettings` (`id`),
+  ADD CONSTRAINT `core_sitesettings_so_sociallink_id_b517d4b7_fk_core_soci` FOREIGN KEY (`sociallink_id`) REFERENCES `core_sociallink` (`id`);
 
 --
 -- Constraints for table `django_admin_log`
