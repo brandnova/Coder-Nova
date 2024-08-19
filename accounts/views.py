@@ -44,8 +44,14 @@ def login_view(request):
                 request.session.set_expiry(0)  # Expire the session when the browser is closed
             else:
                 request.session.set_expiry(1209600)  # 2 weeks in seconds
+
+            # Get the referring page
+            referer = request.META.get('HTTP_REFERER')
+            if referer:
+                return redirect(referer)
+            else:
+                return redirect('profile')
             
-            return redirect('profile')
     else:
         form = CustomAuthenticationForm()
 

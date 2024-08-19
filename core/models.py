@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from ckeditor_uploader.fields import RichTextUploadingField # type: ignore
+from django_ckeditor_5.fields import CKEditor5Field # type: ignore
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 
@@ -73,7 +73,7 @@ class SiteSettings(models.Model):
 class StaticPage(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
-    content = RichTextUploadingField()
+    content = CKEditor5Field('Content', config_name='default')
 
     def __str__(self):
         return self.title
