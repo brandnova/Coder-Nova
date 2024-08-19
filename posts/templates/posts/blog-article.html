@@ -266,9 +266,12 @@
                 {{ article.content|safe }}
             </p>
 
-            {% if ads.articlepage_inner %}
-                {{ ads.articlepage_inner.code|safe }}
-            {% endif %}
+            
+            <section class="ad my-10">
+                {% if ads.articlepage_inner %}
+                    {{ ads.articlepage_inner.code|safe }}
+                {% endif %}
+            </section>
 
             {% if article.youtube_url %}
                 <span class="my-10">Related Video :</span>
@@ -371,6 +374,9 @@
         <!-- Right -->
         <div class="bg-opacity-30 md:w-3/12 rounded-lg">
             <!-- component -->
+            <span class="select-none rounded-t-lg bg-gray-900 py-1 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85]  focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+            Author
+            </span>
             <div class="w-auto whitespace-normal break-words rounded-lg p-4 text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none">
                 <div class="flex items-center justify-between gap-4 mb-2">
                     <img src="{% if article.author.profile.avatar %}{{ article.author.profile.avatar.url }}{% endif %}" alt="{{ article.author.first_name }} {{ article.author.last_name }}" class="relative inline-block object-cover object-center w-12 h-12 rounded-full"/>
@@ -422,7 +428,7 @@
         </div>
     </section>
 
-    <section class="ad mt-20">
+    <section class="ad my-10">
         {% if ads.articlepage_inner %}
             {{ ads.articlepage_inner.code|safe }}
         {% endif %}

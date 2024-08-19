@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-from ckeditor_uploader.fields import RichTextUploadingField # type: ignore
+from django_ckeditor_5.fields import CKEditor5Field # type: ignore
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
@@ -44,7 +44,7 @@ class Article(models.Model):
     slug = models.SlugField(max_length=255, unique=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     type = models.CharField(max_length=20, choices=CONTENT_TYPE, default='article')
-    content = RichTextUploadingField()
+    content = CKEditor5Field('Content', config_name='default')
     excerpt = models.TextField(max_length=500, blank=True)
     image = models.ImageField(upload_to='articles/', blank=True, null=True)
     published_date = models.DateTimeField(auto_now_add=True)

@@ -1,5 +1,5 @@
 from django.db import models
-from ckeditor.fields import RichTextField  # type: ignore
+from django_ckeditor_5.fields import CKEditor5Field # type: ignore
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -30,7 +30,7 @@ def save_user_profile(sender, instance, **kwargs):
 
 class InfoContent(models.Model):
     title = models.CharField(max_length=200)
-    content = RichTextField()
+    content = CKEditor5Field('Content', config_name='default')
     section_id = models.SlugField(max_length=50, unique=True)
 
     def __str__(self):
