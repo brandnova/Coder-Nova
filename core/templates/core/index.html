@@ -168,6 +168,7 @@
                                     <div class="flex justify-between">
                                         <span class="inline-flex items-center mt-4 text-gray-400">{{ article.author.first_name }} {{ article.author.last_name }}</span>
                                         <span class="inline-flex items-center mt-4 me-9 text-xs">
+                                            <i class="bi bi-eye mx-2 cursor-pointer" title="{{ article.views }} Views"> ({{ article.views }})</i>
                                             <i class="bi bi-heart mx-2 cursor-pointer" title="{{ article.total_reactions }} Reactions"> ({{ article.total_reactions }})</i>
                                             <i class="bi bi-chat-dots mx-2 cursor-pointer" title="{{ article.comments.count }} Comments"> ({{ article.comments.count }})</i>
                                             <form action="{% url 'toggle_bookmark' article.slug %}" method="post" class="inline">

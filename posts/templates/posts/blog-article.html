@@ -168,6 +168,54 @@
             font-size: 0.875rem; 
         }
 
+        /* Custom CSS */
+        .reaction-popup {
+            background-color: var(--bg-color);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .share-popup {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease,background-color 0.3s ease, color 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .relative:hover .share-popup {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .share-popup a {
+            color: var(--text-color);
+            transition: color 0.3s ease; /* Smooth transition for icons */
+        }
+        
+        .share-popup a:hover {
+            color: #007bff; /* Add a hover color for light theme */
+        }
+        
+        .bottom-nav {
+            background-color: var(--bg-color);
+        }
+
+        .bottom-nav-icons:hover, .bottom-nav-icons:focus, .link {
+            color: var(--text-color);
+        }
+
+        .bottom-toolbar {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .bottom-toolbar.visible {
+            opacity: 1;
+        }
         
     </style>
     <section class="ad mt-20">
@@ -222,7 +270,7 @@
             <div class="w-full mx-auto flex-row my-10">
                 <div class="text-gray-500 space-y-3">
                     <p>{{ article.published_date|date:"d M Y" }} by {{ article.author.first_name }} {{ article.author.last_name }}</p>
-                    <p>Categories: 
+                    <p>Category: 
                         {{ article.category.name }}
                     </p>
                     <p>Frameworks: 
@@ -374,7 +422,7 @@
         <!-- Right -->
         <div class="bg-opacity-30 md:w-3/12 rounded-lg">
             <!-- component -->
-            <span class="select-none rounded-t-lg bg-gray-900 py-1 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85]  focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+            <span class="select-none rounded-t-lg bg-gray-500 py-1 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85]  focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
             Author
             </span>
             <div class="w-auto whitespace-normal break-words rounded-lg p-4 text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none">
@@ -424,7 +472,7 @@
                     {% endfor %}
                 {% endif %}
             </div>
-            <a href="{% url 'uploads' %}" class="decoration-none border border-gray-300 p-2 rounded-lg bg-gray-500 hover:text-black  text-gray-800 my-3 hover:underline">See More <i class="bi bi-arrow-right"></i></a>
+            <a href="{% url 'uploads' %}" class="decoration-none link p-2 rounded-lg hover:text-black  my-3 hover:underline">See More <i class="bi bi-arrow-right"></i></a>
         </div>
     </section>
 
@@ -447,63 +495,13 @@
                     {% endfor %}
                 {% endif %}
             </div>
-            <a href="{% url 'uploads' %}" class="decoration-none border border-gray-300 p-2 rounded-lg bg-gray-500 hover:text-black  text-gray-800 my-3 hover:underline">See More <i class="bi bi-arrow-right"></i></a>
+            <a href="{% url 'uploads' %}" class="decoration-none link p-2 rounded-lg hover:text-black  my-3 hover:underline">See More <i class="bi bi-arrow-right"></i></a>
         </div>
     </section>
     {% if ads.articlepage_bottom %}
         {{ ads.articlepage_bottom.code|safe }}
     {% endif %}
-    <style>
-        /* Custom CSS */
-        .reaction-popup {
-            background-color: var(--bg-color);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        
-        .share-popup {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease,background-color 0.3s ease, color 0.3s ease;
-            z-index: 10;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        .relative:hover .share-popup {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .share-popup a {
-            color: var(--text-color);
-            transition: color 0.3s ease; /* Smooth transition for icons */
-        }
-        
-        .share-popup a:hover {
-            color: #007bff; /* Add a hover color for light theme */
-        }
-        
-        .bottom-nav{
-            background-color: var(--bg-color);
-        }
-
-        .bottom-nav-icons:hover, .bottom-nav-icons:focus{
-            color: var(--text-color);
-        }
-
-        .bottom-toolbar {
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .bottom-toolbar.visible {
-            opacity: 1;
-        }
-        
-    </style>
+    
     <div class="w-full bottom-toolbar">
         <section id="bottom-navigation" class=" bottom-nav block fixed inset-x-0 bottom-0 z-10 shadow">
             <div id="tabs" class="flex justify-between">
@@ -511,7 +509,7 @@
                 <div class="relative inline-block w-full text-center">
                     <div class="w-full text-gray-500 bottom-nav-icons justify-center inline-block text-center pt-2 pb-1">
                         <i class="bi bi-plus-circle-fill text-xl cursor-pointer react-button"></i>
-                        <span class="tab tab-kategori block text-xs">React {{ article.likes.count }}</span>
+                        <span class="tab tab-kategori block text-xs">React {{ article.total_reactions }}</span>
                     </div>
                     <!-- Reaction Popup -->
                     <div class="reaction-popup absolute bottom-full flex flex-row left-1/2 transform-translate-x-1/2 mb-2 w-max space-x-2 p-2 bg-gray-50 dark:bg-gray-800 shadow-xl rounded-full">

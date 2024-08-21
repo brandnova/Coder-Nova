@@ -22,7 +22,7 @@ def register(request):
             login(request, user)  # Log the user in after registration
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}!')
-            return redirect('profile')  # Redirect to profile page after successful registration
+            return redirect('profile')  
     else:
         form = UserRegisterForm()
     
@@ -67,7 +67,6 @@ def logout_view(request):
             return redirect(referer)
         else:
             return redirect('login')
-
 
 
 @login_required

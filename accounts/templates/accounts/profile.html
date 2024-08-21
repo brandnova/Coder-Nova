@@ -289,7 +289,7 @@
                     {% if request.user.is_staff %} 
                         <div class="mt-14 overflow-hidden max-h-80 border-t border-b rounded-sm py-5 overflow-y-scroll hide-scrollbar">
                             <div class="flex items-center justify-between">
-                                <h4 class="text-xl font-bold">Drafted Articles</h4>
+                                <h4 class="text-xl font-bold">Drafted Articles {{ drafts.count }}</h4>
                             </div>
                             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-8 mt-8">
                                 {% if drafts %}
@@ -314,7 +314,7 @@
                      
                         <div class="mt-14 overflow-hidden max-h-80 border-t border-b rounded-sm py-5 overflow-y-scroll hide-scrollbar">
                             <div class="flex items-center justify-between">
-                                <h4 class="text-xl font-bold">Published Articles</h4>
+                                <h4 class="text-xl font-bold">Published Articles {{ posts_a.count }}</h4>
                             </div>
                             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-8 mt-8">
                                 {% if posts_a %}
@@ -339,7 +339,7 @@
 
                         <div class="mt-14 overflow-hidden max-h-80 border-t border-b rounded-sm py-5 overflow-y-scroll hide-scrollbar">
                             <div class="flex items-center justify-between">
-                                <h4 class="text-xl font-bold">Published Projects</h4>
+                                <h4 class="text-xl font-bold">Published Projects {{ posts_p.count }}</h4>
                             </div>
                             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-8 mt-8">
                                 {% if posts_p %}

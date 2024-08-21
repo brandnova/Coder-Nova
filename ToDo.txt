@@ -2,14 +2,23 @@ Please write an excerp for the blog post, a list of tags separated by commas, an
 
 And whats the estimated read time for the post, what framework/frameworks would you say the post is based on, and what general category would you place 
 
-PYTTSX3 Python Text to Speech
-
-
-Add Source code download link to DIY details page =================================================================
-add an article inner ad and modify the article top ad orientation
-
 Model for Discussions function
 
 Advertizing function
 
+PYTTSX3 Python Text to Speech
+
+Add Source code download link to DIY details page =================================================================
+add an article inner ad and modify the article top ad orientation
+
 More from post author on blog article page ################################
+
+Expand T&C and PP content
+
+Modify ads element in pages for conditional display
+
+
+django cleanup in live server
+
+Look into removing articleview model and only updating the count.
+
