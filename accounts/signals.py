@@ -16,4 +16,5 @@ def save_profile(sender, instance, **kwargs):
 @receiver(post_save, sender=User)
 def notify_new_user(sender, instance, created, **kwargs):
     if created:
-        send_registration_email(instance)
+        # send_registration_email(instance)
+        pass

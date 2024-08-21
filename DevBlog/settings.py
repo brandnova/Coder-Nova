@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_ckeditor_5',
     'django_social_share',
+    'django_cleanup.apps.CleanupConfig',
     'core',
     'posts',
     'taggit',
@@ -37,6 +38,16 @@ INSTALLED_APPS = [
     'ads',
     
 ]
+
+# Django Cleanup Config
+
+# CLEANUP_IGNORE = [
+#     {
+#         'model': 'posts.article',  
+#         'fields': ['image'],  
+#     }
+# ]
+
 
 # Session settings
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Use database-backed sessions
@@ -95,8 +106,8 @@ DATABASES = {
 
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'codernova',
-        'USER': 'codernova',
-        'PASSWORD': 'ndKNtRVasYvLt6s.',
+        'USER': 'root',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
     }
