@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_ckeditor_5',
     'django_social_share',
-    'django_cleanup.apps.CleanupConfig',
+    'rest_framework',
     'core',
     'posts',
     'taggit',
@@ -38,16 +38,6 @@ INSTALLED_APPS = [
     'ads',
     
 ]
-
-# Django Cleanup Config
-
-# CLEANUP_IGNORE = [
-#     {
-#         'model': 'posts.article',  
-#         'fields': ['image'],  
-#     }
-# ]
-
 
 # Session settings
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Use database-backed sessions
@@ -200,7 +190,7 @@ CKEDITOR_5_CONFIGS = {
             'items': [
                 'heading', 'fontFamily', 'fontSize', 'fontColor', 'fontBackgroundColor',
                 '|',
-                'bold', 'italic', 'underline', 'strikethrough', 'subscript', 'superscript',
+                'Bold', 'italic', 'underline', 'strikethrough', 'subscript', 'superscript',
                 '|',
                 'alignment', 'bulletedList', 'numberedList', 'todoList',
                 '|',
@@ -210,20 +200,8 @@ CKEDITOR_5_CONFIGS = {
                 '|',
                 'outdent', 'indent', 'blockQuote', 'horizontalLine', 'removeFormat',
                 '|',
-                'undo', 'redo', 'findAndReplace', 'insertTable', 'specialCharacters'
-                
+                'undo', 'redo', 'findAndReplace', 'insertTable', 'specialCharacters', 'FullPage'
             ],
-            'extraPlugins': 'GeneralHtmlSupport',
-            'htmlSupport': {
-                'allow': [
-                    {
-                        'name': '.*',
-                        'attributes': True,
-                        'classes': True,
-                        'styles': True
-                    }
-                ],
-            },
             'shouldNotGroupWhenFull': True
         },
         'menuBar': {
@@ -275,8 +253,21 @@ CKEDITOR_5_CONFIGS = {
         'upload': {
             "types": ['png', 'jpg', 'jpeg', 'gif']
         },
-        
-        
+        'htmlSupport': {
+            'allow': [
+                {
+                    'name': '/.*/',
+                    'attributes': True,
+                    'styles': True,
+                    'classes': True
+                },
+                
+            ],
+            'disallow': [
+                # Optionally, add elements you want to disallow
+            ]
+        },
+        'extra-plugins': ['htmlSupport']  # Ensure the plugin is loaded
     }
 }
 
@@ -290,6 +281,15 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'brandnova89@gmail.com'
 EMAIL_HOST_PASSWORD = 'zxgc intt dvax quzy'
 DEFAULT_FROM_EMAIL = 'brandnova89@gmail.com'
+
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.mailgun.org'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'postmaster@mail.coursearena.com.ng'
+# EMAIL_HOST_PASSWORD = '9dcbc6aeefc6445941c0b43f1ceca329-777a617d-ea426663'
+# DEFAULT_FROM_EMAIL = 'postmaster@mail.coursearena.com.ng'
 
 
 # Zazzmin settings

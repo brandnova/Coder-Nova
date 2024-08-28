@@ -9,7 +9,7 @@ from .forms import SearchForm
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 from accounts.models import Profile
-from .models import Article, ArticleView, Category, Comment, Framework, Reaction
+from .models import Article, ArticleView, Category, Comment, Framework, Reaction, CustomTag
 from django.contrib.auth.decorators import user_passes_test
 from django.urls import reverse_lazy
 from django.utils.timezone import now
@@ -178,7 +178,7 @@ def uploads(request):
     articles = Article.objects.filter(status='published', type='article').order_by('-published_date')
     categories = Category.objects.all()
     frameworks = Framework.objects.all()
-    tags = Tag.objects.all()
+    tags = CustomTag.objects.all()
     form = SearchForm()
     n_form = SubscriptionForm()
     s_form = SearchForm(request.GET or None)
@@ -193,11 +193,12 @@ def uploads(request):
         Q(slug__icontains=query) | 
         Q(category__name__icontains=query),
         status='published',
+        type='article',
     ).distinct()
 
     category_slug = request.GET.get('category')
     framework_slug = request.GET.get('framework')
-    tag_slug = request.GET.get('tag')
+    tag_slug = request.GET.get('tags')
 
     if category_slug:
         articles = articles.filter(category__slug=category_slug)
@@ -229,14 +230,27 @@ def projects(request):
     diys = Article.objects.filter(status='published', type='diy').order_by('-published_date')
     categories = Category.objects.all()
     frameworks = Framework.objects.all()
-    tags = Tag.objects.all()
+    tags = CustomTag.objects.all()
     form = SearchForm()
     n_form = SubscriptionForm()
     s_form = SearchForm()
+    query = request.GET.get('query', '')
+
+    if query:
+        diys = Article.objects.filter(
+        Q(title__icontains=query) | 
+        Q(content__icontains=query) | 
+        Q(frameworks__name__icontains=query) | 
+        Q(type__icontains=query) | 
+        Q(slug__icontains=query) | 
+        Q(category__name__icontains=query),
+        status='published',
+        type='diy',
+    ).distinct()
 
     category_slug = request.GET.get('category')
     framework_slug = request.GET.get('framework')
-    tag_slug = request.GET.get('tag')
+    tag_slug = request.GET.get('tags')
 
     if category_slug:
         diys = diys.filter(category__slug=category_slug)

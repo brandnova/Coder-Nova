@@ -5,6 +5,7 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager # type: ignore
+from taggit.models import TagBase, GenericTaggedItemBase # type: ignore
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -29,6 +30,22 @@ class Framework(models.Model):
 
     def __str__(self):
         return self.name
+    
+class CustomTag(TagBase):
+    class Meta:
+        # Ensure that the name field is unique
+        unique_together = [('slug', 'name')]
+
+    def save(self, *args, **kwargs):
+        # Normalize the tag name to lowercase before saving
+        self.name = self.name.lower()
+        self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+
+class CustomTaggedItem(GenericTaggedItemBase):
+    tag = models.ForeignKey(CustomTag, on_delete=models.CASCADE, related_name="tagged_items")
+
 
 class Article(models.Model):
     STATUS_CHOICES = (
@@ -51,7 +68,7 @@ class Article(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
     file_url = models.URLField(blank=True, null=True, help_text="Paste the direct download link for the project file.")
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
-    tags = TaggableManager()
+    tags = TaggableManager(through=CustomTaggedItem)
     category = models.ForeignKey(Category, related_name='articles', on_delete=models.CASCADE)
     frameworks = models.ManyToManyField(Framework, related_name='articles', blank=True)
     reading_time = models.PositiveIntegerField(blank=True, null=True)
@@ -68,6 +85,7 @@ class Article(models.Model):
         return reverse('article_detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
+        self.tags.set([tag.lower() for tag in self.tags.names()])
         if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)

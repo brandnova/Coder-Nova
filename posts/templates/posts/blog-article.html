@@ -256,7 +256,7 @@
         </div>
 
         <!-- center -->
-        <div class="container sm:w-9/12 md:w-8/12 px-5">
+        <div class="container sm:w-9/12 md:w-8/12 p-10 mx-5 shadow-lg rounded-lg">
             <!-- Search Bar -->
             <div class="flex items-center justify-center">
                 <form method="get" action="{% url 'uploads' %}" class="flex w-full mx-10 rounded">
@@ -293,6 +293,12 @@
                 </div>
             </div>
 
+            {% if ads.articlepage_inner %}
+                <section class="ad my-10">
+                    {{ ads.articlepage_inner.code|safe }}
+                </section>
+            {% endif %}
+
             <div id="copy-alert" class="hidden fixed top-4 right-4 w-full max-w-xs md:max-w-sm lg:max-w-md bg-green-100 border border-green-400 text-green-700 rounded-lg shadow-lg p-4 z-50" role="alert">
                 <strong><i class="bi bi-clipboard-check"></i></strong>Post Link Copied to clipboard!
                 <button id="close-alert-button" type="button" class="absolute top-2 right-2 text-green-700 hover:text-green-900 focus:outline-none" aria-label="Close">
@@ -310,16 +316,21 @@
 
             <img src="{% if article.image %}{{ article.image.url }}{% endif %}" class="object-cover h-52 w-full mb-5 rounded-lg" alt="{{ article.title }}">
 
+            {% if ads.articlepage_inner %}
+                <section class="ad my-10">
+                    {{ ads.articlepage_inner.code|safe }}
+                </section>
+            {% endif %}
+
             <p id="content" class="mb-10 first-letter:text-7xl first-letter:font-bold first-letter:mr-3 first-letter:float-left">
                 {{ article.content|safe }}
             </p>
-
             
-            <section class="ad my-10">
-                {% if ads.articlepage_inner %}
+            {% if ads.articlepage_inner %}
+                <section class="ad my-10">
                     {{ ads.articlepage_inner.code|safe }}
-                {% endif %}
-            </section>
+                </section>
+            {% endif %}
 
             {% if article.youtube_url %}
                 <span class="my-10">Related Video :</span>
