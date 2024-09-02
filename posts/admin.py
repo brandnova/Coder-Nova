@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Article, ArticleView, Category, Framework, Comment, Reaction
+from .models import Article, ArticleView, Category, Framework, Comment, Reaction, CustomTag
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
@@ -37,6 +37,13 @@ class ReactionAdmin(admin.ModelAdmin):
     search_fields = ('user__username', 'article__title')
 
 
+@admin.register(CustomTag)
+class CustomTagAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+    prepopulated_fields = {'slug': ('name',)}
+    search_fields = ('name',)
+
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
@@ -66,3 +73,5 @@ class ArticleViewAdmin(admin.ModelAdmin):
     date_hierarchy = 'viewed_on'
 
 admin.site.register(ArticleView, ArticleViewAdmin)
+
+

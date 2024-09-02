@@ -8,6 +8,7 @@ Advertizing function
 
 PYTTSX3 Python Text to Speech
 
+
 Add Source code download link to DIY details page =================================================================
 add an article inner ad and modify the article top ad orientation
 
@@ -17,8 +18,4 @@ Expand T&C and PP content
 
 Modify ads element in pages for conditional display
 
-
-django cleanup in live server
-
 Look into removing articleview model and only updating the count.
-

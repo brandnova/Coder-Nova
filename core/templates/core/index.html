@@ -2,11 +2,11 @@
 {% block title %}Home{% endblock  %}
 {% load static %}
 {% block content %}
-    <section class="ad mt-20">
-        {% if ads.homepage_top %}
+    {% if ads.homepage_top %}
+        <section class="container mx-auto mt-20">
             {{ ads.homepage_top.code|safe }}
-        {% endif %}
-    </section>
+        </section>
+    {% endif %}
     <!-- Popup -->
     {% if show_popup %}
         <div id="popup" class="fixed bottom-4 left-4 flex items-center justify-center bg-gray-900 bg-opacity-75 text-white p-4 rounded-lg shadow-lg hidden" style="z-index: 7777;">
@@ -59,9 +59,9 @@
             });
         });
     </script>
-    <section class="mt-10 px-52">
+    <section class="mt-10 px-52 ">
         <!-- Landing -->
-        <section class="pb-12 bg-gradient-to-b from-[#E8E3F5] via-[#EDEAFB] to-[#F7FAFC] lg:block md:hidden hidden">
+        <section class="pb-12 bg-gradient-to-b from-[#E8E3F5] via-[#EDEAFB] to-[#F7FAFC] shadow-lg lg:block md:hidden hidden">
             <div class="items-center pt-5 px-4 sm:px-8 mx-auto max-w-7xl lg:px-16 md:px-12">
                 <div class="justify-center w-full text-center lg:p-10 max-auto">
                     <div class="justify-center w-full mx-auto">
