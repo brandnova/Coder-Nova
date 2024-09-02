@@ -136,16 +136,21 @@ def react_to_article(request, slug):
     article = get_object_or_404(Article, slug=slug)
     reaction_type = request.POST.get('reaction_type')
 
-    reaction, created = Reaction.objects.get_or_create(
+    existing_reaction = Reaction.objects.filter(
         user=request.user,
-        article=article,
-        defaults={'reaction_type': reaction_type}
-    )
+        article=article
+    ).first()
 
-    if not created:
-        # If the reaction already exists, update it
-        reaction.reaction_type = reaction_type
-        reaction.save()
+    if existing_reaction and existing_reaction.reaction_type == reaction_type:
+        # If the same reaction type exists, remove it (toggle off)
+        existing_reaction.delete()
+    else:
+        # If no reaction exists or it's a different type, create or update
+        Reaction.objects.update_or_create(
+            user=request.user,
+            article=article,
+            defaults={'reaction_type': reaction_type}
+        )
 
     # Get the referring page
     referer = request.META.get('HTTP_REFERER')
