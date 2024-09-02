@@ -10,6 +10,9 @@
             --text-color: #333;
             --border-color: #DDD;
             --inline-border-color: #CCC;
+            --copy-button-bg: rgba(255, 255, 255, 0.7);
+            --copy-button-color: #333;
+            --copy-button-hover-bg: rgba(255, 255, 255, 0.9);
         }
         
         [data-theme='dark'] {
@@ -18,31 +21,67 @@
             --text-color: #E0E0E0;
             --border-color: #444;
             --inline-border-color: #555;
+            --copy-button-bg: rgba(65, 65, 65, 0.7);
+            --copy-button-color: #E0E0E0;
+            --copy-button-hover-bg: rgba(65, 65, 65, 0.9);
         }
         
-        pre, code {
-            font-family: 'Courier New', Courier, monospace;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            padding: 1em;
-            border-radius: 10px;
-            overflow: auto;
+        .code-block-wrapper {
+            position: relative;
             margin: 1em 0;
         }
         
-        pre {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            border: 1px solid var(--border-color);
-            cursor: pointer;
+        pre, code {
+            border-radius: 10px;
+            
+        }
+        
+        pre, pre[class*="language-"] {
+            position: relative;
+            margin: 0;
+            padding-top: 5% !important;
         }
         
         code {
             background-color: var(--inline-background-color);
             padding: 0.2em 0.4em;
             border-radius: 3px;
-            border: 1px solid var(--inline-border-color);
         }
+
+        .copy-button, .language-indicator {
+            position: absolute;
+            top: 5px;
+            padding: 3px 6px;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+        
+        .copy-button {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background-color: var(--copy-button-bg);
+            color: var(--copy-button-color);
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .copy-button:hover {
+            background-color: var(--copy-button-hover-bg);
+        }
+
+        .language-indicator {
+            left: 10px; 
+            background-color: rgba(0, 0, 0, 0.1);
+            color: #666;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
         #content{
             font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
             font-style: normal;
@@ -598,29 +637,91 @@
     </div>
 
     <script>
+        function addCodeBlockFeatures() {
+            const codeBlocks = document.querySelectorAll('pre');
+          
+            codeBlocks.forEach(block => {
+              // Create wrapper
+              const wrapper = document.createElement('div');
+              wrapper.className = 'code-block-wrapper';
+              block.parentNode.insertBefore(wrapper, block);
+              wrapper.appendChild(block);
+          
+              // Create copy button
+              const copyButton = document.createElement('button');
+              copyButton.innerHTML = 'Copy';
+              copyButton.className = 'copy-button';
+          
+              // Add click event to copy button
+              copyButton.addEventListener('click', () => {
+                const code = block.querySelector('code') || block;
+                navigator.clipboard.writeText(code.innerText).then(() => {
+                  copyButton.innerHTML = 'Copied!';
+                  setTimeout(() => copyButton.innerHTML = 'Copy', 2000);
+                }).catch(err => {
+                  console.error('Failed to copy: ', err);
+                });
+              });
+          
+              // Create language indicator
+              const languageIndicator = document.createElement('span');
+              languageIndicator.className = 'language-indicator';
+              
+              // Determine language
+              let language = 'txt';
+              const className = block.className || (block.firstChild && block.firstChild.className);
+              const languageMatch = className && className.match(/language-(\w+)/);
+              if (languageMatch) {
+                language = languageMatch[1];
+              }
+              languageIndicator.textContent = language;
+          
+              // Append elements
+              wrapper.appendChild(copyButton);
+              wrapper.appendChild(languageIndicator);
+            });
+          }
+          
+          // Function to apply theme
+          function applyTheme(isDark) {
+            document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+          }
+          
+          // Call the functions when the DOM is fully loaded
+          document.addEventListener('DOMContentLoaded', () => {
+            addCodeBlockFeatures();
+            
+            // Check for saved theme preference or system preference
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const defaultDark = savedTheme === 'dark' || (savedTheme === null && prefersDark);
+            
+            // Apply the default theme
+            applyTheme(defaultDark);
+          
+            // Add event listener for theme toggle if you have one
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+              themeToggle.addEventListener('click', () => {
+                const isDark = document.body.getAttribute('data-theme') === 'dark';
+                applyTheme(!isDark);
+                localStorage.setItem('theme', !isDark ? 'dark' : 'light');
+              });
+            }
+          });
+          
+          // Remove Prism.js default styles
+          document.addEventListener('DOMContentLoaded', () => {
+            const prismStyles = document.querySelector('link[href*="prism"]');
+            if (prismStyles) {
+              prismStyles.disabled = true;
+            }
+          });
+        
+        
+
         
         document.addEventListener('DOMContentLoaded', function() {
-
-            // Copy code snippet to clipboard
-            const preElements = document.querySelectorAll('pre');
-    
-            preElements.forEach(pre => {
-                pre.addEventListener('click', function() {
-                    const code = pre.querySelector('code').innerText;
-    
-                    // Create a temporary textarea element to copy the text
-                    const textarea = document.createElement('textarea');
-                    textarea.value = code;
-                    document.body.appendChild(textarea);
-                    textarea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textarea);
-    
-                    // Show the alert message
-                    alert('Code copied to clipboard!');
-                });
-            });
-
 
             // Popup Modal
             const popup = document.getElementById('engagementPopup');
